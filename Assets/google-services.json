@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "226611184049",
+    "firebase_url": "https://uno2023-226e3-default-rtdb.firebaseio.com",
+    "project_id": "uno2023-226e3",
+    "storage_bucket": "uno2023-226e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226611184049:android:af6f9ec3fcfbf5173cbd90",
+        "android_client_info": {
+          "package_name": "scy.firebase.uno"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "226611184049-n5721jgad1cc3kvkomo80ajq815g7o1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_87nBRDY10ccEp9tCJ9iGnYMOqmrjhLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "226611184049-n5721jgad1cc3kvkomo80ajq815g7o1a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "226611184049-18hrtvaa1n2v3ms03krpk6okhub9c94a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "jsh.firebase.uno"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
