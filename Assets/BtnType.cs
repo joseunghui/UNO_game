@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class BtyType : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public BTNType currentType;
+    public void OnBynClick()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        switch (currentType)
+        {
+            case BTNType.New:
+                Debug.Log("new game");
+            case BTNType.Continue:
+                Debug.Log("continue game...");
+                break;
+        }
     }
 }
