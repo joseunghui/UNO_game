@@ -11,6 +11,7 @@ public class BtyType : MonoBehaviour
         {
             case BTNType.New:
                 Debug.Log("new game");
+                break;
             case BTNType.Continue:
                 Debug.Log("continue game...");
                 break;
