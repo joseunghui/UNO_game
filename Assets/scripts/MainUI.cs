@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum BTNType 
-{
-    New,
+{   
+    //start
+
+    New,  
     Continue,
     Option,
     Back,
