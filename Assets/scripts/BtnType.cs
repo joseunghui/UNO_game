@@ -9,6 +9,7 @@ public class BtyType : MonoBehaviour
     {
         switch (currentType)
         {
+            // start
             case BTNType.New:
                 Debug.Log("new game");
                 break;
