@@ -6,19 +6,19 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-     __NEARBY_PERMISSIONS__
+     
 
     <application>
 
-     __NEARBY_SERVICE_ELEMENT__
+     
 
         <!-- The space in these forces it to be interpreted as a string vs. int -->
         <meta-data android:name="com.google.android.gms.games.APP_ID"
-            android:value="\u003__APP_ID__" />
+            android:value="\u003399057892473" />
 
         <!-- Keep track of which plugin is being used -->
         <meta-data android:name="com.google.android.gms.games.unityVersion"
-            android:value="\u003__PLUGIN_VERSION__" />
+            android:value="\u0030.10.12" />
 
         <activity android:name="com.google.games.bridge.NativeBridgeActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />

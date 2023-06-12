@@ -157,10 +157,11 @@ namespace GooglePlayGames
                 {
                     if (fid.Equals(score.userID))
                     {
-                        mScoreList.Add(score);
-                        break;
+                        return mScoreList.Count;
                     }
                 }
+
+                mScoreList.Add(score);
             }
 
             return mScoreList.Count;
