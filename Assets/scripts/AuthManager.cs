@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Firebase.Auth;
 using UnityEngine.UI;
+using TMPro;
 
 public class AuthManager : MonoBehaviour
 {
-    [SerializeField] InputField emailField;
-    [SerializeField] InputField pwField;
+    [SerializeField] TMP_InputField emailField;
+    [SerializeField] TMP_InputField pwField;
 
     // 인증을 관리할 객체 선언
     Firebase.Auth.FirebaseAuth auth;
