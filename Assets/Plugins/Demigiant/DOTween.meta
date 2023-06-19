@@ -1,5 +1,6 @@
 fileFormatVersion: 2
 guid: a50bd9a009c8dfc4ebd88cc8101225a7
+<<<<<<< Updated upstream
 labels:
 - Tween
 - Tweening
@@ -19,3 +20,11 @@ labels:
 folderAsset: yes
 DefaultImporter:
   userData: 
+=======
+folderAsset: yes
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+>>>>>>> Stashed changes
