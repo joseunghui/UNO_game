@@ -5,14 +5,21 @@ using DG.Tweening;
 using UnityEngine.UI;
 using TMPro; 
 
-public class MainLoad : MonoBehaviour
+public class SettingPopup : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
         DOTween.Init();
-        transform.localScale = Vector3.one * 0.1f;
-        gameObject.SetActive(false);
+        var seq = DOTween.Sequence();      
+    
+        seq.Append(transform.DOScale(0.95f, 0.1f));
+        seq.Append(transform.DOScale(1.05f, 0.1f));
+
+        seq.Play().OnComplete(() => 
+        {
+            this.Show();
+        });
     }
 
     public void Show() 
