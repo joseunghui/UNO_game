@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/scripts/Card.cs.meta
-guid: 3d9cacdfc422fd149b83887bbe0670dd
-========
-guid: 1574b46da19244502b145acd72099139
->>>>>>>> main:Assets/scripts/AuthManager.cs.meta
+guid: 52190ff9d9aa24049b9cc0acb7fa38a7
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
