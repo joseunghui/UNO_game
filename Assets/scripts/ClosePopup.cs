@@ -7,7 +7,7 @@ using TMPro;
 
 public class ClosePopup : MonoBehaviour
 {
-    public MainLoad popupWindow;
+    public SettingPopup popupWindow;
     
     public void OnButtonClick()
     {
