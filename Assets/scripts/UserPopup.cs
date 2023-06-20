@@ -5,21 +5,16 @@ using DG.Tweening;
 using UnityEngine.UI;
 using TMPro; 
 
-public class SettingPopup : MonoBehaviour
+public class UserPopup : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
         DOTween.Init();
-        var seq = DOTween.Sequence();      
-    
-        seq.Append(transform.DOScale(0.95f, 0.1f));
-        seq.Append(transform.DOScale(1.05f, 0.1f));
-
-        seq.Play().OnComplete(() => 
-        {
-            this.Show();
-        });
+      // transform 의 scale 값을 모두 0.1f로 변경합니다.
+      transform.localScale = Vector3.one * 0.1f;
+      // 객체를 비활성화 합니다.
+      gameObject.SetActive(false);
     }
 
     public void Show() 
