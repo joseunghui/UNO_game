@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Firebase.Auth;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro; 
 
 public class AuthManager : MonoBehaviour
@@ -26,6 +27,8 @@ public class AuthManager : MonoBehaviour
                 if (task.IsCompleted && !task.IsFaulted && !task.IsCanceled)
                 {
                     Debug.Log(emailField.text + "님 환영합니다!");
+                    // scenes 전환
+                    SceneManager.LoadScene("cardScenes");
                 }
                 else 
                 {
