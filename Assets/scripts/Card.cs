@@ -13,7 +13,6 @@ public class Card : MonoBehaviour
     bool isFront;
 
     public void Setup(Item item, bool isFront){
-        print(item.sprite);
         this.item = item;
         this.isFront = isFront;
         
