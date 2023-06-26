@@ -68,7 +68,6 @@ public class CardManager : MonoBehaviour
     void AddCard(bool isMine){
         var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Utils.QI);
         var card = cardObject.GetComponent<Card>();
-        print(isMine);
         card.Setup(PopItem(), isMine);
         (isMine ? myCards : otherCards).Add(card);
 
