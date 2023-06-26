@@ -8,10 +8,6 @@ public class Order : MonoBehaviour
     [SerializeField] Renderer[] middleRenderers;
     [SerializeField] string sortingLayerName;
     int originOrder;
-
-    private void Start(){
-        SetOrder(0);
-    }
     
     public void SetOriginOrder(int originOrder){
         this.originOrder = originOrder;
