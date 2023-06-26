@@ -28,3 +28,144 @@ MonoBehaviour:
   - num: 4
     color: red
     sprite: {fileID: 800729748, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 5
+    color: red
+    sprite: {fileID: 270782818, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 6
+    color: red
+    sprite: {fileID: -153535617, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 7
+    color: red
+    sprite: {fileID: 2076560528, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 8
+    color: red
+    sprite: {fileID: 1546254468, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 9
+    color: red
+    sprite: {fileID: -658502896, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 10
+    color: red
+    sprite: {fileID: 1184933239, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 11
+    color: red
+    sprite: {fileID: -722478418, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 12
+    color: red
+    sprite: {fileID: 1989766748, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 0
+    color: yellow
+    sprite: {fileID: -678182301, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 1
+    color: yellow
+    sprite: {fileID: -1059375633, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 2
+    color: yellow
+    sprite: {fileID: 1357397818, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 3
+    color: yellow
+    sprite: {fileID: -655787729, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 4
+    color: yellow
+    sprite: {fileID: 1967240460, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 5
+    color: yellow
+    sprite: {fileID: 1181906259, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 6
+    color: yellow
+    sprite: {fileID: 1540691844, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 7
+    color: yellow
+    sprite: {fileID: 1431942889, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 8
+    color: yellow
+    sprite: {fileID: 1362453133, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 9
+    color: yellow
+    sprite: {fileID: -1982119499, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 10
+    color: yellow
+    sprite: {fileID: 75190814, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 11
+    color: yellow
+    sprite: {fileID: -1863141716, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 12
+    color: yellow
+    sprite: {fileID: -1199366415, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 0
+    color: green
+    sprite: {fileID: -1127514629, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 1
+    color: green
+    sprite: {fileID: 444208578, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 2
+    color: green
+    sprite: {fileID: -50196563, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 3
+    color: green
+    sprite: {fileID: -1843689596, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 4
+    color: green
+    sprite: {fileID: -303454068, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 5
+    color: green
+    sprite: {fileID: -1983799897, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 6
+    color: green
+    sprite: {fileID: 1778467831, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 7
+    color: green
+    sprite: {fileID: -940899330, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 8
+    color: green
+    sprite: {fileID: 142125591, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 9
+    color: green
+    sprite: {fileID: -1611558470, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 10
+    color: green
+    sprite: {fileID: -1918941814, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 11
+    color: green
+    sprite: {fileID: 1706638681, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 12
+    color: green
+    sprite: {fileID: -814810814, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 0
+    color: blue
+    sprite: {fileID: 964620983, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 1
+    color: blue
+    sprite: {fileID: 66665582, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 2
+    color: blue
+    sprite: {fileID: -542428942, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 3
+    color: blue
+    sprite: {fileID: -92970344, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 4
+    color: blue
+    sprite: {fileID: -248813466, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 5
+    color: blue
+    sprite: {fileID: -1211805920, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 6
+    color: blue
+    sprite: {fileID: -904321636, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 7
+    color: blue
+    sprite: {fileID: -1219733031, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 8
+    color: blue
+    sprite: {fileID: 1584173475, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 9
+    color: blue
+    sprite: {fileID: -210518470, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 10
+    color: blue
+    sprite: {fileID: 2092174280, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 11
+    color: blue
+    sprite: {fileID: 1246149286, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 12
+    color: blue
+    sprite: {fileID: -1065391010, guid: bdd135c182633483aa95b4adab683016, type: 3}
