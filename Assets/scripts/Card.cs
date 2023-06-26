@@ -4,6 +4,8 @@ using UnityEngine;
 using DG.Tweening;
 public class Card : MonoBehaviour
 {
+    [SerializeField] SpriteRenderer card;
+    [SerializeField] SpriteRenderer image;
     [SerializeField] Sprite cardBack;
 
     public Item item;
@@ -14,10 +16,28 @@ public class Card : MonoBehaviour
         print(item.sprite);
         this.item = item;
         this.isFront = isFront;
+        
         if(this.isFront)
-            item.sprite = this.item.sprite;
+            image.sprite = this.item.sprite;
         else
-            item.sprite = cardBack;
+            card.sprite = cardBack;
+    }
+    
+    void OnMouseOver(){
+        if(isFront)
+            CardManager.Inst.CardMouseOver(this);
+    }
+    void OnMouseExit(){
+        if(isFront)
+            CardManager.Inst.CardMouseExit(this);
+    }
+    void OnMouseDown(){
+        if(isFront)
+            CardManager.Inst.CardMouseDown();
+    }
+    void OnMouseUp(){
+        if(isFront)
+            CardManager.Inst.CardMouseUp();
     }
 
     public void MoveTransform(PRS prs, bool useDotween, float dotweenTime = 0){
