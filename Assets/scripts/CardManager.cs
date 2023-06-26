@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CardManager : MonoBehaviour
 {
@@ -19,6 +21,9 @@ public class CardManager : MonoBehaviour
 
 
     List<Item> itemBuffer;
+    Card selectCard;
+    bool isMyCardDrag;
+    bool OnMyCardArea;
 
     public Item PopItem(){          // 카드 다뽑으면 다시 만드는건데.. 이건 수정 필요함
         if(itemBuffer.Count == 0)
@@ -42,18 +47,24 @@ public class CardManager : MonoBehaviour
             Item temp = itemBuffer[i];
             itemBuffer[i] = itemBuffer[rand];
             itemBuffer[rand] = temp;
+
         }
     }
     void Start()
     {
         SetUpItemBuffer();
+        TurnManager.OnAddCard += AddCard;
+    }
+    void OnDestroy(){
+        TurnManager.OnAddCard -= AddCard;
     }
     void Update(){
-        if(Input.GetKeyDown(KeyCode.Keypad1)){
-            AddCard(true);}
-        if(Input.GetKeyDown(KeyCode.Keypad2)){
-            AddCard(false);}
+        if(isMyCardDrag)
+            CardDrag();
+        
+        DetectCardArea();
     }
+    
     void AddCard(bool isMine){
         var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Utils.QI);
         var card = cardObject.GetComponent<Card>();
@@ -115,4 +126,38 @@ public class CardManager : MonoBehaviour
         }
         return results;
     }
+    
+    
+#region MyCard
+    public void CardMouseOver(Card card){
+        selectCard = card;
+        EnlargeCard(true, card);
+    }
+    public void CardMouseExit(Card card){
+        EnlargeCard(false, card);
+    }
+    public void CardMouseDown(){
+        isMyCardDrag = true;
+    }
+    public void CardMouseUp(){
+        isMyCardDrag = false;
+    }
+    void CardDrag(){
+
+    }
+    void DetectCardArea(){  // MyCardArea랑 마우스랑 겹치는 부분이 있으면 true; 실행하면 false만 나옴..
+        RaycastHit2D[] hits = Physics2D.RaycastAll(Utils.MousePos, Vector3.forward);
+        int layer = LayerMask.NameToLayer("MyCardArea");
+        OnMyCardArea = Array.Exists(hits, x => x.collider.gameObject.layer == layer);
+    }
+    void EnlargeCard(bool isEnlarge, Card card){
+        if(isEnlarge){
+            Vector3 enlargePos = new Vector3(card.originPRS.pos.x, -2.1f, -5f);   // x는 그대로 y 올리고 z는 앞으로 뻄
+            card.MoveTransform(new PRS(enlargePos, Utils.QI, Vector3.one * 1.6f), false);
+        } else
+            card.MoveTransform(card.originPRS, false);
+        
+        card.GetComponent<Order>().SetMostFrontOrder(isEnlarge);
+    }
+#endregion
 }

@@ -18,4 +18,12 @@ public class PRS{   // 카드원본위치
 public class Utils
 {
     public static Quaternion QI => Quaternion.identity;
+
+    public static Vector3 MousePos{
+        get{
+            Vector3 result = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            result.z = -5;
+            return result;
+        }
+    }
 }
