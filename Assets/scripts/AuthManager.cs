@@ -1,55 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Firebase.Auth;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using TMPro; 
+using GooglePlayGames; // PlayGamesPlatform 인스턴스를 활성화
+using GooglePlayGames.BasicApi; // API 를 사용하기 위한 데이터를 초기화
 
 public class AuthManager : MonoBehaviour
 {
-    [SerializeField] TMP_InputField emailField;
-    [SerializeField] TMP_InputField pwField;
+    bool bWait = false;
+    // public Text text;
 
-    // 인증을 관리할 객체 선언
-    Firebase.Auth.FirebaseAuth auth;
-
-    void Awake()
+    private void Awake()
     {
         // 객체 초기화 
-        auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        // 초기화 함수, 인스턴스를 만드는 역할
+        PlayGamesPlatform.InitializeInstance(new PlayGamesClientConfiguration.Builder().Build());
+
+        // 디버그용 함수
+        PlayGamesPlatform.DebugLogEnabled = true;
+
+        // 구글 관련 서비스 활성화
+        PlayGamesPlatform.Activate();
+
+        // 로그인 여부 띄우기
+        // text.text = "no login";
     }
+
     public void loginUserBtn()
     {
-        // 제공되는 함수 : email 과 pw로 로그인
-        auth.SignInWithEmailAndPasswordAsync(emailField.text, pwField.text).ContinueWith(
-            task => {
-                if (task.IsCompleted && !task.IsFaulted && !task.IsCanceled)
+        // 로그인 단계 : local에 연결된 계정이 있는지 확인 -> 안되었다면, 인증 단계 시작!
+        if (!Social.localUser.authenticated)
+        {
+            // 계정 인증
+            Social.localUser.Authenticate((bool isSuccess) => 
+            {
+                if(isSuccess) 
                 {
-                    Debug.Log(emailField.text + "님 환영합니다!");
-                    // scenes 전환
-                    SceneManager.LoadScene("cardScenes");
+                    Debug.Log("Login Success!");
+                    Debug.Log("Success : " + Social.localUser.userName);
+                    // text.text = Social.localUser.userName;
                 }
                 else 
                 {
-                    Debug.Log("아이디와 비밀번호를 확인해주세요.");
+                    Debug.Log("Login Fail!");
+                    // text.text = "Fail";
                 }
-            }
-        );
+            });
+        }
     }
-    public void addUserBtn() {
-        // 제공 되는 함수 : 이메일과 비번으로 회원가입
-        auth.CreateUserWithEmailAndPasswordAsync(emailField.text, pwField.text).ContinueWith(
-            task => {
-                if (!task.IsCanceled && !task.IsFaulted) 
-                {
-                    Debug.Log(emailField.text + "로 회원가입 완료");
-                }
-                else
-                {
-                    Debug.Log("회원가입 실패");
-                }
-            }
-        );
+
+    public void logOut()
+    {
+        ((PlayGamesPlatform)Social.Active).SignOut();
+        // text.text = "LogOut";
     }
+
 }
