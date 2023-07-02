@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using GooglePlayGames; // PlayGamesPlatform 인스턴스를 활성화
 using GooglePlayGames.BasicApi; // API 를 사용하기 위한 데이터를 초기화
 
 public class AuthManager : MonoBehaviour
 {
-    bool bWait = false;
-    // public Text text;
+    // bool bWait = false;
+    public TMP_Text text;
 
     private void Awake()
     {
@@ -22,7 +24,7 @@ public class AuthManager : MonoBehaviour
         PlayGamesPlatform.Activate();
 
         // 로그인 여부 띄우기
-        // text.text = "no login";
+        text.text = "로그인 후 이용해주세요.";
     }
 
     public void loginUserBtn()
@@ -37,12 +39,12 @@ public class AuthManager : MonoBehaviour
                 {
                     Debug.Log("Login Success!");
                     Debug.Log("Success : " + Social.localUser.userName);
-                    // text.text = Social.localUser.userName;
+                    text.text = Social.localUser.userName + "님 환영합니다!";
                 }
                 else 
                 {
                     Debug.Log("Login Fail!");
-                    // text.text = "Fail";
+                    text.text = "로그인에 실패하였습니다.";
                 }
             });
         }
@@ -51,7 +53,7 @@ public class AuthManager : MonoBehaviour
     public void logOut()
     {
         ((PlayGamesPlatform)Social.Active).SignOut();
-        // text.text = "LogOut";
+        text.text = "로그아웃...";
     }
 
 }
