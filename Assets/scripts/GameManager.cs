@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // 치트, UI, 랭킹, 게임오버 등등
 public class GameManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
     void Awake() => Inst = this;
 
     [SerializeField] NotificationPanel notificationPanel;
+    private Button btn;
 
     void Start()
     {
@@ -27,7 +29,6 @@ public class GameManager : MonoBehaviour
             TurnManager.OnAddCard?.Invoke(false);
         if(Input.GetKeyDown(KeyCode.Keypad3))
             TurnManager.Inst.EndTurn();
-
     }
     
     public void StartGame(){
@@ -36,5 +37,13 @@ public class GameManager : MonoBehaviour
 
     public void Notification(string message){
         notificationPanel.Show(message);
+    }
+
+    public void nonePutCard(){
+        if(!TurnManager.Inst.myTurn)
+            btn.GetComponent<Button>().interactable = false;
+        if(TurnManager.Inst.myTurn)
+            TurnManager.OnAddCard?.Invoke(true);
+            TurnManager.Inst.EndTurn();
     }
 }

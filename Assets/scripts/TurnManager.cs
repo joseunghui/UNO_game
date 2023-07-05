@@ -19,8 +19,8 @@ public class TurnManager : MonoBehaviour
     enum ETurnMode {Random, My, Other}
     WaitForSeconds delay01 = new WaitForSeconds(0.1f);
     WaitForSeconds delay05 = new WaitForSeconds(0.5f);
-
     public static Action<bool> OnAddCard;
+    public static event Action<bool> OnTurnStarted;
 
     void GameSetup(){
         switch(eTurnMode){
@@ -46,6 +46,8 @@ public class TurnManager : MonoBehaviour
             yield return delay01;
             OnAddCard?.Invoke(true);    // 내카드
         }
+        yield return delay01;
+        CardManager.Inst.StartCard();
         StartCoroutine(StartTurnCo());
     }
 
@@ -53,11 +55,9 @@ public class TurnManager : MonoBehaviour
         isLoading = true;
         if(myTurn)
             GameManager.Inst.Notification("내 차례!");
-
-        yield return delay05;
-        //OnAddCard?.Invoke(myTurn);  턴마다 카드 하나 먹는 코드
         yield return delay05;
         isLoading = false;
+        OnTurnStarted?.Invoke(myTurn);
     }
 
     public void EndTurn(){

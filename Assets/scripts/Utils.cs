@@ -21,8 +21,8 @@ public class Utils
 
     public static Vector3 MousePos{
         get{
-            Vector3 result = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-            result.z = -5;
+            Vector3 result = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            result.z = -10;
             return result;
         }
     }

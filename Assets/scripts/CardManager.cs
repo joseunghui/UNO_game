@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using DG.Tweening;
 
 public class CardManager : MonoBehaviour
 {
@@ -11,19 +12,24 @@ public class CardManager : MonoBehaviour
 
     [SerializeField] ItemSO itemSO;
     [SerializeField] GameObject cardPrefab;
+    [SerializeField] GameObject entityPrefab;
     [SerializeField] List<Card> myCards;
     [SerializeField] List<Card> otherCards;
+    [SerializeField] List<Card> putCards;
     [SerializeField] Transform cardSpawnPoint;
     [SerializeField] Transform myCardLeft;
     [SerializeField] Transform myCardRight;
     [SerializeField] Transform otherCardLeft;
     [SerializeField] Transform otherCardRight;
+    [SerializeField] ECardState eCardState;
 
 
     List<Item> itemBuffer;
     Card selectCard;
     bool isMyCardDrag;
     bool OnMyCardArea;
+    enum ECardState {Nothing, CanMouseOver, CanMouseDrag}
+    int myPutCount;
 
     public Item PopItem(){          // 카드 다뽑으면 다시 만드는건데.. 이건 수정 필요함
         if(itemBuffer.Count == 0)
@@ -47,26 +53,41 @@ public class CardManager : MonoBehaviour
             Item temp = itemBuffer[i];
             itemBuffer[i] = itemBuffer[rand];
             itemBuffer[rand] = temp;
-
+            
         }
     }
     void Start()
     {
         SetUpItemBuffer();
         TurnManager.OnAddCard += AddCard;
+        TurnManager.OnTurnStarted += OnTurnStarted;
     }
     void OnDestroy(){
         TurnManager.OnAddCard -= AddCard;
+        TurnManager.OnTurnStarted -= OnTurnStarted;
+    }
+    void OnTurnStarted(bool myTurn){    // 내턴 시작하면 놓을 수 있는 개수 초기화
+        if(myTurn)
+            myPutCount = 0;
     }
     void Update(){
         if(isMyCardDrag)
             CardDrag();
         
         DetectCardArea();
+        SetECardState();
     }
     
+    public void StartCard(){
+        var cardObject = Instantiate(entityPrefab, Vector3.zero, Utils.QI);
+        var card = cardObject.GetComponent<Card>();
+        card.Setup(PopItem(), true);print(card);
+        putCards.Add(card);             
+        EntityManager.Inst.EntityAlignment();
+    }
     void AddCard(bool isMine){
-        var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Utils.QI);
+        var spawnPos = Vector3.zero;
+        var cardObject = Instantiate(cardPrefab, spawnPos, Utils.QI);
         var card = cardObject.GetComponent<Card>();
         card.Setup(PopItem(), isMine);
         (isMine ? myCards : otherCards).Add(card);
@@ -94,7 +115,7 @@ public class CardManager : MonoBehaviour
             var targetCard = targetCards[i];
 
             targetCard.originPRS = originCardPRSs[i];
-            targetCard.MoveTransform(targetCard.originPRS, true, 0.7f);
+            targetCard.MoveTransform(targetCard.originPRS, true, 0.97f);
         }
     }
     List<PRS> RoundAlignment(Transform leftTr, Transform rightTr, int objCount, float height, Vector3 scale){
@@ -125,10 +146,35 @@ public class CardManager : MonoBehaviour
         }
         return results;
     }
+    public bool TryPutCard(bool isMine){
+        if(isMine && myPutCount >= 1)   // 카드 하나 낼 수 있음
+            return false;
+        Card card = selectCard;
+        var spawnPos = Vector3.zero;
+        var targetCards = isMine ? myCards : otherCards;
+        if(EntityManager.Inst.SpawnEntity(isMine, card.item, spawnPos)){
+            putCards.Add(card);
+            targetCards.Remove(card);
+            card.transform.DOKill();
+            DestroyImmediate(card.gameObject);
+            if(isMine){
+                selectCard = null;
+                myPutCount++;
+            }
+            CardAlignment(isMine);
+            return true;
+        } else{
+            targetCards.ForEach(x => x.GetComponent<Order>().SetMostFrontOrder(false)); //origin order 만들기
+            CardAlignment(isMine);
+            return false;
+        }
+    }
     
     
 #region MyCard
     public void CardMouseOver(Card card){
+        if(eCardState == ECardState.Nothing)
+            return;
         selectCard = card;
         EnlargeCard(true, card);
     }
@@ -136,15 +182,31 @@ public class CardManager : MonoBehaviour
         EnlargeCard(false, card);
     }
     public void CardMouseDown(){
+        if(eCardState != ECardState.CanMouseDrag)
+            return;
         isMyCardDrag = true;
+        
     }
     public void CardMouseUp(){
         isMyCardDrag = false;
+        if(eCardState != ECardState.CanMouseDrag)
+            return;
+        if(OnMyCardArea)
+            EntityManager.Inst.RemoveMyEmptyEntity();
+        else
+            TryPutCard(true);
+            TurnManager.Inst.EndTurn();
     }
     void CardDrag(){
-
+        if(eCardState != ECardState.CanMouseDrag)
+            return;
+        
+        if(!OnMyCardArea){
+            selectCard.MoveTransform(new PRS(Utils.MousePos, Utils.QI, selectCard.originPRS.scale), false);
+            EntityManager.Inst.InsertMyEmptyEntity(Utils.MousePos.x);
+        }
     }
-    void DetectCardArea(){  // MyCardArea랑 마우스랑 겹치는 부분이 있으면 true; 실행하면 false만 나옴..
+    void DetectCardArea(){  // MyCardArea랑 마우스랑 겹치는 부분이 있으면 true
         RaycastHit2D[] hits = Physics2D.RaycastAll(Utils.MousePos, Vector3.forward);
         int layer = LayerMask.NameToLayer("MyCardArea");
         OnMyCardArea = Array.Exists(hits, x => x.collider.gameObject.layer == layer);
@@ -157,6 +219,15 @@ public class CardManager : MonoBehaviour
             card.MoveTransform(card.originPRS, false);
         
         card.GetComponent<Order>().SetMostFrontOrder(isEnlarge);
+    }
+    void SetECardState(){
+        if(TurnManager.Inst.isLoading)  // 게임 로딩중일땐 아무것도 안되고
+            eCardState = ECardState.Nothing;
+        else if(!TurnManager.Inst.myTurn || myPutCount == 1)   // 드래그 못하게
+            eCardState = ECardState.CanMouseOver;
+        else if(TurnManager.Inst.myTurn && myPutCount == 0)    // 내 턴일땐 가능
+            eCardState = ECardState.CanMouseDrag;
+        
     }
 #endregion
 }
