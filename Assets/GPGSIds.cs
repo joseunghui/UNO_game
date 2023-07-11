@@ -25,6 +25,8 @@
 public static class GPGSIds
 {
         public const string leaderboard_unogame = "CgkI-ejQzc4LEAIQAw"; // <GPGSID>
+        public const string event_unogame = "CgkI-ejQzc4LEAIQBQ"; // <GPGSID>
+        public const string achievement_unogame = "CgkI-ejQzc4LEAIQBA"; // <GPGSID>
 
 }
 
