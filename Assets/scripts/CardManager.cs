@@ -37,6 +37,7 @@ public class CardManager : MonoBehaviour
         
         Item item = itemBuffer[0];
         itemBuffer.RemoveAt(0);
+        print(item);
         return item;
     }
 
@@ -60,12 +61,12 @@ public class CardManager : MonoBehaviour
     {
         SetUpItemBuffer();
         TurnManager.OnAddCard += AddCard;
-        TurnManager.onStartCard += StartCard;
+        // TurnManager.onStartCard += StartCard;
         TurnManager.OnTurnStarted += OnTurnStarted;
     }
     void OnDestroy(){
         TurnManager.OnAddCard -= AddCard;
-        TurnManager.onStartCard -= StartCard;
+        // TurnManager.onStartCard -= StartCard;
         TurnManager.OnTurnStarted -= OnTurnStarted;
     }
     void OnTurnStarted(bool myTurn){    // 내턴 시작하면 놓을 수 있는 개수 초기화
@@ -79,15 +80,19 @@ public class CardManager : MonoBehaviour
         DetectCardArea();
         SetECardState();
     }
-    
+    /*
     public void StartCard(bool isFront){
+        print(isFront);
         //EntityManager.Inst.SpawnEntity(isFront, card.item, spawnPos)
         var cardObject = Instantiate(entityPrefab, Vector3.zero, Utils.QI);
         var card = cardObject.GetComponent<Card>();
-        card.Setup(PopItem(), isFront);print(card);
+        card.Setup(PopItem(), isFront);
+        print(card);
         putCards.Add(card);
         EntityManager.Inst.EntityAlignment();
     }
+    */
+
     void AddCard(bool isMine){
         var cardObject = Instantiate(cardPrefab, Vector3.zero, Utils.QI);
         var card = cardObject.GetComponent<Card>();
