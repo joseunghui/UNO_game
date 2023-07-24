@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     void Awake() => Inst = this;
 
     [SerializeField] NotificationPanel notificationPanel;
-    private Button btn;
 
     void Start()
     {
@@ -40,10 +39,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void nonePutCard(){
-        if(!TurnManager.Inst.myTurn)
-            btn.GetComponent<Button>().interactable = false;
-        if(TurnManager.Inst.myTurn)
-            TurnManager.OnAddCard?.Invoke(true);
-            TurnManager.Inst.EndTurn();
+        TurnManager.OnAddCard?.Invoke(true);
+        TurnManager.Inst.EndTurn();
     }
 }

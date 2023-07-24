@@ -11,13 +11,18 @@ public class Card : MonoBehaviour
     public Item item;
     public PRS originPRS;
     bool isFront;
+    public AudioSource clickSound;
+
+    public void ClickSound(){
+        clickSound.Play();
+    }
 
     public void Setup(Item item, bool isFront){
         this.item = item;
         this.isFront = isFront;
         
-        if(this.isFront)
-            image.sprite = this.item.sprite;
+        if(this.isFront){
+            image.sprite = this.item.sprite;}
         else
             card.sprite = cardBack;
     }

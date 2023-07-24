@@ -60,10 +60,12 @@ public class CardManager : MonoBehaviour
     {
         SetUpItemBuffer();
         TurnManager.OnAddCard += AddCard;
+        TurnManager.onStartCard += StartCard;
         TurnManager.OnTurnStarted += OnTurnStarted;
     }
     void OnDestroy(){
         TurnManager.OnAddCard -= AddCard;
+        TurnManager.onStartCard -= StartCard;
         TurnManager.OnTurnStarted -= OnTurnStarted;
     }
     void OnTurnStarted(bool myTurn){    // 내턴 시작하면 놓을 수 있는 개수 초기화
@@ -78,16 +80,16 @@ public class CardManager : MonoBehaviour
         SetECardState();
     }
     
-    public void StartCard(){
+    public void StartCard(bool isFront){
+        //EntityManager.Inst.SpawnEntity(isFront, card.item, spawnPos)
         var cardObject = Instantiate(entityPrefab, Vector3.zero, Utils.QI);
         var card = cardObject.GetComponent<Card>();
-        card.Setup(PopItem(), true);print(card);
-        putCards.Add(card);             
+        card.Setup(PopItem(), isFront);print(card);
+        putCards.Add(card);
         EntityManager.Inst.EntityAlignment();
     }
     void AddCard(bool isMine){
-        var spawnPos = Vector3.zero;
-        var cardObject = Instantiate(cardPrefab, spawnPos, Utils.QI);
+        var cardObject = Instantiate(cardPrefab, Vector3.zero, Utils.QI);
         var card = cardObject.GetComponent<Card>();
         card.Setup(PopItem(), isMine);
         (isMine ? myCards : otherCards).Add(card);
@@ -191,8 +193,6 @@ public class CardManager : MonoBehaviour
         isMyCardDrag = false;
         if(eCardState != ECardState.CanMouseDrag)
             return;
-        if(OnMyCardArea)
-            EntityManager.Inst.RemoveMyEmptyEntity();
         else
             TryPutCard(true);
             TurnManager.Inst.EndTurn();
@@ -203,7 +203,6 @@ public class CardManager : MonoBehaviour
         
         if(!OnMyCardArea){
             selectCard.MoveTransform(new PRS(Utils.MousePos, Utils.QI, selectCard.originPRS.scale), false);
-            EntityManager.Inst.InsertMyEmptyEntity(Utils.MousePos.x);
         }
     }
     void DetectCardArea(){  // MyCardArea랑 마우스랑 겹치는 부분이 있으면 true

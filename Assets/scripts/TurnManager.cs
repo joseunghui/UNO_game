@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class TurnManager : MonoBehaviour
@@ -16,11 +17,14 @@ public class TurnManager : MonoBehaviour
     [Header("Properties")]
     public bool isLoading; // 게임 끝나면 true로 해서 클릭 방지
     public bool myTurn;
+    public Button btn;
     enum ETurnMode {Random, My, Other}
     WaitForSeconds delay01 = new WaitForSeconds(0.1f);
     WaitForSeconds delay05 = new WaitForSeconds(0.5f);
     public static Action<bool> OnAddCard;
+    public static Action<bool> onStartCard;
     public static event Action<bool> OnTurnStarted;
+    public AudioSource startSound;
 
     void GameSetup(){
         switch(eTurnMode){
@@ -39,6 +43,7 @@ public class TurnManager : MonoBehaviour
     public IEnumerator StartGameCo(){
         GameSetup();
         isLoading = true;
+        startSound.Play();
         
         for(int i=0; i<startCardCount; i++){
             yield return delay01;
@@ -47,12 +52,15 @@ public class TurnManager : MonoBehaviour
             OnAddCard?.Invoke(true);    // 내카드
         }
         yield return delay01;
-        CardManager.Inst.StartCard();
+        onStartCard?.Invoke(true);
         StartCoroutine(StartTurnCo());
     }
 
     IEnumerator StartTurnCo(){
         isLoading = true;
+        btn.interactable = myTurn;
+        ColorBlock btnColor = btn.colors;
+        btnColor.normalColor = myTurn ? new Color32(255,234,0,172) : new Color32(55,55,55,255);
         if(myTurn)
             GameManager.Inst.Notification("내 차례!");
         yield return delay05;
