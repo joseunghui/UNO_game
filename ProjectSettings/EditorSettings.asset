@@ -7,8 +7,8 @@ EditorSettings:
   m_SerializationMode: 2
   m_LineEndingsForNewScripts: 0
   m_DefaultBehaviorMode: 1
-  m_PrefabRegularEnvironment: {fileID: 0}
-  m_PrefabUIEnvironment: {fileID: 0}
+  m_PrefabRegularEnvironment: {fileID: 102900000, guid: 9cb40339641614bb4b5b5e0cc8e55c63, type: 3}
+  m_PrefabUIEnvironment: {fileID: 102900000, guid: 9cb40339641614bb4b5b5e0cc8e55c63, type: 3}
   m_SpritePackerMode: 4
   m_SpritePackerPaddingPower: 1
   m_Bc7TextureCompressor: 0
@@ -26,7 +26,7 @@ EditorSettings:
   m_EnterPlayModeOptionsEnabled: 1
   m_EnterPlayModeOptions: 3
   m_GameObjectNamingDigits: 1
-  m_GameObjectNamingScheme: 0
+  m_GameObjectNamingScheme: 2
   m_AssetNamingUsesSpace: 1
   m_UseLegacyProbeSampleCount: 0
   m_SerializeInlineMappingsOnOneLine: 1
