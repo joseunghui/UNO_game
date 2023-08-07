@@ -169,3 +169,15 @@ MonoBehaviour:
   - num: 12
     color: blue
     sprite: {fileID: -1065391010, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 100
+    color: black
+    sprite: {fileID: -659043117, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 101
+    color: black
+    sprite: {fileID: -163008857, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 200
+    color: black
+    sprite: {fileID: 348909702, guid: bdd135c182633483aa95b4adab683016, type: 3}
+  - num: 201
+    color: black
+    sprite: {fileID: 1240053956, guid: bdd135c182633483aa95b4adab683016, type: 3}

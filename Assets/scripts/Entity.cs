@@ -11,8 +11,7 @@ public class Entity : MonoBehaviour
 
     public int num;
     public string color;
-    public bool isMine;
-    public bool isBossOrEmpty;
+    public Sprite sprite;
     public Vector3 originPos;
 
     public void Setup(Item item){
