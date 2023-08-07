@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     void Awake() => Inst = this;
 
     [SerializeField] NotificationPanel notificationPanel;
+    public Button cardbtn;
+    public Button turnbtn;
 
     void Start()
     {
@@ -40,6 +42,11 @@ public class GameManager : MonoBehaviour
 
     public void nonePutCard(){
         TurnManager.OnAddCard?.Invoke(true);
-        TurnManager.Inst.EndTurn();
+        cardbtn.interactable = false;
+        ColorBlock btnColor = cardbtn.colors;
+        btnColor.normalColor = new Color32(55,55,55,255);
+        turnbtn.interactable = true;
+        ColorBlock btnColor1 = turnbtn.colors;
+        btnColor1.normalColor = new Color32(255,234,0,172);
     }
 }
