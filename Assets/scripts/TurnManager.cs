@@ -42,6 +42,10 @@ public class TurnManager : MonoBehaviour
     }
 
     public IEnumerator StartGameCo(){
+        turnbtn.interactable = false;
+        ColorBlock btnColor = turnbtn.colors;
+        btnColor.normalColor = new Color32(55,55,55,255);
+
         GameSetup();
         isLoading = true;
         startSound.Play();
