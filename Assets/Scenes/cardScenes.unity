@@ -412,8 +412,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155763467}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -766.77, y: -359.94, z: 0}
-  m_LocalScale: {x: 1.7, y: 1.7, z: 1.3333334}
+  m_LocalPosition: {x: -775.31006, y: -359.83, z: 0}
+  m_LocalScale: {x: 1.9, y: 1.9, z: 1.3333334}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1176750043}
@@ -528,8 +528,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 340513400}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -770.3894, y: -361.14, z: 0}
-  m_LocalScale: {x: 7.700398, y: 12.6268215, z: 1.3333334}
+  m_LocalPosition: {x: -782.3, y: -360.7, z: 0}
+  m_LocalScale: {x: 9.10128, y: 15.910338, z: 1.3333334}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1176750043}
@@ -635,7 +635,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -573.74, y: 41.999992}
+  m_AnchoredPosition: {x: -573.74, y: 171}
   m_SizeDelta: {x: 247.47, y: 86.0373}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &372037191
@@ -1323,7 +1323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eTurnMode: 0
-  startCardCount: 55
+  startCardCount: 5
   isLoading: 0
   myTurn: 0
   cardbtn: {fileID: 372037191}
@@ -1740,7 +1740,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -573.74, y: -54}
+  m_AnchoredPosition: {x: -573.74, y: 75}
   m_SizeDelta: {x: 247.47, y: 86.0373}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1651634481
