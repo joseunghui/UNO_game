@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        StartGame();
+        StartGame();    // 나중에 버튼으로 바꿔서 호출하는 시점에 게임이 시작되도록~
     }
     void Update(){
 #if UNITY_EDITOR    // 유니티 에디터일 경우에만 치트 호출

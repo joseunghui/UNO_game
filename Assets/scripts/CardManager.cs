@@ -32,37 +32,41 @@ public class CardManager : MonoBehaviour
     int myPutCount;
 
     public Item PopItem(){  // 수정 필요
-        if(itemBuffer.Count == 0)
-            SetUpItemBuffer();
-        /*if(itemBuffer.Count == 0){
+        
+        if(itemBuffer.Count == 0){
             items = EntityManager.Inst.items;
             for(int i = 0; i<items.Count-1; i++){
-                itemBuffer.Add(items[i]);
-                items.Remove(items[i]);
+                itemBuffer.Add(items[i]);     
             }
-        }*/
-        
+            for(int i = items.Count-2; i >= 0; i--){
+                EntityManager.Inst.items.Remove(items[i]);
+            }
+            MixCard();
+        }
         Item item = itemBuffer[0];
         itemBuffer.RemoveAt(0);
         return item;
     }
 
     void SetUpItemBuffer(){
-        itemBuffer = new List<Item>(100);
+        itemBuffer = new List<Item>(150);
         for(int i = 0; i<itemSO.items.Length; i++){ // 카드 갯수만큼 반복
             Item item = itemSO.items[i];
             for(int j=0; j<2; j++)                  // 카드 같은거 두개씩이니 두번 반복
                 itemBuffer.Add(item);
-        }
-        
+        } 
+        MixCard();
+    }
+
+    void MixCard(){
         for(int i=0; i<itemBuffer.Count; i++){      // 카드 섞기
             int rand = Random.Range(i, itemBuffer.Count);
             Item temp = itemBuffer[i];
             itemBuffer[i] = itemBuffer[rand];
-            itemBuffer[rand] = temp;
-            
+            itemBuffer[rand] = temp; 
         }
     }
+
     void Start()
     {
         SetUpItemBuffer();
@@ -111,7 +115,7 @@ public class CardManager : MonoBehaviour
     void CardAlignment(bool isMine){    // 카드 정렬
         List<PRS> originCardPRSs = new List<PRS>();
         if(isMine)
-            originCardPRSs = RoundAlignment(myCardLeft, myCardRight, myCards.Count, 0.5f, Vector3.one * 1.4f);
+            originCardPRSs = RoundAlignment(myCardLeft, myCardRight, myCards.Count, 0.5f, Vector3.one * 1.2f);
         else
             originCardPRSs = RoundAlignment(otherCardLeft, otherCardRight, otherCards.Count, -0.5f, Vector3.one);
 
@@ -230,7 +234,7 @@ public class CardManager : MonoBehaviour
     void EnlargeCard(bool isEnlarge, Card card){
         if(isEnlarge){
             Vector3 enlargePos = new Vector3(card.originPRS.pos.x, -2.1f, -5f);   // x는 그대로 y 올리고 z는 앞으로 뻄
-            card.MoveTransform(new PRS(enlargePos, Utils.QI, Vector3.one * 1.6f), false);
+            card.MoveTransform(new PRS(enlargePos, Utils.QI, Vector3.one * 1.4f), false);
         } else
             card.MoveTransform(card.originPRS, false);
         
