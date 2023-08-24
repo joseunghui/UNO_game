@@ -1,4 +1,4 @@
-using System;
+ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,8 +31,7 @@ public class CardManager : MonoBehaviour
     enum ECardState {Nothing, CanMouseOver, CanMouseDrag}
     int myPutCount;
 
-    public Item PopItem(){  // 수정 필요
-        
+    public Item PopItem(){
         if(itemBuffer.Count == 0){
             items = EntityManager.Inst.items;
             for(int i = 0; i<items.Count-1; i++){
@@ -167,7 +166,7 @@ public class CardManager : MonoBehaviour
         var targetCards = isMine ? myCards : otherCards;
         bool result = false;
         
-        if(card.item.color == item.color || card.item.num == item.num){
+        if(card.item.color == item.color || card.item.num == item.num){ // 카드 낼 때 조건
             EntityManager.Inst.SpawnEntity(isMine, card.item, spawnPos);
             targetCards.Remove(card);
             card.transform.DOKill();
