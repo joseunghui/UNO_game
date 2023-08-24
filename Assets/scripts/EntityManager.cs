@@ -18,7 +18,7 @@ public class EntityManager : MonoBehaviour
             var targetEntity = targetEntities[i];
             targetEntity.originPos = new Vector3(0, 0, 0);
             targetEntity.MoveTransform(targetEntity.originPos, true, 0.5f);
-            targetEntity.GetComponent<Order>()?.SetOriginOrder(i);           // 순서 정렬; 수정 필요
+            targetEntity.GetComponent<Order>()?.SetOriginOrder(i);
             
         }
         
