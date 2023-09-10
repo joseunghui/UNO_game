@@ -101,6 +101,11 @@ Library: lib_burst_generated
 --compilation-defines=NET_STANDARD_2_1
 --compilation-defines=NETSTANDARD
 --compilation-defines=NETSTANDARD2_1
+--compilation-defines=DEVELOPMENT_BUILD
+--compilation-defines=ENABLE_PROFILER
+--compilation-defines=DEBUG
+--compilation-defines=TRACE
+--compilation-defines=UNITY_ASSERTIONS
 --compilation-defines=ENABLE_CUSTOM_RENDER_TEXTURE
 --compilation-defines=ENABLE_DIRECTOR
 --compilation-defines=ENABLE_LOCALIZATION
@@ -126,6 +131,7 @@ Library: lib_burst_generated
 --compilation-defines=TIMELINE_FRAMEACCURATE
 --compilation-defines=ENABLE_SPRITESHAPE_BURST
 --generate-link-xml=Temp/burst.link.xml
+--debug=Full
 --output=/Users/joseunghui/gameProject/UNO_game/Temp/StagingArea/tempburstlibs/arm64-v8a/lib_burst_generated
 --root-assembly=/Users/joseunghui/gameProject/UNO_game/Temp/StagingArea/Data/Managed/UnityEngine.UI.dll
 --root-assembly=/Users/joseunghui/gameProject/UNO_game/Temp/StagingArea/Data/Managed/Unity.VisualScripting.Flow.dll
