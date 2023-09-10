@@ -41,24 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Background
+  - name: background
     uniqueID: 1332718669
-    locked: 0
-  - name: Table
-    uniqueID: 4288884961
-    locked: 0
-  - name: Objects
-    uniqueID: 2314586611
     locked: 0
   - name: UISprite
     uniqueID: 2842748245
     locked: 0
-  - name: Hand
+  - name: hand
     uniqueID: 2751083679
     locked: 0
-  - name: Card
+  - name: card
     uniqueID: 2419523145
-    locked: 0
-  - name: Effects
-    uniqueID: 2915525401
     locked: 0
