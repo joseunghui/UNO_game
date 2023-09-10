@@ -17,7 +17,8 @@ public class TurnManager : MonoBehaviour
     [Header("Properties")]
     public bool isLoading; // 게임 끝나면 true로 해서 클릭 방지
     public bool myTurn;
-    public Button btn;
+    public Button cardbtn;
+    public Button turnbtn;
     enum ETurnMode {Random, My, Other}
     WaitForSeconds delay01 = new WaitForSeconds(0.1f);
     WaitForSeconds delay05 = new WaitForSeconds(0.5f);
@@ -41,6 +42,10 @@ public class TurnManager : MonoBehaviour
     }
 
     public IEnumerator StartGameCo(){
+        turnbtn.interactable = false;
+        ColorBlock btnColor = turnbtn.colors;
+        btnColor.normalColor = new Color32(55,55,55,255);
+
         GameSetup();
         isLoading = true;
         startSound.Play();
@@ -58,8 +63,8 @@ public class TurnManager : MonoBehaviour
 
     IEnumerator StartTurnCo(){
         isLoading = true;
-        btn.interactable = myTurn;
-        ColorBlock btnColor = btn.colors;
+        cardbtn.interactable = myTurn;
+        ColorBlock btnColor = cardbtn.colors;
         btnColor.normalColor = myTurn ? new Color32(255,234,0,172) : new Color32(55,55,55,255);
         if(myTurn)
             GameManager.Inst.Notification("내 차례!");
@@ -71,5 +76,8 @@ public class TurnManager : MonoBehaviour
     public void EndTurn(){
         myTurn = !myTurn;
         StartCoroutine(StartTurnCo());
+        turnbtn.interactable = false;
+        ColorBlock btnColor1 = turnbtn.colors;
+        btnColor1.normalColor = new Color32(55,55,55,255);
     }
 }

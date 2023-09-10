@@ -10,10 +10,12 @@ public class GameManager : MonoBehaviour
     void Awake() => Inst = this;
 
     [SerializeField] NotificationPanel notificationPanel;
+    public Button cardbtn;
+    public Button turnbtn;
 
     void Start()
     {
-        StartGame();
+        StartGame();    // 나중에 버튼으로 바꿔서 호출하는 시점에 게임이 시작되도록~
     }
     void Update(){
 #if UNITY_EDITOR    // 유니티 에디터일 경우에만 치트 호출
@@ -40,6 +42,11 @@ public class GameManager : MonoBehaviour
 
     public void nonePutCard(){
         TurnManager.OnAddCard?.Invoke(true);
-        TurnManager.Inst.EndTurn();
+        cardbtn.interactable = false;
+        ColorBlock btnColor = cardbtn.colors;
+        btnColor.normalColor = new Color32(55,55,55,255);
+        turnbtn.interactable = true;
+        ColorBlock btnColor1 = turnbtn.colors;
+        btnColor1.normalColor = new Color32(255,234,0,172);
     }
 }

@@ -1,4 +1,4 @@
-using System;
+ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +15,6 @@ public class CardManager : MonoBehaviour
     [SerializeField] GameObject entityPrefab;
     [SerializeField] List<Card> myCards;
     [SerializeField] List<Card> otherCards;
-    [SerializeField] List<Card> putCards;
     [SerializeField] Transform cardSpawnPoint;
     [SerializeField] Transform myCardLeft;
     [SerializeField] Transform myCardRight;
@@ -25,49 +24,60 @@ public class CardManager : MonoBehaviour
 
 
     List<Item> itemBuffer;
+    List<Item> items;
     Card selectCard;
     bool isMyCardDrag;
     bool OnMyCardArea;
     enum ECardState {Nothing, CanMouseOver, CanMouseDrag}
     int myPutCount;
 
-    public Item PopItem(){          // 카드 다뽑으면 다시 만드는건데.. 이건 수정 필요함
-        if(itemBuffer.Count == 0)
-            SetUpItemBuffer();
-        
+    public Item PopItem(){
+        if(itemBuffer.Count == 0){
+            items = EntityManager.Inst.items;
+            for(int i = 0; i<items.Count-1; i++){
+                itemBuffer.Add(items[i]);     
+            }
+            for(int i = items.Count-2; i >= 0; i--){
+                EntityManager.Inst.items.Remove(items[i]);
+            }
+            MixCard();
+        }
         Item item = itemBuffer[0];
         itemBuffer.RemoveAt(0);
-        print(item);
         return item;
     }
 
     void SetUpItemBuffer(){
-        itemBuffer = new List<Item>(100);
+        itemBuffer = new List<Item>(150);
         for(int i = 0; i<itemSO.items.Length; i++){ // 카드 갯수만큼 반복
             Item item = itemSO.items[i];
             for(int j=0; j<2; j++)                  // 카드 같은거 두개씩이니 두번 반복
                 itemBuffer.Add(item);
-        }
-        
+        } 
+        MixCard();
+    }
+
+    void MixCard(){
         for(int i=0; i<itemBuffer.Count; i++){      // 카드 섞기
             int rand = Random.Range(i, itemBuffer.Count);
             Item temp = itemBuffer[i];
             itemBuffer[i] = itemBuffer[rand];
-            itemBuffer[rand] = temp;
-            
+            itemBuffer[rand] = temp; 
         }
     }
+
     void Start()
     {
         SetUpItemBuffer();
         TurnManager.OnAddCard += AddCard;
-        // TurnManager.onStartCard += StartCard;
         TurnManager.OnTurnStarted += OnTurnStarted;
+        TurnManager.onStartCard += StartCard;
     }
     void OnDestroy(){
         TurnManager.OnAddCard -= AddCard;
-        // TurnManager.onStartCard -= StartCard;
         TurnManager.OnTurnStarted -= OnTurnStarted;
+        TurnManager.onStartCard -= StartCard;
+
     }
     void OnTurnStarted(bool myTurn){    // 내턴 시작하면 놓을 수 있는 개수 초기화
         if(myTurn)
@@ -80,21 +90,13 @@ public class CardManager : MonoBehaviour
         DetectCardArea();
         SetECardState();
     }
-    /*
-    public void StartCard(bool isFront){
-        print(isFront);
-        //EntityManager.Inst.SpawnEntity(isFront, card.item, spawnPos)
-        var cardObject = Instantiate(entityPrefab, Vector3.zero, Utils.QI);
-        var card = cardObject.GetComponent<Card>();
-        card.Setup(PopItem(), isFront);
-        print(card);
-        putCards.Add(card);
-        EntityManager.Inst.EntityAlignment();
+    
+    void StartCard(bool isFront){
+        EntityManager.Inst.SpawnEntity(isFront, PopItem(), Vector3.zero);
     }
-    */
 
     void AddCard(bool isMine){
-        var cardObject = Instantiate(cardPrefab, Vector3.zero, Utils.QI);
+        var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Utils.QI);
         var card = cardObject.GetComponent<Card>();
         card.Setup(PopItem(), isMine);
         (isMine ? myCards : otherCards).Add(card);
@@ -112,7 +114,7 @@ public class CardManager : MonoBehaviour
     void CardAlignment(bool isMine){    // 카드 정렬
         List<PRS> originCardPRSs = new List<PRS>();
         if(isMine)
-            originCardPRSs = RoundAlignment(myCardLeft, myCardRight, myCards.Count, 0.5f, Vector3.one * 1.4f);
+            originCardPRSs = RoundAlignment(myCardLeft, myCardRight, myCards.Count, 0.5f, Vector3.one * 1.2f);
         else
             originCardPRSs = RoundAlignment(otherCardLeft, otherCardRight, otherCards.Count, -0.5f, Vector3.one);
 
@@ -156,11 +158,16 @@ public class CardManager : MonoBehaviour
     public bool TryPutCard(bool isMine){
         if(isMine && myPutCount >= 1)   // 카드 하나 낼 수 있음
             return false;
+
         Card card = selectCard;
+        items = EntityManager.Inst.items;
+        Item item = items[items.Count-1];
         var spawnPos = Vector3.zero;
         var targetCards = isMine ? myCards : otherCards;
-        if(EntityManager.Inst.SpawnEntity(isMine, card.item, spawnPos)){
-            putCards.Add(card);
+        bool result = false;
+        
+        if(card.item.color == item.color || card.item.num == item.num){ // 카드 낼 때 조건
+            EntityManager.Inst.SpawnEntity(isMine, card.item, spawnPos);
             targetCards.Remove(card);
             card.transform.DOKill();
             DestroyImmediate(card.gameObject);
@@ -169,12 +176,13 @@ public class CardManager : MonoBehaviour
                 myPutCount++;
             }
             CardAlignment(isMine);
-            return true;
-        } else{
+            result = true; 
+        }else{
             targetCards.ForEach(x => x.GetComponent<Order>().SetMostFrontOrder(false)); //origin order 만들기
             CardAlignment(isMine);
-            return false;
+            result = false;
         }
+        return result;
     }
     
     
@@ -198,9 +206,15 @@ public class CardManager : MonoBehaviour
         isMyCardDrag = false;
         if(eCardState != ECardState.CanMouseDrag)
             return;
-        else
-            TryPutCard(true);
-            TurnManager.Inst.EndTurn();
+        if(OnMyCardArea)
+            EntityManager.Inst.EntityAlignment();
+        else{
+            if(TryPutCard(true)){
+                TurnManager.Inst.EndTurn();
+            }
+        }
+            
+            
     }
     void CardDrag(){
         if(eCardState != ECardState.CanMouseDrag)
@@ -208,6 +222,7 @@ public class CardManager : MonoBehaviour
         
         if(!OnMyCardArea){
             selectCard.MoveTransform(new PRS(Utils.MousePos, Utils.QI, selectCard.originPRS.scale), false);
+            EntityManager.Inst.EntityAlignment();
         }
     }
     void DetectCardArea(){  // MyCardArea랑 마우스랑 겹치는 부분이 있으면 true
@@ -218,7 +233,7 @@ public class CardManager : MonoBehaviour
     void EnlargeCard(bool isEnlarge, Card card){
         if(isEnlarge){
             Vector3 enlargePos = new Vector3(card.originPRS.pos.x, -2.1f, -5f);   // x는 그대로 y 올리고 z는 앞으로 뻄
-            card.MoveTransform(new PRS(enlargePos, Utils.QI, Vector3.one * 1.6f), false);
+            card.MoveTransform(new PRS(enlargePos, Utils.QI, Vector3.one * 1.4f), false);
         } else
             card.MoveTransform(card.originPRS, false);
         
