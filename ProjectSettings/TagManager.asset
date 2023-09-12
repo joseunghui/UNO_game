@@ -47,9 +47,6 @@ TagManager:
   - name: UISprite
     uniqueID: 2842748245
     locked: 0
-  - name: hand
+  - name: Card
     uniqueID: 2751083679
-    locked: 0
-  - name: card
-    uniqueID: 2419523145
     locked: 0

@@ -1,4 +1,4 @@
- using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -168,6 +168,25 @@ public class CardManager : MonoBehaviour
         
         if(card.item.color == item.color || card.item.num == item.num){ // 카드 낼 때 조건
             EntityManager.Inst.SpawnEntity(isMine, card.item, spawnPos);
+
+            // 특수카드 
+            //if () // 드로우 4
+            //{
+
+            //}
+            //else if () // 드로우 2
+            //{
+
+            //}
+            //else if () // 리버스
+            //{
+
+            //}
+            //else if () // 스킵
+            //{
+
+            //}
+
             targetCards.Remove(card);
             card.transform.DOKill();
             DestroyImmediate(card.gameObject);
