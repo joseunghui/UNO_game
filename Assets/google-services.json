@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "777150041646",
+    "project_id": "uno-14789890",
+    "storage_bucket": "uno-14789890.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777150041646:android:7b9e87ecb8bda716ba59bf",
+        "android_client_info": {
+          "package_name": "com.game.UNO_game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "777150041646-smvkkupp9imbalit1rkoj242d8ipjpb1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpXWaYtfmMud0jyRGB7uJRbw9Po7-H3os"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "777150041646-smvkkupp9imbalit1rkoj242d8ipjpb1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

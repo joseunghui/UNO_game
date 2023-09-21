@@ -8,6 +8,9 @@
         maven {
             url (unityProjectPath + "/Assets/GeneratedLocalRepo/Firebase/m2repository") // Assets/Firebase/Editor/AnalyticsDependencies.xml:18, Assets/Firebase/Editor/AppDependencies.xml:22, Assets/Firebase/Editor/AuthDependencies.xml:20
         }
+        maven {
+            url (unityProjectPath + "/Assets/GeneratedLocalRepo/GooglePlayGames/com.google.play.games/Editor/m2repository") // Assets/GooglePlayGames/com.google.play.games/Editor/GooglePlayGamesPluginDependencies.xml:11
+        }
         mavenLocal()
         mavenCentral()
     }
@@ -26,6 +29,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:22.1.1' // Assets/Firebase/Editor/AuthDependencies.xml:13
     implementation 'com.google.firebase:firebase-auth-unity:11.4.0' // Assets/Firebase/Editor/AuthDependencies.xml:20
     implementation 'com.google.firebase:firebase-common:20.3.3' // Assets/Firebase/Editor/AppDependencies.xml:13
+    implementation 'com.google.games:gpgs-plugin-support:0.11.01' // Assets/GooglePlayGames/com.google.play.games/Editor/GooglePlayGamesPluginDependencies.xml:11
 // Android Resolver Dependencies End
 **DEPS**}
 

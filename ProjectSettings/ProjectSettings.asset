@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: scy
+  companyName: game
   productName: UNO_game
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -250,8 +250,8 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 2800000, guid: 98e69eba6ae10459895febd007e5b67c, type: 3}
-  AndroidKeystoreName: '{inproject}: user.keystore'
-  AndroidKeyaliasName: uno
+  AndroidKeystoreName: '{inproject}: uno_key.keystore'
+  AndroidKeyaliasName: uno_key
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
   AndroidIsGame: 1
