@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using GooglePlayGames; // PlayGamesPlatform 인스턴스를 활성화
-using GooglePlayGames.BasicApi; // API 를 사용하기 위한 데이터를 초기화
+//using GooglePlayGames; // PlayGamesPlatform 인스턴스를 활성화
+//using GooglePlayGames.BasicApi; // API 를 사용하기 위한 데이터를 초기화
 
 public class AuthManager : MonoBehaviour
 {
@@ -15,13 +15,13 @@ public class AuthManager : MonoBehaviour
     {
         // 객체 초기화 
         // 초기화 함수, 인스턴스를 만드는 역할
-        PlayGamesPlatform.InitializeInstance(new PlayGamesClientConfiguration.Builder().Build());
+        //PlayGamesPlatform.InitializeInstance(new PlayGamesClientConfiguration.Builder().Build());
 
         // 디버그용 함수
-        PlayGamesPlatform.DebugLogEnabled = true;
+        //PlayGamesPlatform.DebugLogEnabled = true;
 
         // 구글 관련 서비스 활성화
-        PlayGamesPlatform.Activate();
+        //PlayGamesPlatform.Activate();
 
         // 로그인 여부 띄우기
         text.text = "로그인 후 이용해주세요.";
@@ -52,7 +52,7 @@ public class AuthManager : MonoBehaviour
 
     public void logOut()
     {
-        ((PlayGamesPlatform)Social.Active).SignOut();
+        //((PlayGamesPlatform)Social.Active).SignOut();
         text.text = "로그아웃...";
     }
 
