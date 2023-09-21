@@ -155,7 +155,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: scy.firebase.uno
+    Android: com.game.UNO_game
     Standalone: com.DefaultCompany.2DProject
   buildNumber:
     Standalone: 0
