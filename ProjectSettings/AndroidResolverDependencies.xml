@@ -1,21 +1,8 @@
 <dependencies>
   <packages>
-    <package>com.google.android.gms:play-services-base:18.2.0</package>
-    <package>com.google.firebase:firebase-analytics:21.2.2</package>
-    <package>com.google.firebase:firebase-analytics-unity:11.0.0</package>
-    <package>com.google.firebase:firebase-app-unity:11.0.0</package>
-    <package>com.google.firebase:firebase-auth:22.0.0</package>
-    <package>com.google.firebase:firebase-auth-unity:11.0.0</package>
-    <package>com.google.firebase:firebase-common:20.3.2</package>
     <package>com.google.games:gpgs-plugin-support:0.10.14</package>
   </packages>
   <files>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/11.0.0/firebase-analytics-unity-11.0.0.aar</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/11.0.0/firebase-analytics-unity-11.0.0.pom</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-app-unity/11.0.0/firebase-app-unity-11.0.0.aar</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-app-unity/11.0.0/firebase-app-unity-11.0.0.pom</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-auth-unity/11.0.0/firebase-auth-unity-11.0.0.aar</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-auth-unity/11.0.0/firebase-auth-unity-11.0.0.pom</file>
     <file>Assets/GeneratedLocalRepo/GooglePlayGames/Editor/m2repository/com/google/games/gpgs-plugin-support/0.10.14/gpgs-plugin-support-0.10.14.aar</file>
     <file>Assets/GeneratedLocalRepo/GooglePlayGames/Editor/m2repository/com/google/games/gpgs-plugin-support/0.10.14/gpgs-plugin-support-0.10.14.pom</file>
   </files>
