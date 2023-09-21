@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Uno/1Lobby/Scenes/mainScenes.unity
     guid: 9cb40339641614bb4b5b5e0cc8e55c63
   - enabled: 1
-    path: Assets/Uno/2Game/Scenes/cardScenes.unity
+    path: Assets/Uno/2Game/Scenes/CardScenes.unity
     guid: c9326d9310d43fc4fa7314cbbb2ca22b
   - enabled: 1
     path: Assets/Uno/1Lobby/Scenes/settingScenes.unity

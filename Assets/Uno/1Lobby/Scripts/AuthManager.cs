@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
-//using GooglePlayGames; // PlayGamesPlatform 인스턴스를 활성화
-//using GooglePlayGames.BasicApi; // API 를 사용하기 위한 데이터를 초기화
+using GooglePlayGames; // PlayGamesPlatform 인스턴스를 활성화
+using GooglePlayGames.BasicApi; // API 를 사용하기 위한 데이터를 초기화
+using UnityEngine.SocialPlatforms;
+
+
 
 public class AuthManager : MonoBehaviour
 {
@@ -13,18 +17,18 @@ public class AuthManager : MonoBehaviour
 
     private void Awake()
     {
-        // 객체 초기화 
-        // 초기화 함수, 인스턴스를 만드는 역할
-        //PlayGamesPlatform.InitializeInstance(new PlayGamesClientConfiguration.Builder().Build());
-
         // 디버그용 함수
-        //PlayGamesPlatform.DebugLogEnabled = true;
+        PlayGamesPlatform.DebugLogEnabled = true;
 
         // 구글 관련 서비스 활성화
-        //PlayGamesPlatform.Activate();
+        PlayGamesPlatform.Activate();
 
-        // 로그인 여부 띄우기
-        text.text = "로그인 후 이용해주세요.";
+
+        if (Social.localUser.authenticated) // local에 연결된 계정이 있는지 확인 -> 있으면 메인 게임으로 이동!
+        {
+            SceneManager.LoadScene(1); // 게임화면 이동
+        }
+        else text.text = "로그인 후 이용해주세요."; // 로그인 여부 띄우기
     }
 
     public void loginUserBtn()
@@ -33,27 +37,23 @@ public class AuthManager : MonoBehaviour
         if (!Social.localUser.authenticated)
         {
             // 계정 인증
-            Social.localUser.Authenticate((bool isSuccess) => 
+            Social.localUser.Authenticate((bool isSuccess) =>
             {
-                if(isSuccess) 
+
+                if (isSuccess)
                 {
+
                     Debug.Log("Login Success!");
                     Debug.Log("Success : " + Social.localUser.userName);
                     text.text = Social.localUser.userName + "님 환영합니다!";
                 }
-                else 
+                else
                 {
                     Debug.Log("Login Fail!");
                     text.text = "로그인에 실패하였습니다.";
                 }
             });
         }
-    }
-
-    public void logOut()
-    {
-        //((PlayGamesPlatform)Social.Active).SignOut();
-        text.text = "로그아웃...";
     }
 
 }
