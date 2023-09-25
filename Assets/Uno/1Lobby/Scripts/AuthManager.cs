@@ -24,14 +24,14 @@ public class AuthManager : MonoBehaviour
         PlayGamesPlatform.Activate();
 
 
-        if (Social.localUser.authenticated) // local에 연결된 계정이 있는지 확인 -> 있으면 메인 게임으로 이동!
+        if (Social.localUser.authenticated) // local에 연결된 계정이 있는지 확인 -> 게임으로 이동!
         {
             SceneManager.LoadScene(1); // 게임화면 이동
         }
-        else text.text = "로그인 후 이용해주세요."; // 로그인 여부 띄우기
+        else AccessGame(); // 없으면 계정 인증 시작하기
     }
 
-    public void loginUserBtn()
+    public void AccessGame()
     {
         // 로그인 단계 : local에 연결된 계정이 있는지 확인 -> 안되었다면, 인증 단계 시작!
         if (!Social.localUser.authenticated)
