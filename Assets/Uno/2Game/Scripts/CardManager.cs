@@ -172,15 +172,10 @@ public class CardManager : MonoBehaviour
         // 특수카드 중 색깔 블랙 (4드로우, 색깔 변경)
         if (card.item.color.Equals("black"))
         {
-            Debug.Log("특수카드 냈음");
-            Debug.Log(card.item.color + ", " + card.item.num);
-
             EntityManager.Inst.SpawnEntity(isMine, card.item, spawnPos);
-
             targetCards.Remove(card);
             card.transform.DOKill();
             DestroyImmediate(card.gameObject);
-
             if (isMine)
             {
                 selectCard = null;
@@ -189,16 +184,16 @@ public class CardManager : MonoBehaviour
             CardAlignment(isMine);
 
             // 색깔 바꾸기 카드 낸 경우
-            if (item.num == 101)
+            if (card.item.num == 101 || card.item.num == 100)
             {
                 Debug.Log("색깔 변경!");
             }
-
-            if (item.num == 200 || item.num == 201)
+            else if (card.item.num == 200 || card.item.num == 201)
             {
-                // 상대 카드 추가
-                AddCard(false);
-                AddCard(false);
+                for (int i=0; i<4; i++)
+                {
+                    AddCard(false);
+                }
                 CardAlignment(false);
             }
             result = true;
@@ -225,6 +220,13 @@ public class CardManager : MonoBehaviour
                     OnTurnStarted(isMine);
                     return false;
                 }
+                // +2 드로우 카드 (색깔 구분 O)
+                else if (card.item.num == 12)
+                {
+                    AddCard(false);
+                    AddCard(false);
+                    CardAlignment(false);
+                }
                 result = true;
             } else {
                 targetCards.ForEach(x => x.GetComponent<Order>().SetMostFrontOrder(false)); //origin order 만들기
@@ -235,7 +237,6 @@ public class CardManager : MonoBehaviour
         return result;
     }
     #endregion
-
     #region 상대방이 카드 내는 과정
     public void OtherTryPutCard(bool isMine)
     {
