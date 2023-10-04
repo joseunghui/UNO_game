@@ -226,6 +226,7 @@ public class CardManager : MonoBehaviour
                     AddCard(false);
                     AddCard(false);
                     CardAlignment(false);
+                    result = true;
                 }
                 result = true;
             } else {
