@@ -19,6 +19,7 @@ public class TurnManager : MonoBehaviour
     public bool myTurn;
     public Button cardbtn;
     public Button turnbtn;
+    public Button unobtn;
     enum ETurnMode {Random, My, Other}
     WaitForSeconds delay01 = new WaitForSeconds(0.1f);
     WaitForSeconds delay05 = new WaitForSeconds(0.5f);
@@ -26,6 +27,7 @@ public class TurnManager : MonoBehaviour
     public static Action<bool> onStartCard;
     public static event Action<bool> OnTurnStarted;
     public AudioSource startSound;
+    int unoCount = 0;
 
     void GameSetup(){
         switch(eTurnMode){
@@ -43,8 +45,8 @@ public class TurnManager : MonoBehaviour
 
     public IEnumerator StartGameCo(){
         turnbtn.interactable = false;
-        ColorBlock btnColor = turnbtn.colors;
-        btnColor.normalColor = new Color32(55,55,55,255);
+        unobtn.interactable = false;
+        cardbtn.interactable = false;
 
         GameSetup();
         isLoading = true;
@@ -59,26 +61,38 @@ public class TurnManager : MonoBehaviour
         }
         yield return delay01;
         onStartCard?.Invoke(true);
+        unoCount = 1;
         StartCoroutine(StartTurnCo());
     }
 
     IEnumerator StartTurnCo(){
         isLoading = true;
         cardbtn.interactable = myTurn;
-        ColorBlock btnColor = cardbtn.colors;
-        btnColor.normalColor = myTurn ? new Color32(255,234,0,172) : new Color32(55,55,55,255);
         if(myTurn)
             GameManager.Inst.Notification("내 차례!");
         yield return delay05;
         isLoading = false;
+        
         OnTurnStarted?.Invoke(myTurn);
+    }
+
+    public void Update(){
+        if(CardManager.Inst.myCards.Count >= 2)
+            unoCount = 1;
+        if(CardManager.Inst.myCards.Count == 1 && unoCount == 1)
+            unobtn.interactable = true;
     }
 
     public void EndTurn(){
         myTurn = !myTurn;
         StartCoroutine(StartTurnCo());
         turnbtn.interactable = false;
-        ColorBlock btnColor1 = turnbtn.colors;
-        btnColor1.normalColor = new Color32(55,55,55,255);
+    }
+
+    public void Uno(){
+        OnAddCard?.Invoke(false); // 게임이 내 기준에서 구현해서 일단 false로 넣어놓음
+        // 상대 움직임 구현에 따라 수정 필요
+        unobtn.interactable = false;
+        unoCount = 0;
     }
 }
