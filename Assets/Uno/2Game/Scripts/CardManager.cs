@@ -12,9 +12,6 @@ public class CardManager : MonoBehaviour
 
     [SerializeField] ItemSO itemSO;
     [SerializeField] GameObject cardPrefab;
-    [SerializeField] GameObject entityPrefab;
-    [SerializeField] List<Card> myCards;
-    [SerializeField] List<Card> otherCards;
     [SerializeField] Transform cardSpawnPoint;
     [SerializeField] Transform myCardLeft;
     [SerializeField] Transform myCardRight;
@@ -22,7 +19,8 @@ public class CardManager : MonoBehaviour
     [SerializeField] Transform otherCardRight;
     [SerializeField] ECardState eCardState;
 
-
+    public List<Card> otherCards;
+    public List<Card> myCards;
     List<Item> itemBuffer;
     List<Item> items;
     Card selectCard;
