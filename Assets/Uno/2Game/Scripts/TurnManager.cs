@@ -48,6 +48,7 @@ public class TurnManager : MonoBehaviour
 
         GameSetup();
         isLoading = true;
+
         startSound.Play();
         
         for(int i=0; i<startCardCount; i++){

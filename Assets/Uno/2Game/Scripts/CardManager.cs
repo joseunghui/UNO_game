@@ -80,8 +80,9 @@ public class CardManager : MonoBehaviour
 
     }
     void OnTurnStarted(bool myTurn){    // 내턴 시작하면 놓을 수 있는 개수 초기화
-        if(myTurn)
+        if (myTurn)
             myPutCount = 0;
+        else OtherTryPutCard(myTurn);
     }
     void Update(){
         if(isMyCardDrag)
@@ -155,57 +156,113 @@ public class CardManager : MonoBehaviour
         }
         return results;
     }
+
+    #region 내가 카드 내는 과정
     public bool TryPutCard(bool isMine){
         if(isMine && myPutCount >= 1)   // 카드 하나 낼 수 있음
             return false;
 
         Card card = selectCard;
         items = EntityManager.Inst.items;
-        Item item = items[items.Count-1];
+        Item item = items[items.Count-1]; // 뒤집혀진 카드
         var spawnPos = Vector3.zero;
         var targetCards = isMine ? myCards : otherCards;
         bool result = false;
-        
-        if(card.item.color == item.color || card.item.num == item.num){ // 카드 낼 때 조건
+
+        // 특수카드 중 색깔 블랙 (4드로우, 색깔 변경)
+        if (card.item.color.Equals("black"))
+        {
+            Debug.Log("특수카드 냈음");
+            Debug.Log(card.item.color + ", " + card.item.num);
+
             EntityManager.Inst.SpawnEntity(isMine, card.item, spawnPos);
-
-            // 특수카드 
-            //if () // 드로우 4
-            //{
-
-            //}
-            //else if () // 드로우 2
-            //{
-
-            //}
-            //else if () // 리버스
-            //{
-
-            //}
-            //else if () // 스킵
-            //{
-
-            //}
 
             targetCards.Remove(card);
             card.transform.DOKill();
             DestroyImmediate(card.gameObject);
-            if(isMine){
+
+            if (isMine)
+            {
                 selectCard = null;
                 myPutCount++;
             }
             CardAlignment(isMine);
-            result = true; 
-        }else{
-            targetCards.ForEach(x => x.GetComponent<Order>().SetMostFrontOrder(false)); //origin order 만들기
-            CardAlignment(isMine);
-            result = false;
+
+            // 색깔 바꾸기 카드 낸 경우
+            if (item.num == 101)
+            {
+                Debug.Log("색깔 변경!");
+            }
+
+            if (item.num == 200 || item.num == 201)
+            {
+                // 상대 카드 추가
+                AddCard(false);
+                AddCard(false);
+                CardAlignment(false);
+            }
+            result = true;
+        }
+        else
+        {
+            if(card.item.color == item.color || card.item.num == item.num || item.color.Equals("black")) { // 카드 낼 때 조건
+                EntityManager.Inst.SpawnEntity(isMine, card.item, spawnPos);
+
+                targetCards.Remove(card);
+                card.transform.DOKill();
+                DestroyImmediate(card.gameObject);
+
+                if(isMine){
+                    selectCard = null;
+                    myPutCount++;
+                }
+                CardAlignment(isMine);
+
+                // 리버스 카드, 스킵 카드의 경우 내 차례 다시
+                if (card.item.num == 10 || card.item.num == 11)
+                {
+                    isMine = true;
+                    OnTurnStarted(isMine);
+                    return false;
+                }
+                result = true;
+            } else {
+                targetCards.ForEach(x => x.GetComponent<Order>().SetMostFrontOrder(false)); //origin order 만들기
+                CardAlignment(isMine);
+                result = false;
+            }
         }
         return result;
     }
-    
-    
-#region MyCard
+    #endregion
+
+    #region 상대방이 카드 내는 과정
+    public void OtherTryPutCard(bool isMine)
+    {
+        Debug.Log("상대방 차례일 떄 카드 제출 움직임 구현");
+        Debug.Log("isMine ::" + isMine);
+
+        Card card = selectCard;
+        items = EntityManager.Inst.items;
+        Item item = items[items.Count - 1];
+
+        var spawnPos = Vector3.zero;
+        var targetCards = isMine ? myCards : otherCards;
+        bool result = false;
+
+        // if (card.item.color == item.color || card.item.num == item.num) // 카드 낼 때 조건
+        for (int i = 0; i < items.Count; i++)
+        {
+            // 아래에 놓여있는 카드 정보
+            Debug.Log(item.color + ", "+ item.num);
+        }
+        // 카드는 한장 낼 수 있음
+        // 카드 색깔과 숫자, 특수카드 고려
+
+
+    }
+    #endregion
+    #region MyCard
     public void CardMouseOver(Card card){
         if(eCardState == ECardState.Nothing)
             return;
@@ -267,5 +324,5 @@ public class CardManager : MonoBehaviour
             eCardState = ECardState.CanMouseDrag;
         
     }
-#endregion
+    #endregion
 }
