@@ -430,7 +430,7 @@ GameObject:
   - component: {fileID: 340513402}
   - component: {fileID: 340513403}
   m_Layer: 0
-  m_Name: table
+  m_Name: tableImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -598,9 +598,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1846183844}
+      - m_Target: {fileID: 1846183845}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: nonePutCard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2478,7 +2478,7 @@ GameObject:
   - component: {fileID: 2030799989}
   - component: {fileID: 2030799990}
   m_Layer: 0
-  m_Name: CardDek
+  m_Name: cardDek
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
