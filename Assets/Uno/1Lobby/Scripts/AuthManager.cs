@@ -8,8 +8,6 @@ using GooglePlayGames; // PlayGamesPlatform 인스턴스를 활성화
 using GooglePlayGames.BasicApi; // API 를 사용하기 위한 데이터를 초기화
 using UnityEngine.SocialPlatforms;
 
-
-
 public class AuthManager : MonoBehaviour
 {
     // bool bWait = false;
