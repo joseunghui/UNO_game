@@ -21,13 +21,14 @@ public class CardManager : MonoBehaviour
 
     public List<Card> otherCards;
     public List<Card> myCards;
+    // public AudioSource clickSound;
     List<Item> itemBuffer;
     List<Item> items;
     Card selectCard;
     bool isMyCardDrag;
     bool OnMyCardArea;
     enum ECardState {Nothing, CanMouseOver, CanMouseDrag}
-    int myPutCount;
+    int putCount;
 
     public Item PopItem(){
         if(itemBuffer.Count == 0){
@@ -78,9 +79,10 @@ public class CardManager : MonoBehaviour
 
     }
     void OnTurnStarted(bool myTurn){    // 내턴 시작하면 놓을 수 있는 개수 초기화
-        if (myTurn)
-            myPutCount = 0;
-        else OtherTryPutCard(myTurn);
+        putCount = 0;
+        if(myTurn == false)
+            if(TryPutCard(myTurn))
+                TurnManager.Inst.EndTurn();
     }
     void Update(){
         if(isMyCardDrag)
@@ -155,17 +157,24 @@ public class CardManager : MonoBehaviour
         return results;
     }
 
-    #region 내가 카드 내는 과정
+    #region 카드 내는 과정
     public bool TryPutCard(bool isMine){
-        if(isMine && myPutCount >= 1)   // 카드 하나 낼 수 있음
+        if(putCount >= 1)   // 카드 하나 낼 수 있음
             return false;
-
-        Card card = selectCard;
+        
         items = EntityManager.Inst.items;
-        Item item = items[items.Count-1]; // 뒤집혀진 카드
+        Item item = items[items.Count-1]; // 마지막으로 낸 카드
+        Card card = isMine ? selectCard : OtherCard(item, 1);
+        
+        if(card == null){
+            Debug.Log("왔나");
+            TurnManager.Inst.EndTurn();
+            return false;
+        }
         var spawnPos = Vector3.zero;
         var targetCards = isMine ? myCards : otherCards;
         bool result = false;
+        
 
         // 특수카드 중 색깔 블랙 (4드로우, 색깔 변경)
         if (card.item.color.Equals("black"))
@@ -174,11 +183,8 @@ public class CardManager : MonoBehaviour
             targetCards.Remove(card);
             card.transform.DOKill();
             DestroyImmediate(card.gameObject);
-            if (isMine)
-            {
-                selectCard = null;
-                myPutCount++;
-            }
+            selectCard = null;
+            putCount++;
             CardAlignment(isMine);
 
             // 색깔 바꾸기 카드 낸 경우
@@ -190,7 +196,7 @@ public class CardManager : MonoBehaviour
             {
                 for (int i=0; i<4; i++)
                 {
-                    AddCard(false);
+                    AddCard(!isMine);
                 }
                 CardAlignment(false);
             }
@@ -200,29 +206,24 @@ public class CardManager : MonoBehaviour
         {
             if(card.item.color == item.color || card.item.num == item.num || item.color.Equals("black")) { // 카드 낼 때 조건
                 EntityManager.Inst.SpawnEntity(isMine, card.item, spawnPos);
-
                 targetCards.Remove(card);
                 card.transform.DOKill();
                 DestroyImmediate(card.gameObject);
-
-                if(isMine){
-                    selectCard = null;
-                    myPutCount++;
-                }
+                selectCard = null;
+                putCount++;
                 CardAlignment(isMine);
 
                 // 리버스 카드, 스킵 카드의 경우 내 차례 다시
                 if (card.item.num == 10 || card.item.num == 11)
                 {
-                    isMine = true;
                     OnTurnStarted(isMine);
                     return false;
                 }
                 // +2 드로우 카드 (색깔 구분 O)
                 else if (card.item.num == 12)
                 {
-                    AddCard(false);
-                    AddCard(false);
+                    AddCard(!isMine);
+                    AddCard(!isMine);
                     CardAlignment(false);
                     result = true;
                 }
@@ -237,29 +238,33 @@ public class CardManager : MonoBehaviour
     }
     #endregion
     #region 상대방이 카드 내는 과정
-    public void OtherTryPutCard(bool isMine)
+    public Card OtherCard(Item item, int count)// int count는 낼 카드 없을 때 계속 카드 먹는 거 방지용
     {
         Debug.Log("상대방 차례일 떄 카드 제출 움직임 구현");
-        Debug.Log("isMine ::" + isMine);
+        Debug.Log(item.color + ", "+ item.num);
+        Card card;
 
-        Card card = selectCard;
-        items = EntityManager.Inst.items;
-        Item item = items[items.Count - 1];
-
-        var spawnPos = Vector3.zero;
-        var targetCards = isMine ? myCards : otherCards;
-        bool result = false;
-
-        // if (card.item.color == item.color || card.item.num == item.num) // 카드 낼 때 조건
-        for (int i = 0; i < items.Count; i++)
-        {
-            // 아래에 놓여있는 카드 정보
-            Debug.Log(item.color + ", "+ item.num);
+        if(item.color == "black")   //블랙이면 아무거나
+            card = otherCards[Random.Range(0, otherCards.Count)];
+        else{
+            var targetCards = otherCards.FindAll(x => x.item.color.Equals(item.color) || x.item.num == item.num);
+            for(int i=0;i<targetCards.Count-1;i++){
+                Debug.Log(targetCards[i].item.color+ ",♡ "+targetCards[i].item.num);   
+            }
+            if(targetCards.Count <= 0 && count == 1){
+                Debug.Log("와야해 "+targetCards.Count);
+                AddCard(false);
+                OtherCard(item, 0);
+            }  
+            if(targetCards.Count <= 0){
+                Debug.Log("왔어 "+targetCards.Count);
+                card = null;
+            }
+            else
+                card = targetCards[0];
+            //if(Mode == easy) card = targetCards.Find(p => p.item.num < 100)
         }
-        // 카드는 한장 낼 수 있음
-        // 카드 색깔과 숫자, 특수카드 고려
-
-
+        return card;
     }
     #endregion
     #region MyCard
@@ -318,9 +323,9 @@ public class CardManager : MonoBehaviour
     void SetECardState(){
         if(TurnManager.Inst.isLoading)  // 게임 로딩중일땐 아무것도 안되고
             eCardState = ECardState.Nothing;
-        else if(!TurnManager.Inst.myTurn || myPutCount == 1)   // 드래그 못하게
+        else if(!TurnManager.Inst.myTurn || putCount == 1)   // 드래그 못하게
             eCardState = ECardState.CanMouseOver;
-        else if(TurnManager.Inst.myTurn && myPutCount == 0)    // 내 턴일땐 가능
+        else if(TurnManager.Inst.myTurn && putCount == 0)    // 내 턴일땐 가능
             eCardState = ECardState.CanMouseDrag;
         
     }

@@ -11,11 +11,6 @@ public class Card : MonoBehaviour
     public Item item;
     public PRS originPRS;
     bool isFront;
-    public AudioSource clickSound;
-
-    public void ClickSound(){
-        clickSound.Play();
-    }
 
     public void Setup(Item item, bool isFront){
         this.item = item;
