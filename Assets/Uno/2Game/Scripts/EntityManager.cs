@@ -7,7 +7,7 @@ public class EntityManager : MonoBehaviour
     public static EntityManager Inst {get; private set;}
     void Awake() => Inst = this;
 
-    [SerializeField] GameObject entityPrefab;
+    public GameObject entityPrefab;
     const int MAX_ENTITY_COUNT = 1;
     public List<Entity> entities;
     public List<Item> items;
@@ -27,6 +27,8 @@ public class EntityManager : MonoBehaviour
     public bool SpawnEntity(bool isMine, Item item, Vector3 spawnPos){
         var entityObject = Instantiate(entityPrefab, spawnPos, Utils.QI);
         var entity = entityObject.GetComponent<Entity>();
+        if(isMine == false)
+            entity.MoveTransform(spawnPos,true,0.5f);
 
         entity.Setup(item);
         entities.Add(entity);
