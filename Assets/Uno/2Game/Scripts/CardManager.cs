@@ -21,7 +21,8 @@ public class CardManager : MonoBehaviour
 
     public List<Card> otherCards;
     public List<Card> myCards;
-    // public AudioSource clickSound;
+    public AudioSource addcardSound;
+    public AudioSource downcardSound;
     List<Item> itemBuffer;
     List<Item> items;
     Card selectCard;
@@ -102,6 +103,7 @@ public class CardManager : MonoBehaviour
         card.Setup(PopItem(), isMine);
         (isMine ? myCards : otherCards).Add(card);
 
+        addcardSound.Play();
         SetOriginOrder(isMine);
         CardAlignment(isMine);
     }
@@ -233,6 +235,9 @@ public class CardManager : MonoBehaviour
                 CardAlignment(isMine);
                 result = false;
             }
+        }
+        if(result){
+            downcardSound.Play();
         }
         return result;
     }
