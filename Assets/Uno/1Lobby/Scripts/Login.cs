@@ -22,14 +22,16 @@ public class Login
         }
     }
 
-    public void CustomSignUp(string id, string pw)
+    public void CustomSignUp(string id, string pw, string nick)
     {
         Debug.Log("회원가입을 요청합니다.");
 
-        var bro = Backend.BMember.CustomSignUp(id, pw);
+        var bro = Backend.BMember.CustomSignUp(id, pw, nick);
 
         if (bro.IsSuccess())
         {
+            // userInfo 테이블에 유저 정보 insert
+            UserDataIns.Instance.InsertUserData();
             Debug.Log("회원가입에 성공했습니다. : " + bro);
         }
         else
@@ -54,8 +56,4 @@ public class Login
         }
     }
 
-    public void UpdateNickname(string nickname)
-    {
-        // Step 4. 닉네임 변경 구현하기 로직
-    }
 }
