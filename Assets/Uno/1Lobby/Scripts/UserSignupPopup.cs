@@ -5,7 +5,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using TMPro; 
 
-public class UserPopup : MonoBehaviour
+public class UserSignupPopup : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
