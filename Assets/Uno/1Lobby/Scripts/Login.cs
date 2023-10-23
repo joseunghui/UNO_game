@@ -31,7 +31,7 @@ public class Login
         if (bro.IsSuccess())
         {
             // userInfo 테이블에 유저 정보 insert
-            UserDataIns.Instance.InsertUserData();
+            // UserDataIns.Instance.InsertUserData();
             Debug.Log("회원가입에 성공했습니다. : " + bro);
         }
         else
