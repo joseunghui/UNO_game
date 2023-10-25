@@ -9,7 +9,6 @@ using BackEnd; // 뒤끝 디비
 #region UserInfoData Class
 public class UserInfoData
 {
-    public string email;
     public int winrate;
     public int grade;
     public int heart;
@@ -21,7 +20,6 @@ public class UserInfoData
     {
         StringBuilder result = new StringBuilder();
        
-        result.AppendLine($"email : {email}");
         result.AppendLine($"winrate : {winrate}");
         result.AppendLine($"grade : {grade}");
         result.AppendLine($"heart : {heart}");
@@ -60,7 +58,6 @@ public class UserDataIns
 
         // 업데이트 목록에 추가하기 위한 param 생성
         Param param = new Param();
-        param.Add("email", userInfoData.email); 
         param.Add("winrate", userInfoData.winrate);
         param.Add("grade", userInfoData.grade);
         param.Add("heart", userInfoData.heart);
@@ -124,7 +121,6 @@ public class UserDataIns
             string freeDiaStr = bro.GetReturnValuetoJSON()["row"]["freeDia"].ToString();
             string payDiaStr = bro.GetReturnValuetoJSON()["row"]["payDia"].ToString();
 
-            info.email = bro.GetReturnValuetoJSON()["row"]["email"].ToString();
             info.winrate = Convert.ToInt32(winrateStr);
             info.grade = Convert.ToInt32(gradeStr);
             info.heart = Convert.ToInt32(heartStr);

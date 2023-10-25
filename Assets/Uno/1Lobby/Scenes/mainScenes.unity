@@ -358,6 +358,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &831504651 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8895108794851630757, guid: d7d3e43c5d12742059073d67ec9ccdb2, type: 3}
+  m_PrefabInstance: {fileID: 1522876296}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &831504656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831504651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d9cacdfc422fd149b83887bbe0670dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AlertField: {fileID: 837207276}
+  Alert: {fileID: 948581482}
+  LevelBtnPrefab: {fileID: 0}
+  LevelField: {fileID: 746392292}
+  SignInPopup: {fileID: 1203752419}
+  in_email_text: {fileID: 1709601782}
+  in_pwd_text: {fileID: 1204885894}
+  SignUpPopup: {fileID: 1496860901}
+  up_email_text: {fileID: 1522876300}
+  up_pwd_text: {fileID: 1558967551}
+  up_pwd_conf_text: {fileID: 782312381}
 --- !u!1 &837207276
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,7 +424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -20}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.9999999}
 --- !u!222 &837207279
@@ -638,8 +666,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1000,6 +1028,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1381444802}
     m_Modifications:
+    - target: {fileID: 6971049449784078594, guid: d7d3e43c5d12742059073d67ec9ccdb2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 831504656}
+    - target: {fileID: 6971049449784078594, guid: d7d3e43c5d12742059073d67ec9ccdb2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DoSignUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6971049449784078594, guid: d7d3e43c5d12742059073d67ec9ccdb2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: AuthManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6971049449784078594, guid: d7d3e43c5d12742059073d67ec9ccdb2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7699976393677840774, guid: d7d3e43c5d12742059073d67ec9ccdb2, type: 3}
       propertyPath: m_Name
       value: SignUpPopup
