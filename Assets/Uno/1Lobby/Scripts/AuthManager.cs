@@ -8,11 +8,9 @@ using BackEnd; // 뒤끝
 public class AuthManager : MonoBehaviour
 {
     [Header("Main Canvas")]
+    [SerializeField] public GameObject AccessGameBtn;
     [SerializeField] public GameObject AlertField;
     [SerializeField] public TextMeshProUGUI Alert;
-    // level button
-    [SerializeField] public GameObject LevelBtnPrefab;
-    [SerializeField] public GameObject LevelField;
 
     [Header("Sign In Popup")]
     [SerializeField] public GameObject SignInPopup;
@@ -25,7 +23,11 @@ public class AuthManager : MonoBehaviour
     [SerializeField] public TMP_InputField up_pwd_text;
     [SerializeField] public TMP_InputField up_pwd_conf_text;
 
+    [Header("Level Select Popup")]
+    [SerializeField] public GameObject LevelSelectPopup;
+    [SerializeField] public GameObject LevelField;
 
+    // Log-in 확인 버튼 클릭
     public void DoSignIn()
     {
         Debug.Log("email : " + in_email_text.text);
@@ -51,6 +53,7 @@ public class AuthManager : MonoBehaviour
         }
     }
 
+    // Sign-Up 확인 버튼 클릭
     public void DoSignUp()
     {
         Debug.Log("email : " + up_email_text.text);
@@ -71,8 +74,18 @@ public class AuthManager : MonoBehaviour
         {
             if (Login.Instance.CustomSignUp(up_email_text.text, up_pwd_text.text))
             {
-                // Insert user Info data
+                #region Insert user Info data
 
+                UserInfoData userInfo = new UserInfoData(); // 초기 값 세팅용 객체 생
+                userInfo.winrate = 0;
+                userInfo.grade = 3;
+                userInfo.heart = 5;
+                userInfo.freeDia = 10; // 웰컴 다이아ㅋㅋㅋ
+                userInfo.payDia = 0;
+
+                UserDataIns.Instance.InsertUserData(userInfo);
+
+                #endregion
 
                 string alertTxt = "회원 가입이 완료 되었습니다.\n로그인 후 이용해주세요.";
                 Alert.text = alertTxt.Replace("\\n", "\n");
@@ -89,13 +102,14 @@ public class AuthManager : MonoBehaviour
     // 레벨 선택 버튼 생성
     void CreateLevelBtn()
     {
-        LevelBtnPrefab = Resources.Load<GameObject>("LevelField");
-        for (int i=0; i<3; i++)
-        {
-            GameObject button = Instantiate(LevelBtnPrefab);
-            RectTransform btnPos = button.GetComponent<RectTransform>();
-            button.transform.position = gameObject.transform.position;
-        }
+        Alert.text = "환영합니다.";
+        // 팝업 비활성화
+        SignInPopup.SetActive(false);
+        SignUpPopup.SetActive(false);
+        AccessGameBtn.SetActive(false);
+
+        // 레벨선택 필드 활성화
+        LevelSelectPopup.SetActive(true);
     }
 
     // Sign-up popup open
