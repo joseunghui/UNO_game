@@ -110,6 +110,20 @@ public class AuthManager : MonoBehaviour
 
         // 레벨선택 필드 활성화
         LevelSelectPopup.SetActive(true);
+
+        // user data 가져오기
+        UserInfoData allData = UserDataIns.Instance.GetMyAllData();
+
+        if (allData.nickname == null)
+        {
+            Debug.LogError("회원 정보 조회에 실패했습니다.");
+        }
+        // 확인
+        Debug.Log("닉네임 : " + allData.nickname);
+        Debug.Log("등급 : " + allData.grade + "급");
+        Debug.Log("하트 : " + allData.heart + "개");
+        Debug.Log("무료 다이아 : " + allData.freeDia);
+        Debug.Log("유료 다이아 : " + allData.payDia);
     }
 
     // Sign-up popup open
@@ -127,6 +141,14 @@ public class AuthManager : MonoBehaviour
         if (bro.IsSuccess())
         {
             Debug.Log("초기화 성공 : " + bro); // 성공일 경우 statusCode 204 Success
+
+            // 기등록된 로컬 기기 자동 로그인
+            BackendReturnObject autoLogin = Backend.BMember.LoginWithTheBackendToken();
+            if (autoLogin.IsSuccess())
+            {
+                Debug.Log("자동 로그인에 성공했습니다.");
+                CreateLevelBtn();
+            }
         }
         else
         {

@@ -9,6 +9,7 @@ using BackEnd; // 뒤끝 디비
 #region UserInfoData Class
 public class UserInfoData
 {
+    public string nickname;
     public int winrate;
     public int grade;
     public int heart;
@@ -19,7 +20,8 @@ public class UserInfoData
     public override string ToString()
     {
         StringBuilder result = new StringBuilder();
-       
+
+        result.AppendLine($"nickname : {nickname}");
         result.AppendLine($"winrate : {winrate}");
         result.AppendLine($"grade : {grade}");
         result.AppendLine($"heart : {heart}");
@@ -105,6 +107,42 @@ public class UserDataIns
         return false;
     }
     #endregion
+    #region Get user all data
+    public UserInfoData GetMyAllData()
+    {
+        var bro = Backend.GameData.GetMyData("user", new Where()); // game data
+        var getNick = Backend.BMember.GetUserInfo();
+
+        // 실패 처리
+        if (bro.IsSuccess() == false || getNick.IsSuccess() == false)
+        {
+            Debug.LogError(bro);
+        }
+
+        // 조회는 성공 했는데 데이터가 없는 경우
+        if (bro.GetReturnValuetoJSON()["rows"].Count <= 0)
+        {
+            // data 가 존재하는지 확인
+            Debug.Log(bro);
+        }
+
+        // return Data
+        UserInfoData myInfo = new UserInfoData();
+        myInfo.nickname = getNick.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+        myInfo.winrate = int.Parse(bro.Rows()[0]["winrate"]["N"].ToString());
+        myInfo.grade = int.Parse(bro.Rows()[0]["grade"]["N"].ToString());
+        myInfo.heart = int.Parse(bro.Rows()[0]["heart"]["N"].ToString());
+        myInfo.freeDia = int.Parse(bro.Rows()[0]["freeDia"]["N"].ToString());
+        myInfo.payDia = int.Parse(bro.Rows()[0]["payDia"]["N"].ToString());
+
+        for (int i=0; i<bro.Rows().Count; i++)
+        {
+            string inDate = bro.FlattenRows()[0]["inDate"].ToString();
+            Debug.Log(inDate);
+        }
+        return myInfo;
+    }
+    #endregion
     #region userInfo select() where nick
     public UserInfoData UserDataGet(string _nick)
     {
@@ -128,6 +166,12 @@ public class UserDataIns
             info.payDia = Convert.ToInt32(payDiaStr);
         }
         return info;
+    }
+    #endregion
+    #region user nickname change
+    public void updateUserNickname()
+    {
+
     }
     #endregion
     #region userInfo update(change userInfo)
