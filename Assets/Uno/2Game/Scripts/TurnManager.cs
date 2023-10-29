@@ -91,7 +91,6 @@ public class TurnManager : MonoBehaviour
 
     public void Uno(){
         OnAddCard?.Invoke(false); // 게임이 내 기준에서 구현해서 일단 false로 넣어놓음
-        OnAddCard?.Invoke(false);
         // 상대 움직임 구현에 따라 수정 필요
         unobtn.interactable = false;
         unoCount = 0;
