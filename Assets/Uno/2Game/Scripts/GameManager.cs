@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public Button cardbtn;
     public Button turnbtn;
 
+    
     void Start()
     {
         StartGame();    // 나중에 버튼으로 바꿔서 호출하는 시점에 게임이 시작되도록~

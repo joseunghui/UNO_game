@@ -7,6 +7,18 @@ using Random = UnityEngine.Random;
 
 public class TurnManager : MonoBehaviour
 {
+    /* sample
+    [Header("status bar")]
+    [SerializeField] public TextMeshProUGUI text;
+
+    void Start()
+    {
+        UserInfoData user = new UserInfoData();
+        user = UserDataIns.Instance.GetMyAllData();
+        text.text = user.grade;
+    }
+    */
+
     public static TurnManager Inst {get; private set;}
     void Awake() => Inst = this;
 
