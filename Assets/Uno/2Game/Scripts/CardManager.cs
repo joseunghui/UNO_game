@@ -30,6 +30,7 @@ public class CardManager : MonoBehaviour
     bool OnMyCardArea;
     enum ECardState {Nothing, CanMouseOver, CanMouseDrag}
     int putCount;
+    
 
     public Item PopItem(){
         if(itemBuffer.Count == 0){
@@ -81,9 +82,11 @@ public class CardManager : MonoBehaviour
     }
     void OnTurnStarted(bool myTurn){    // 내턴 시작하면 놓을 수 있는 개수 초기화
         putCount = 0;
-        if(myTurn == false)
+        if(myTurn == false){
             if(TryPutCard(myTurn))
                 TurnManager.Inst.EndTurn();
+        }
+            
     }
     void Update(){
         if(isMyCardDrag)
@@ -163,7 +166,7 @@ public class CardManager : MonoBehaviour
     public bool TryPutCard(bool isMine){
         if(putCount >= 1)   // 카드 하나 낼 수 있음
             return false;
-        
+        Debug.Log(isMine);
         items = EntityManager.Inst.items;
         Item item = items[items.Count-1]; // 마지막으로 낸 카드
         Card card = isMine ? selectCard : OtherCard(item, 1);
@@ -242,7 +245,7 @@ public class CardManager : MonoBehaviour
         return result;
     }
     #endregion
-    #region 상대방이 카드 내는 과정
+    #region OtherCard
     public Card OtherCard(Item item, int count)// int count는 낼 카드 없을 때 계속 카드 먹는 거 방지용
     {
         Debug.Log("상대방 차례일 떄 카드 제출 움직임 구현");
@@ -257,12 +260,10 @@ public class CardManager : MonoBehaviour
                 Debug.Log(targetCards[i].item.color+ ",♡ "+targetCards[i].item.num);   
             }
             if(targetCards.Count <= 0 && count == 1){
-                Debug.Log("와야해 "+targetCards.Count);
                 AddCard(false);
                 OtherCard(item, 0);
             }  
             if(targetCards.Count <= 0){
-                Debug.Log("왔어 "+targetCards.Count);
                 card = null;
             }
             else
