@@ -1,57 +1,158 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
 using GooglePlayGames; // PlayGamesPlatform 인스턴스를 활성화
 using GooglePlayGames.BasicApi; // API 를 사용하기 위한 데이터를 초기화
 using UnityEngine.SocialPlatforms;
+using BackEnd; // 뒤끝
 
 public class AuthManager : MonoBehaviour
 {
-    // bool bWait = false;
-    public TMP_Text text;
+    [Header("Main Canvas")]
+    [SerializeField] public GameObject AccessGameBtn;
+    [SerializeField] public GameObject AlertField;
+    [SerializeField] public TextMeshProUGUI Alert;
 
-    private void Awake()
+    [Header("Sign In Popup")]
+    [SerializeField] public GameObject SignInPopup;
+    [SerializeField] public TextMeshProUGUI in_email_text;
+    [SerializeField] public TMP_InputField in_pwd_text;
+
+    [Header("Sign Up Popup")]
+    [SerializeField] public GameObject SignUpPopup;
+    [SerializeField] public TextMeshProUGUI up_email_text;
+    [SerializeField] public TMP_InputField up_pwd_text;
+    [SerializeField] public TMP_InputField up_pwd_conf_text;
+
+    [Header("Level Select Popup")]
+    [SerializeField] public GameObject LevelSelectPopup;
+    [SerializeField] public GameObject LevelField;
+
+    // Log-in 확인 버튼 클릭
+    public void DoSignIn()
     {
-        // 디버그용 함수
-        PlayGamesPlatform.DebugLogEnabled = true;
+        Debug.Log("email : " + in_email_text.text);
+        Debug.Log("pwd : " + in_pwd_text.text);
 
-        // 구글 관련 서비스 활성화
-        PlayGamesPlatform.Activate();
-
-
-        if (Social.localUser.authenticated) // local에 연결된 계정이 있는지 확인 -> 게임으로 이동!
+        if (in_email_text.text == null)
         {
-            SceneManager.LoadScene(1); // 게임화면 이동
+            Alert.text = "이메일을 입력해주세요.";
         }
-        else AccessGame(); // 없으면 계정 인증 시작하기
+
+        // 기존 유저 -> 로그인 / 신규 유저 -> 회원 가입
+        // 여기서 HavingThisUser() 를 먼저 사용하려 했지만 로그인 전에는 뒤끝 접근이 불가능 했음
+        if (Login.Instance.CustomLogin(in_email_text.text, in_pwd_text.text))
+        {
+            // 기존유저 -> 그대로 로그인 후 게임 시작
+            // level 선택 버튼 생성
+            CreateLevelBtn();
+        } else {
+            // 신규유저 등록 필요 -> 회원가입 유도
+            Alert.text = "회원 정보가 없습니다. 회원 가입 후 이용해주세요.";
+            Invoke("OpenSignUpPopup", 0.5f);
+ 
+        }
     }
 
-    public void AccessGame()
+    // Sign-Up 확인 버튼 클릭
+    public void DoSignUp()
     {
-        // 로그인 단계 : local에 연결된 계정이 있는지 확인 -> 안되었다면, 인증 단계 시작!
-        if (!Social.localUser.authenticated)
+        Debug.Log("email : " + up_email_text.text);
+        Debug.Log("pwd : " + up_pwd_text.text);
+
+        if (up_email_text.text != null || up_email_text.text != "")
         {
-            // 계정 인증
-            Social.localUser.Authenticate((bool isSuccess) =>
+            Alert.text = null;
+        }
+
+        if (up_email_text.text == null)
+        {
+            Alert.text = "이메일을 입력해주세요.";
+        }
+
+        // 비번 정규식 넣어서 수정해야함
+        if (up_pwd_conf_text.text == up_pwd_text.text && up_pwd_text != null)
+        {
+            if (Login.Instance.CustomSignUp(up_email_text.text, up_pwd_text.text))
             {
+                #region Insert user Info data
 
-                if (isSuccess)
-                {
+                UserInfoData userInfo = new UserInfoData(); // 초기 값 세팅용 객체 생
+                userInfo.winrate = 0;
+                userInfo.grade = 3;
+                userInfo.heart = 5;
+                userInfo.freeDia = 10; // 웰컴 다이아ㅋㅋㅋ
+                userInfo.payDia = 0;
 
-                    Debug.Log("Login Success!");
-                    Debug.Log("Success : " + Social.localUser.userName);
-                    text.text = Social.localUser.userName + "님 환영합니다!";
-                }
-                else
-                {
-                    Debug.Log("Login Fail!");
-                    text.text = "로그인에 실패하였습니다.";
-                }
-            });
+                UserDataIns.Instance.InsertUserData(userInfo);
+
+                #endregion
+
+                string alertTxt = "회원 가입이 완료 되었습니다.\n로그인 후 이용해주세요.";
+                Alert.text = alertTxt.Replace("\\n", "\n");
+                SignUpPopup.SetActive(false);
+            }
+
+        } else
+        {
+            Alert.text = "확인한 비밀번호가 일치하지 않습니다.";
         }
+
     }
 
+    // 레벨 선택 버튼 생성
+    void CreateLevelBtn()
+    {
+        Alert.text = "환영합니다.";
+        // 팝업 비활성화
+        SignInPopup.SetActive(false);
+        SignUpPopup.SetActive(false);
+        AccessGameBtn.SetActive(false);
+
+        // 레벨선택 필드 활성화
+        LevelSelectPopup.SetActive(true);
+
+        // user data 가져오기
+        UserInfoData allData = UserDataIns.Instance.GetMyAllData();
+
+        if (allData.nickname == null)
+        {
+            Debug.LogError("회원 정보 조회에 실패했습니다.");
+        }
+        // 확인
+        Debug.Log("닉네임 : " + allData.nickname);
+        Debug.Log("등급 : " + allData.grade + "급");
+        Debug.Log("하트 : " + allData.heart + "개");
+        Debug.Log("무료 다이아 : " + allData.freeDia);
+        Debug.Log("유료 다이아 : " + allData.payDia);
+    }
+
+    // Sign-up popup open
+    void OpenSignUpPopup()
+    {
+        SignUpPopup.SetActive(true);
+    }
+
+
+    void Start()
+    {
+        var bro = Backend.Initialize(true); // 뒤끝 초기화
+
+        // 뒤끝 초기화에 대한 응답값
+        if (bro.IsSuccess())
+        {
+            Debug.Log("초기화 성공 : " + bro); // 성공일 경우 statusCode 204 Success
+
+            // 기등록된 로컬 기기 자동 로그인
+            BackendReturnObject autoLogin = Backend.BMember.LoginWithTheBackendToken();
+            if (autoLogin.IsSuccess())
+            {
+                Debug.Log("자동 로그인에 성공했습니다.");
+                CreateLevelBtn();
+            }
+        }
+        else
+        {
+            Debug.LogError("초기화 실패 : " + bro); // 실패일 경우 statusCode 400대 에러 발생 
+        }
+    }
 }
