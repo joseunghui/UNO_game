@@ -440,10 +440,10 @@ MonoBehaviour:
   AlertField: {fileID: 837207276}
   Alert: {fileID: 948581482}
   SignInPopup: {fileID: 1203752419}
-  in_email_text: {fileID: 1709601782}
+  in_id_text: {fileID: 0}
   in_pwd_text: {fileID: 1204885894}
   SignUpPopup: {fileID: 1496860901}
-  up_email_text: {fileID: 1522876300}
+  up_id_text: {fileID: 0}
   up_pwd_text: {fileID: 1558967551}
   up_pwd_conf_text: {fileID: 782312381}
   LevelSelectPopup: {fileID: 670682738}
@@ -675,10 +675,10 @@ MonoBehaviour:
   AlertField: {fileID: 837207276}
   Alert: {fileID: 948581482}
   SignInPopup: {fileID: 1203752419}
-  in_email_text: {fileID: 1709601782}
+  in_id_text: {fileID: 1709601782}
   in_pwd_text: {fileID: 1204885894}
   SignUpPopup: {fileID: 1496860901}
-  up_email_text: {fileID: 1522876300}
+  up_id_text: {fileID: 1522876300}
   up_pwd_text: {fileID: 1558967551}
   up_pwd_conf_text: {fileID: 782312381}
   LevelSelectPopup: {fileID: 670682738}
@@ -1034,10 +1034,10 @@ MonoBehaviour:
   AlertField: {fileID: 837207276}
   Alert: {fileID: 948581482}
   SignInPopup: {fileID: 1203752419}
-  in_email_text: {fileID: 1709601782}
+  in_id_text: {fileID: 1709601782}
   in_pwd_text: {fileID: 1204885894}
   SignUpPopup: {fileID: 1496860901}
-  up_email_text: {fileID: 1522876300}
+  up_id_text: {fileID: 0}
   up_pwd_text: {fileID: 1558967551}
   up_pwd_conf_text: {fileID: 782312381}
   LevelSelectPopup: {fileID: 670682738}
@@ -1422,10 +1422,10 @@ MonoBehaviour:
   AlertField: {fileID: 837207276}
   Alert: {fileID: 948581482}
   SignInPopup: {fileID: 1203752419}
-  in_email_text: {fileID: 1709601782}
+  in_id_text: {fileID: 0}
   in_pwd_text: {fileID: 1204885894}
   SignUpPopup: {fileID: 1496860901}
-  up_email_text: {fileID: 1522876300}
+  up_id_text: {fileID: 0}
   up_pwd_text: {fileID: 1558967551}
   up_pwd_conf_text: {fileID: 782312381}
   LevelSelectPopup: {fileID: 670682738}

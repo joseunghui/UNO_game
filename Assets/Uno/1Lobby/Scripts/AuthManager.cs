@@ -14,12 +14,12 @@ public class AuthManager : MonoBehaviour
 
     [Header("Sign In Popup")]
     [SerializeField] public GameObject SignInPopup;
-    [SerializeField] public TextMeshProUGUI in_email_text;
+    [SerializeField] public TextMeshProUGUI in_id_text;
     [SerializeField] public TMP_InputField in_pwd_text;
 
     [Header("Sign Up Popup")]
     [SerializeField] public GameObject SignUpPopup;
-    [SerializeField] public TextMeshProUGUI up_email_text;
+    [SerializeField] public TextMeshProUGUI up_id_text;
     [SerializeField] public TMP_InputField up_pwd_text;
     [SerializeField] public TMP_InputField up_pwd_conf_text;
 
@@ -30,17 +30,15 @@ public class AuthManager : MonoBehaviour
     // Log-in 확인 버튼 클릭
     public void DoSignIn()
     {
-        Debug.Log("email : " + in_email_text.text);
-        Debug.Log("pwd : " + in_pwd_text.text);
 
-        if (in_email_text.text == null)
+        if (in_id_text.text == null)
         {
-            Alert.text = "이메일을 입력해주세요.";
+            Alert.text = "아이디를 입력해주세요.";
         }
 
         // 기존 유저 -> 로그인 / 신규 유저 -> 회원 가입
         // 여기서 HavingThisUser() 를 먼저 사용하려 했지만 로그인 전에는 뒤끝 접근이 불가능 했음
-        if (Login.Instance.CustomLogin(in_email_text.text, in_pwd_text.text))
+        if (Login.Instance.CustomLogin(in_id_text.text, in_pwd_text.text))
         {
             // 기존유저 -> 그대로 로그인 후 게임 시작
             // level 선택 버튼 생성
@@ -56,23 +54,20 @@ public class AuthManager : MonoBehaviour
     // Sign-Up 확인 버튼 클릭
     public void DoSignUp()
     {
-        Debug.Log("email : " + up_email_text.text);
-        Debug.Log("pwd : " + up_pwd_text.text);
-
-        if (up_email_text.text != null || up_email_text.text != "")
+        if (up_id_text.text != null || up_id_text.text != "")
         {
             Alert.text = null;
         }
 
-        if (up_email_text.text == null)
+        if (up_id_text.text == null)
         {
-            Alert.text = "이메일을 입력해주세요.";
+            Alert.text = "아이디를 입력해주세요.";
         }
 
         // 비번 정규식 넣어서 수정해야함
         if (up_pwd_conf_text.text == up_pwd_text.text && up_pwd_text != null)
         {
-            if (Login.Instance.CustomSignUp(up_email_text.text, up_pwd_text.text))
+            if (Login.Instance.CustomSignUp(up_id_text.text, up_pwd_text.text))
             {
                 #region Insert user Info data
 
@@ -118,12 +113,6 @@ public class AuthManager : MonoBehaviour
         {
             Debug.LogError("회원 정보 조회에 실패했습니다.");
         }
-        // 확인
-        Debug.Log("닉네임 : " + allData.nickname);
-        Debug.Log("등급 : " + allData.grade + "급");
-        Debug.Log("하트 : " + allData.heart + "개");
-        Debug.Log("무료 다이아 : " + allData.freeDia);
-        Debug.Log("유료 다이아 : " + allData.payDia);
     }
 
     // Sign-up popup open
