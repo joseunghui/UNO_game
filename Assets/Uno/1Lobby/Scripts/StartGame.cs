@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class StartGame : MonoBehaviour
 {
     [SerializeField] public Button LevelBtn;
+    public static int TurnlimitTime;
 
     private void Start()
     {
@@ -25,20 +26,17 @@ public class StartGame : MonoBehaviour
 
         if (btnName == "EasyBtn")
         {
-            // 넘겨줄 구분 값?
-
+            TurnlimitTime = 20;
             // CardScene으로 변경
             LoadingSceneManager.LoadScene("CardScenes");
         } else if (btnName == "NormalBtn")
         {
-            // 넘겨줄 구분 값?
-
+            TurnlimitTime = 10;
             // CardScene으로 변경
             LoadingSceneManager.LoadScene("CardScenes");
         } else if (btnName == "HardBtn")
         {
-            // 넘겨줄 구분 값?
-
+            TurnlimitTime = 5;
             // CardScene으로 변경
             LoadingSceneManager.LoadScene("CardScenes");
         }

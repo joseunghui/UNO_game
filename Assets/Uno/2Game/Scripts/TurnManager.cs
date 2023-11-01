@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class TurnManager : MonoBehaviour
+public class TurnManager : Singleton<TurnManager>
 {
     /* sample
     [Header("status bar")]
@@ -19,8 +19,6 @@ public class TurnManager : MonoBehaviour
     }
     */
 
-    public static TurnManager Inst {get; private set;}
-    void Awake() => Inst = this;
 
     [Header("Develop")]
     [SerializeField] [Tooltip("시작 턴 모드를 정합니다")] ETurnMode eTurnMode;
