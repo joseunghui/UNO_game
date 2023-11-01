@@ -440,10 +440,10 @@ MonoBehaviour:
   AlertField: {fileID: 837207276}
   Alert: {fileID: 948581482}
   SignInPopup: {fileID: 1203752419}
-  in_id_text: {fileID: 0}
+  in_id_text: {fileID: 1709601782}
   in_pwd_text: {fileID: 1204885894}
   SignUpPopup: {fileID: 1496860901}
-  up_id_text: {fileID: 0}
+  up_id_text: {fileID: 1522876300}
   up_pwd_text: {fileID: 1558967551}
   up_pwd_conf_text: {fileID: 782312381}
   LevelSelectPopup: {fileID: 670682738}
@@ -608,15 +608,15 @@ Canvas:
   m_GameObject: {fileID: 765027147}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 259632860}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: -1
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1371,8 +1371,8 @@ Canvas:
   m_GameObject: {fileID: 1381444798}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 259632860}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1429,7 +1429,7 @@ MonoBehaviour:
   up_pwd_text: {fileID: 1558967551}
   up_pwd_conf_text: {fileID: 782312381}
   LevelSelectPopup: {fileID: 670682738}
-  LevelField: {fileID: 0}
+  LevelField: {fileID: 406690352}
 --- !u!1 &1399277977 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3671911926756277466, guid: 5177ee2d233a24be995c5861df3c78fa, type: 3}

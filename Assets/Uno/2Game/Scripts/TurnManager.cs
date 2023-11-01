@@ -19,7 +19,6 @@ public class TurnManager : Singleton<TurnManager>
     }
     */
 
-
     [Header("Develop")]
     [SerializeField] [Tooltip("시작 턴 모드를 정합니다")] ETurnMode eTurnMode;
     [SerializeField] [Tooltip("시작 카드 개수를 정합니다")] int startCardCount;

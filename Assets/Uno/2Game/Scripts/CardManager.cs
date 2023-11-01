@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -30,7 +29,7 @@ public class CardManager : MonoBehaviour
     bool OnMyCardArea;
     enum ECardState {Nothing, CanMouseOver, CanMouseDrag}
     int putCount;
-    
+    private int timeLimit = StartGame.TurnlimitTime;
 
     public Item PopItem(){
         if(itemBuffer.Count == 0){
@@ -69,6 +68,7 @@ public class CardManager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("사간제한 : " + timeLimit);
         SetUpItemBuffer();
         TurnManager.OnAddCard += AddCard;
         TurnManager.OnTurnStarted += OnTurnStarted;
@@ -86,7 +86,6 @@ public class CardManager : MonoBehaviour
             if(TryPutCard(myTurn))
                 TurnManager.instance.EndTurn();
         }
-            
     }
     void Update(){
         if(isMyCardDrag)
