@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // 치트, UI, 랭킹, 게임오버 등등
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     public static GameManager Inst {get; private set;}
     void Awake() => Inst = this;
@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public Button cardbtn;
     public Button turnbtn;
 
+    
     void Start()
     {
         StartGame();    // 나중에 버튼으로 바꿔서 호출하는 시점에 게임이 시작되도록~
@@ -29,11 +30,11 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Keypad2))
             TurnManager.OnAddCard?.Invoke(false);
         if(Input.GetKeyDown(KeyCode.Keypad3))
-            TurnManager.Inst.EndTurn();
+            TurnManager.instance.EndTurn();
     }
     
     public void StartGame(){
-        StartCoroutine(TurnManager.Inst.StartGameCo());
+        StartCoroutine(TurnManager.instance.StartGameCo());
     }
 
     public void Notification(string message){

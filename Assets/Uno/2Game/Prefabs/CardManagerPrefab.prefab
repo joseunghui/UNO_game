@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &497937105606187207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2157865102228395202}
+  - component: {fileID: 4803839088041836680}
+  m_Layer: 0
+  m_Name: CardManagerPrefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2157865102228395202
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497937105606187207}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4803839088041836680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497937105606187207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb73724eda521f4494583c65871990e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemSO: {fileID: 11400000, guid: 2f80e87c80df63d48b9a34e18abd6dcd, type: 2}
+  cardPrefab: {fileID: 2499801217509708884, guid: e5d386a0e67d8d444a21743b11093d3d, type: 3}
+  cardSpawnPoint: {fileID: 2427598104757949430, guid: 0c779315338a54d4882ae1d132c8d056, type: 3}
+  myCardLeft: {fileID: 5613578045792060495, guid: 58bbe8da5a4d14b11951fed7245a6fea, type: 3}
+  myCardRight: {fileID: 3887835574482235013, guid: e047d2781ad484537aff2736be82d66d, type: 3}
+  otherCardLeft: {fileID: 7781630526537066038, guid: f949d3f749f5249399f81521f09a9ce7, type: 3}
+  otherCardRight: {fileID: 2832343658658427250, guid: 9a3a6cad7c41448db861c5e9d9c6bc58, type: 3}
+  eCardState: 0
+  otherCards: []
+  myCards: []
+  addcardSound: {fileID: 0}
+  downcardSound: {fileID: 0}

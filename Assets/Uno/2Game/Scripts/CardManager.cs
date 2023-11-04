@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -30,7 +29,7 @@ public class CardManager : MonoBehaviour
     bool OnMyCardArea;
     enum ECardState {Nothing, CanMouseOver, CanMouseDrag}
     int putCount;
-    
+    private int timeLimit = StartGame.TurnlimitTime;
 
     public Item PopItem(){
         if(itemBuffer.Count == 0){
@@ -69,6 +68,7 @@ public class CardManager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("사간제한 : " + timeLimit);
         SetUpItemBuffer();
         TurnManager.OnAddCard += AddCard;
         TurnManager.OnTurnStarted += OnTurnStarted;
@@ -84,9 +84,8 @@ public class CardManager : MonoBehaviour
         putCount = 0;
         if(myTurn == false){
             if(TryPutCard(myTurn))
-                TurnManager.Inst.EndTurn();
+                TurnManager.instance.EndTurn();
         }
-            
     }
     void Update(){
         if(isMyCardDrag)
@@ -173,7 +172,7 @@ public class CardManager : MonoBehaviour
         
         if(card == null){
             Debug.Log("왔나");
-            TurnManager.Inst.EndTurn();
+            TurnManager.instance.EndTurn();
             return false;
         }
         var spawnPos = Vector3.zero;
@@ -297,7 +296,7 @@ public class CardManager : MonoBehaviour
             EntityManager.Inst.EntityAlignment();
         else{
             if(TryPutCard(true)){
-                TurnManager.Inst.EndTurn();
+                TurnManager.instance.EndTurn();
             }
         }
             
@@ -327,11 +326,11 @@ public class CardManager : MonoBehaviour
         card.GetComponent<Order>().SetMostFrontOrder(isEnlarge);
     }
     void SetECardState(){
-        if(TurnManager.Inst.isLoading)  // 게임 로딩중일땐 아무것도 안되고
+        if(TurnManager.instance.isLoading)  // 게임 로딩중일땐 아무것도 안되고
             eCardState = ECardState.Nothing;
-        else if(!TurnManager.Inst.myTurn || putCount == 1)   // 드래그 못하게
+        else if(!TurnManager.instance.myTurn || putCount == 1)   // 드래그 못하게
             eCardState = ECardState.CanMouseOver;
-        else if(TurnManager.Inst.myTurn && putCount == 0)    // 내 턴일땐 가능
+        else if(TurnManager.instance.myTurn && putCount == 0)    // 내 턴일땐 가능
             eCardState = ECardState.CanMouseDrag;
         
     }

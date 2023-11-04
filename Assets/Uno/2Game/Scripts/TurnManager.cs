@@ -5,10 +5,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class TurnManager : MonoBehaviour
+public class TurnManager : Singleton<TurnManager>
 {
-    public static TurnManager Inst {get; private set;}
-    void Awake() => Inst = this;
+    /* sample
+    [Header("status bar")]
+    [SerializeField] public TextMeshProUGUI text;
+
+    void Start()
+    {
+        UserInfoData user = new UserInfoData();
+        user = UserDataIns.Instance.GetMyAllData();
+        text.text = user.grade;
+    }
+    */
 
     [Header("Develop")]
     [SerializeField] [Tooltip("시작 턴 모드를 정합니다")] ETurnMode eTurnMode;
