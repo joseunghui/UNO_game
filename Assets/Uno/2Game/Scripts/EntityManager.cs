@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class EntityManager : Singleton<EntityManager>
 {
-    public static EntityManager Inst {get; private set;}
-    void Awake() => Inst = this;
-
     public GameObject entityPrefab;
     const int MAX_ENTITY_COUNT = 1;
     public List<Entity> entities;
@@ -21,7 +18,6 @@ public class EntityManager : Singleton<EntityManager>
             targetEntity.GetComponent<Order>()?.SetOriginOrder(i);
             
         }
-        
     }
     
     public bool SpawnEntity(bool isMine, Item item, Vector3 spawnPos){

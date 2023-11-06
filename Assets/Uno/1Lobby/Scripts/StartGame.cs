@@ -27,7 +27,6 @@ public class StartGame : MonoBehaviour
         if (btnName == "EasyBtn")
         {
             TurnlimitTime = 20;
-            // CardScene으로 변경
             LoadingSceneManager.LoadScene("CardScenes");
         } else if (btnName == "NormalBtn")
         {

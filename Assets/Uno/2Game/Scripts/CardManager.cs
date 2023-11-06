@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using DG.Tweening;
+using TMPro;
 
-public class CardManager : MonoBehaviour
+public class CardManager : Singleton<CardManager>
 {
+    [SerializeField] TextMeshProUGUI LimitTime;
+
     public static CardManager Inst { get; private set; }
     void Awake() => Inst = this;
 
@@ -29,7 +32,7 @@ public class CardManager : MonoBehaviour
     bool OnMyCardArea;
     enum ECardState {Nothing, CanMouseOver, CanMouseDrag}
     int putCount;
-    private int timeLimit = StartGame.TurnlimitTime;
+    private float timeLimit = (float)StartGame.TurnlimitTime;
 
     public void play(int clip){
         AudioSource audioSource = GetComponent<AudioSource>();
@@ -42,12 +45,12 @@ public class CardManager : MonoBehaviour
 
     public Item PopItem(){
         if(itemBuffer.Count == 0){
-            items = EntityManager.Inst.items;
+            items = EntityManager.instance.items;
             for(int i = 0; i<items.Count-1; i++){
                 itemBuffer.Add(items[i]);     
             }
             for(int i = items.Count-2; i >= 0; i--){
-                EntityManager.Inst.items.Remove(items[i]);
+                EntityManager.instance.items.Remove(items[i]);
             }
             MixCard();
         }
@@ -77,11 +80,14 @@ public class CardManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("사간제한 : " + timeLimit);
+        Debug.Log("시간제한 : " + timeLimit);
         SetUpItemBuffer();
         TurnManager.OnAddCard += AddCard;
         TurnManager.OnTurnStarted += OnTurnStarted;
         TurnManager.onStartCard += StartCard;
+
+
+
     }
     void OnDestroy(){
         TurnManager.OnAddCard -= AddCard;
@@ -98,14 +104,19 @@ public class CardManager : MonoBehaviour
     }
     void Update(){
         if(isMyCardDrag)
+        {
+            if (timeLimit > 0)
+                timeLimit -= Time.deltaTime;
+            LimitTime.text = Mathf.Ceil(timeLimit).ToString();
             CardDrag();
+        }  
         
         DetectCardArea();
         SetECardState();
     }
     
     void StartCard(bool isFront){
-        EntityManager.Inst.SpawnEntity(isFront, PopItem(), Vector3.zero);
+        EntityManager.instance.SpawnEntity(isFront, PopItem(), Vector3.zero);
     }
 
     void AddCard(bool isMine){
@@ -176,7 +187,7 @@ public class CardManager : MonoBehaviour
         if(putCount >= 1)   // 카드 하나 낼 수 있음
             return false;
         Debug.Log(isMine);
-        items = EntityManager.Inst.items;
+        items = EntityManager.instance.items;
         Item item = items[items.Count-1]; // 마지막으로 낸 카드
         Card card = isMine ? selectCard : OtherCard(item, 1);
         
@@ -193,7 +204,7 @@ public class CardManager : MonoBehaviour
         // 특수카드 중 색깔 블랙 (4드로우, 색깔 변경)
         if (card.item.color.Equals("black"))
         {
-            EntityManager.Inst.SpawnEntity(isMine, card.item, spawnPos);
+            EntityManager.instance.SpawnEntity(isMine, card.item, spawnPos);
             targetCards.Remove(card);
             card.transform.DOKill();
             DestroyImmediate(card.gameObject);
@@ -219,7 +230,7 @@ public class CardManager : MonoBehaviour
         else
         {
             if(card.item.color == item.color || card.item.num == item.num || item.color.Equals("black")) { // 카드 낼 때 조건
-                EntityManager.Inst.SpawnEntity(isMine, card.item, spawnPos);
+                EntityManager.instance.SpawnEntity(isMine, card.item, spawnPos);
                 targetCards.Remove(card);
                 card.transform.DOKill();
                 DestroyImmediate(card.gameObject);
@@ -302,7 +313,7 @@ public class CardManager : MonoBehaviour
         if(eCardState != ECardState.CanMouseDrag)
             return;
         if(OnMyCardArea)
-            EntityManager.Inst.EntityAlignment();
+            EntityManager.instance.EntityAlignment();
         else{
             if(TryPutCard(true)){
                 TurnManager.instance.EndTurn();
@@ -317,7 +328,7 @@ public class CardManager : MonoBehaviour
         
         if(!OnMyCardArea){
             selectCard.MoveTransform(new PRS(Utils.MousePos, Utils.QI, selectCard.originPRS.scale), false);
-            EntityManager.Inst.EntityAlignment();
+            EntityManager.instance.EntityAlignment();
         }
     }
     void DetectCardArea(){  // MyCardArea랑 마우스랑 겹치는 부분이 있으면 true

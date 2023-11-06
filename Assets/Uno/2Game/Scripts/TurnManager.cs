@@ -4,21 +4,10 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using TMPro;
 
 public class TurnManager : Singleton<TurnManager>
 {
-    /* sample
-    [Header("status bar")]
-    [SerializeField] public TextMeshProUGUI text;
-
-    void Start()
-    {
-        UserInfoData user = new UserInfoData();
-        user = UserDataIns.Instance.GetMyAllData();
-        text.text = user.grade;
-    }
-    */
-
     [Header("Develop")]
     [SerializeField] [Tooltip("시작 턴 모드를 정합니다")] ETurnMode eTurnMode;
     [SerializeField] [Tooltip("시작 카드 개수를 정합니다")] int startCardCount;
@@ -30,13 +19,17 @@ public class TurnManager : Singleton<TurnManager>
     public Button turnbtn;
     public Button unobtn;
     enum ETurnMode {Random, My, Other}
-    WaitForSeconds delay01 = new WaitForSeconds(0.1f);
-    WaitForSeconds delay05 = new WaitForSeconds(0.5f);
+    WaitForSeconds delay01 = new WaitForSeconds(10f);
+    WaitForSeconds delay05 = new WaitForSeconds(50f);
     public static Action<bool> OnAddCard;
     public static Action<bool> onStartCard;
     public static event Action<bool> OnTurnStarted;
     
     int unoCount = 0;
+
+    [SerializeField] NotificationPanel notificationPanel;
+    [SerializeField] TextMeshProUGUI nickname;
+    [SerializeField] TextMeshProUGUI diaValue;
 
     void GameSetup(){
         switch(eTurnMode){
@@ -77,8 +70,8 @@ public class TurnManager : Singleton<TurnManager>
 
     IEnumerator StartTurnCo(){
         isLoading = true;
-        if(myTurn)
-            GameManager.Inst.Notification("내 차례!");
+        if (myTurn)
+            Notification("내 차례!");
         yield return delay05;
         isLoading = false;
         
@@ -87,7 +80,11 @@ public class TurnManager : Singleton<TurnManager>
     }
 
     public void Update(){
-        if(CardManager.Inst.myCards.Count >= 2)
+#if UNITY_EDITOR    // 유니티 에디터일 경우에만 치트 호출
+        InputCheatKey();
+#endif
+
+        if (CardManager.Inst.myCards.Count >= 2)
             unoCount = 1;
         if(CardManager.Inst.myCards.Count == 1 && unoCount == 1)
             unobtn.interactable = true;
@@ -111,5 +108,28 @@ public class TurnManager : Singleton<TurnManager>
         OnAddCard?.Invoke(true);
         cardbtn.interactable = false;
         turnbtn.interactable = true;
+        Debug.Log("turn btn");
+        turnbtn.onClick.AddListener(() => Debug.Log("click turn change!") );
+    }
+
+
+    void InputCheatKey()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+            OnAddCard?.Invoke(true);
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+            OnAddCard?.Invoke(false);
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+            EndTurn();
+    }
+
+    public void StartGame()
+    {
+        StartCoroutine(StartGameCo());
+    }
+
+    public void Notification(string message)
+    {
+        notificationPanel.Show(message);
     }
 }

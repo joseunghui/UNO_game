@@ -43,7 +43,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: efea73c89f714a94cb5a85fe7586f6c5, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb73724eda521f4494583c65871990e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LimitTime: {fileID: 0}
   itemSO: {fileID: 11400000, guid: 2f80e87c80df63d48b9a34e18abd6dcd, type: 2}
   cardPrefab: {fileID: 2499801217509708884, guid: e5d386a0e67d8d444a21743b11093d3d, type: 3}
   cardSpawnPoint: {fileID: 2427598104757949430, guid: 0c779315338a54d4882ae1d132c8d056, type: 3}
