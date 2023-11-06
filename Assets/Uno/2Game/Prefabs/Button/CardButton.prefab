@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 7994283816866351676}
   - component: {fileID: 7963993875069389147}
   - component: {fileID: 1915556217609731847}
+  - component: {fileID: 8749010878405816072}
   m_Layer: 0
   m_Name: CardButton
   m_TagString: Untagged
@@ -257,20 +258,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Card, Assembly-CSharp
-        m_MethodName: ClickSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 8749010878405816072}
+        m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
         m_MethodName: nonePutCard
         m_Mode: 1
         m_Arguments:
@@ -281,3 +270,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8749010878405816072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6479619286830327970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ff7094ba8839a4cb63ffb57a27e02e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eTurnMode: 0
+  startCardCount: 0
+  isLoading: 0
+  myTurn: 0
+  cardbtn: {fileID: 1915556217609731847}
+  turnbtn: {fileID: 4203852250092161406, guid: b28f9380e04124193a2dbc41862ff201, type: 3}
+  unobtn: {fileID: 4404943838726595255, guid: 11c7d8f7133c44868a1dca66d3fa108b, type: 3}

@@ -20,8 +20,8 @@ public class CardManager : MonoBehaviour
 
     public List<Card> otherCards;
     public List<Card> myCards;
-    public AudioSource addcardSound;
-    public AudioSource downcardSound;
+    public AudioClip AddCardSound;
+    public AudioClip DownCardSound;
     List<Item> itemBuffer;
     List<Item> items;
     Card selectCard;
@@ -30,6 +30,15 @@ public class CardManager : MonoBehaviour
     enum ECardState {Nothing, CanMouseOver, CanMouseDrag}
     int putCount;
     private int timeLimit = StartGame.TurnlimitTime;
+
+    public void play(int clip){
+        AudioSource audioSource = GetComponent<AudioSource>();
+        if(clip == 1) 
+           audioSource.clip = AddCardSound;
+        else
+            audioSource.clip = DownCardSound;
+        audioSource.Play();
+    }
 
     public Item PopItem(){
         if(itemBuffer.Count == 0){
@@ -104,8 +113,9 @@ public class CardManager : MonoBehaviour
         var card = cardObject.GetComponent<Card>();
         card.Setup(PopItem(), isMine);
         (isMine ? myCards : otherCards).Add(card);
+        
+        //play(1);
 
-        addcardSound.Play();
         SetOriginOrder(isMine);
         CardAlignment(isMine);
     }
@@ -119,9 +129,9 @@ public class CardManager : MonoBehaviour
     void CardAlignment(bool isMine){    // 카드 정렬
         List<PRS> originCardPRSs = new List<PRS>();
         if(isMine)
-            originCardPRSs = RoundAlignment(myCardLeft, myCardRight, myCards.Count, 0.5f, Vector3.one * 1.2f);
+            originCardPRSs = RoundAlignment(myCardLeft, myCardRight, myCards.Count, 0.5f, Vector3.one);
         else
-            originCardPRSs = RoundAlignment(otherCardLeft, otherCardRight, otherCards.Count, -0.5f, Vector3.one);
+            originCardPRSs = RoundAlignment(otherCardLeft, otherCardRight, otherCards.Count, -0.5f, Vector3.one * 0.8f);
 
 
         var targetCards = isMine ? myCards : otherCards;
@@ -239,7 +249,7 @@ public class CardManager : MonoBehaviour
             }
         }
         if(result){
-            downcardSound.Play();
+            //play(2);
         }
         return result;
     }
@@ -247,7 +257,6 @@ public class CardManager : MonoBehaviour
     #region OtherCard
     public Card OtherCard(Item item, int count)// int count는 낼 카드 없을 때 계속 카드 먹는 거 방지용
     {
-        Debug.Log("상대방 차례일 떄 카드 제출 움직임 구현");
         Debug.Log(item.color + ", "+ item.num);
         Card card;
 

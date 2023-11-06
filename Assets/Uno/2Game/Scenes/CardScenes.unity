@@ -715,7 +715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8419558437834595405, guid: b28f9380e04124193a2dbc41862ff201, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8419558437834595405, guid: b28f9380e04124193a2dbc41862ff201, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1177,8 +1177,8 @@ MonoBehaviour:
   eCardState: 0
   otherCards: []
   myCards: []
-  addcardSound: {fileID: 0}
-  downcardSound: {fileID: 0}
+  AddCardSound: {fileID: 0}
+  DownCardSound: {fileID: 0}
 --- !u!4 &803016570
 Transform:
   m_ObjectHideFlags: 0
@@ -2648,7 +2648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4134390626865993087, guid: 11c7d8f7133c44868a1dca66d3fa108b, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4134390626865993087, guid: 11c7d8f7133c44868a1dca66d3fa108b, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2673,18 +2673,6 @@ PrefabInstance:
     - target: {fileID: 4134390626865993087, guid: 11c7d8f7133c44868a1dca66d3fa108b, type: 3}
       propertyPath: m_SizeDelta.y
       value: 160
-      objectReference: {fileID: 0}
-    - target: {fileID: 4134390626865993087, guid: 11c7d8f7133c44868a1dca66d3fa108b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4134390626865993087, guid: 11c7d8f7133c44868a1dca66d3fa108b, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4134390626865993087, guid: 11c7d8f7133c44868a1dca66d3fa108b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4134390626865993087, guid: 11c7d8f7133c44868a1dca66d3fa108b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3549,8 +3537,8 @@ RectTransform:
   - {fileID: 2030799989}
   - {fileID: 1622003211}
   - {fileID: 2034852761}
-  - {fileID: 1858415937}
   - {fileID: 269093712}
+  - {fileID: 1858415937}
   - {fileID: 1261938840}
   - {fileID: 1137710066}
   m_Father: {fileID: 1327218932}
