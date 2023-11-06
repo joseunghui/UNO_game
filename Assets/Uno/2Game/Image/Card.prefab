@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2499801216383514884}
   - component: {fileID: 2499801216383514883}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 2499801217509708880}
   - component: {fileID: 2499801217509708883}
   - component: {fileID: 966394640}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}

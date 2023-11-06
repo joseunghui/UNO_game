@@ -19,8 +19,8 @@ public class TurnManager : Singleton<TurnManager>
     public Button turnbtn;
     public Button unobtn;
     enum ETurnMode {Random, My, Other}
-    WaitForSeconds delay01 = new WaitForSeconds(10f);
-    WaitForSeconds delay05 = new WaitForSeconds(50f);
+    WaitForSeconds delay01 = new WaitForSeconds(0.1f);
+    WaitForSeconds delay05 = new WaitForSeconds(0.1f);
     public static Action<bool> OnAddCard;
     public static Action<bool> onStartCard;
     public static event Action<bool> OnTurnStarted;
@@ -84,9 +84,9 @@ public class TurnManager : Singleton<TurnManager>
         InputCheatKey();
 #endif
 
-        if (CardManager.Inst.myCards.Count >= 2)
+        if (CardManager.instance.myCards.Count >= 2)
             unoCount = 1;
-        if(CardManager.Inst.myCards.Count == 1 && unoCount == 1)
+        if(CardManager.instance.myCards.Count == 1 && unoCount == 1)
             unobtn.interactable = true;
     }
 

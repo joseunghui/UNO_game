@@ -24,19 +24,19 @@ public class Card : MonoBehaviour
     
     void OnMouseOver(){
         if(isFront)
-            CardManager.Inst.CardMouseOver(this);
+            CardManager.instance.CardMouseOver(this);
     }
     void OnMouseExit(){
         if(isFront)
-            CardManager.Inst.CardMouseExit(this);
+            CardManager.instance.CardMouseExit(this);
     }
     void OnMouseDown(){
         if(isFront)
-            CardManager.Inst.CardMouseDown();
+            CardManager.instance.CardMouseDown();
     }
     void OnMouseUp(){
         if(isFront)
-            CardManager.Inst.CardMouseUp();
+            CardManager.instance.CardMouseUp();
     }
 
     public void MoveTransform(PRS prs, bool useDotween, float dotweenTime = 0){

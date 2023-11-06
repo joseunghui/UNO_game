@@ -9,9 +9,6 @@ public class CardManager : Singleton<CardManager>
 {
     [SerializeField] TextMeshProUGUI LimitTime;
 
-    public static CardManager Inst { get; private set; }
-    void Awake() => Inst = this;
-
     [SerializeField] ItemSO itemSO;
     [SerializeField] GameObject cardPrefab;
     [SerializeField] Transform cardSpawnPoint;
@@ -81,6 +78,7 @@ public class CardManager : Singleton<CardManager>
     void Start()
     {
         Debug.Log("시간제한 : " + timeLimit);
+        
         SetUpItemBuffer();
         TurnManager.OnAddCard += AddCard;
         TurnManager.OnTurnStarted += OnTurnStarted;
@@ -105,9 +103,7 @@ public class CardManager : Singleton<CardManager>
     void Update(){
         if(isMyCardDrag)
         {
-            if (timeLimit > 0)
-                timeLimit -= Time.deltaTime;
-            LimitTime.text = Mathf.Ceil(timeLimit).ToString();
+            
             CardDrag();
         }  
         
