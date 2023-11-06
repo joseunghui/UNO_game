@@ -35,7 +35,7 @@ public class TurnManager : Singleton<TurnManager>
     public static Action<bool> OnAddCard;
     public static Action<bool> onStartCard;
     public static event Action<bool> OnTurnStarted;
-    public AudioSource startSound;
+    
     int unoCount = 0;
 
     void GameSetup(){
@@ -60,7 +60,8 @@ public class TurnManager : Singleton<TurnManager>
         GameSetup();
         isLoading = true;
 
-        startSound.Play();
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
         
         for(int i=0; i<startCardCount; i++){
             yield return delay01;
@@ -76,12 +77,12 @@ public class TurnManager : Singleton<TurnManager>
 
     IEnumerator StartTurnCo(){
         isLoading = true;
-        cardbtn.interactable = myTurn;
         if(myTurn)
             GameManager.Inst.Notification("내 차례!");
         yield return delay05;
         isLoading = false;
         
+        cardbtn.interactable = true;
         OnTurnStarted?.Invoke(myTurn);
     }
 
@@ -94,8 +95,8 @@ public class TurnManager : Singleton<TurnManager>
 
     public void EndTurn(){
         myTurn = !myTurn;
-        StartCoroutine(StartTurnCo());
         turnbtn.interactable = false;
+        StartCoroutine(StartTurnCo());
     }
 
     public void Uno(){
@@ -104,5 +105,11 @@ public class TurnManager : Singleton<TurnManager>
         // 상대 움직임 구현에 따라 수정 필요
         unobtn.interactable = false;
         unoCount = 0;
+    }
+    
+    public void nonePutCard(){
+        OnAddCard?.Invoke(true);
+        cardbtn.interactable = false;
+        turnbtn.interactable = true;
     }
 }

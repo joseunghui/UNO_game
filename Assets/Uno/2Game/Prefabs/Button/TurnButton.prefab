@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 8272880886476677008}
   - component: {fileID: 8198254032013757241}
   - component: {fileID: 4203852250092161406}
+  - component: {fileID: -2434606490754246997}
   m_Layer: 0
   m_Name: TurnButton
   m_TagString: Untagged
@@ -257,7 +258,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: -2434606490754246997}
         m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
         m_MethodName: EndTurn
         m_Mode: 1
@@ -269,3 +270,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &-2434606490754246997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8744604312065472231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ff7094ba8839a4cb63ffb57a27e02e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eTurnMode: 0
+  startCardCount: 0
+  isLoading: 0
+  myTurn: 0
+  cardbtn: {fileID: 1915556217609731847, guid: 9801feab288364d17a50226b2fae9877, type: 3}
+  turnbtn: {fileID: 4203852250092161406}
+  unobtn: {fileID: 4404943838726595255, guid: 11c7d8f7133c44868a1dca66d3fa108b, type: 3}

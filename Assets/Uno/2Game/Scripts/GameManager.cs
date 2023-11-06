@@ -10,8 +10,6 @@ public class GameManager : Singleton<GameManager>
     void Awake() => Inst = this;
 
     [SerializeField] NotificationPanel notificationPanel;
-    public Button cardbtn;
-    public Button turnbtn;
 
     
     void Start()
@@ -39,15 +37,5 @@ public class GameManager : Singleton<GameManager>
 
     public void Notification(string message){
         notificationPanel.Show(message);
-    }
-
-    public void nonePutCard(){
-        TurnManager.OnAddCard?.Invoke(true);
-        cardbtn.interactable = false;
-        ColorBlock btnColor = cardbtn.colors;
-        btnColor.normalColor = new Color32(55,55,55,255);
-        turnbtn.interactable = true;
-        ColorBlock btnColor1 = turnbtn.colors;
-        btnColor1.normalColor = new Color32(255,234,0,172);
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1947279195583231258}
   - component: {fileID: 7404465433888415451}
   - component: {fileID: 4404943838726595255}
+  - component: {fileID: 6449750421764153718}
   m_Layer: 0
   m_Name: UnoButton
   m_TagString: Untagged
@@ -28,7 +29,7 @@ RectTransform:
   m_GameObject: {fileID: 4594839321708161373}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1, y: 1.2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 426694682429821354}
@@ -117,12 +118,12 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 7404465433888415451}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6449750421764153718}
         m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
         m_MethodName: Uno
         m_Mode: 1
@@ -134,18 +135,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Card, Assembly-CSharp
-        m_MethodName: ClickSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+--- !u!114 &6449750421764153718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4594839321708161373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ff7094ba8839a4cb63ffb57a27e02e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eTurnMode: 0
+  startCardCount: 0
+  isLoading: 0
+  myTurn: 0
+  cardbtn: {fileID: 1915556217609731847, guid: 9801feab288364d17a50226b2fae9877, type: 3}
+  turnbtn: {fileID: 4203852250092161406, guid: b28f9380e04124193a2dbc41862ff201, type: 3}
+  unobtn: {fileID: 4404943838726595255}
 --- !u!1 &9036265605835519556
 GameObject:
   m_ObjectHideFlags: 0
