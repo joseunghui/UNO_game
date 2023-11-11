@@ -44,6 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b633bec1b50df84a886a0a1c989c357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notificationPanel: {fileID: 5029052164000036315, guid: 5c42e4962dd5947fb9a16fad9639f264, type: 3}
-  cardbtn: {fileID: 1915556217609731847, guid: 9801feab288364d17a50226b2fae9877, type: 3}
-  turnbtn: {fileID: 4203852250092161406, guid: b28f9380e04124193a2dbc41862ff201, type: 3}
+  cbtnPrefab: {fileID: 8141542250650319397, guid: 9801feab288364d17a50226b2fae9877, type: 3}
+  tbtnPrefab: {fileID: 8744604312065472231, guid: b28f9380e04124193a2dbc41862ff201, type: 3}

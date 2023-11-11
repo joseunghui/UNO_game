@@ -14,7 +14,7 @@ public class EntityManager : Singleton<EntityManager>
         for(int i = 0; i < targetEntities.Count; i++){
             var targetEntity = targetEntities[i];
             targetEntity.originPos = new Vector3(0, 0, 0);
-            targetEntity.MoveTransform(targetEntity.originPos, true, 0.5f);
+            //targetEntity.MoveTransform(targetEntity.originPos, true, 0.5f);
             targetEntity.GetComponent<Order>()?.SetOriginOrder(i);
             
         }
@@ -23,10 +23,9 @@ public class EntityManager : Singleton<EntityManager>
     public bool SpawnEntity(bool isMine, Item item, Vector3 spawnPos){
         var entityObject = Instantiate(entityPrefab, spawnPos, Utils.QI);
         var entity = entityObject.GetComponent<Entity>();
-        if(isMine == false)
-            entity.MoveTransform(spawnPos,true,0.5f);
 
         entity.Setup(item);
+        //entity.MoveTransform(spawnPos,true,0.97f);
         entities.Add(entity);
         items.Add(item);
         EntityAlignment();

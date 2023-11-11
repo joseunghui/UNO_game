@@ -21,7 +21,7 @@ public class Entity : MonoBehaviour
         this.item = item;
         image.sprite = this.item.sprite;
     }
-    public void MoveTransform(Vector3 pos, bool useDotween, float dotweenTime = 0){
+    public void MoveTransform(Vector3 pos, bool useDotween, float dotweenTime){
         if(useDotween)
             transform.DOMove(pos, dotweenTime);
         else
