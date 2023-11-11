@@ -49,9 +49,10 @@ MonoBehaviour:
   startCardCount: 5
   isLoading: 0
   myTurn: 0
-  cardbtn: {fileID: 1915556217609731847, guid: 9801feab288364d17a50226b2fae9877, type: 3}
+  cardbtn: {fileID: 3259643003756316825, guid: 9801feab288364d17a50226b2fae9877, type: 3}
   turnbtn: {fileID: 4203852250092161406, guid: b28f9380e04124193a2dbc41862ff201, type: 3}
   unobtn: {fileID: 4404943838726595255, guid: 11c7d8f7133c44868a1dca66d3fa108b, type: 3}
+  unoCount: 0
   notificationPanel: {fileID: 5029052164000036315, guid: 5c42e4962dd5947fb9a16fad9639f264, type: 3}
   nickname: {fileID: 0}
   diaValue: {fileID: 0}
@@ -73,7 +74,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 139
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

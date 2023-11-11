@@ -16,9 +16,5 @@ public class GameManager : Singleton<GameManager>
         //userInfo = UserDataIns.Instance.GetMyAllData();
         //nickname.text = userInfo.nickname;
         //diaValue.text = (userInfo.freeDia + userInfo.payDia).ToString();
-
-    }
-    void Update(){
-
     }
 }

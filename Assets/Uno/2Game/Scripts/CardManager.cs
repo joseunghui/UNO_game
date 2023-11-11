@@ -130,7 +130,7 @@ public class CardManager : Singleton<CardManager>
         int count = isMine ? myCards.Count : otherCards.Count;
         for(int i=0; i<count; i++){
             var targetCard = isMine ? myCards[i] : otherCards[i];
-            targetCard?.GetComponent<Order>().SetOriginOrder(i);
+            targetCard?.GetComponent<Order>().SetOriginOrder(i+1);
         }
     }
     void CardAlignment(bool isMine){    // 카드 정렬
@@ -182,7 +182,6 @@ public class CardManager : Singleton<CardManager>
     public bool TryPutCard(bool isMine){
         if(putCount >= 1)   // 카드 하나 낼 수 있음
             return false;
-        Debug.Log(isMine);
         items = EntityManager.instance.items;
         Item item = items[items.Count-1]; // 마지막으로 낸 카드
         Card card = isMine ? selectCard : OtherCard(item, 1);
@@ -195,6 +194,7 @@ public class CardManager : Singleton<CardManager>
         var spawnPos = Vector3.zero;
         var targetCards = isMine ? myCards : otherCards;
         bool result = false;
+        //card.MoveTransform(new PRS(Vector3.zero,Utils.QI,Vector3.one),true,0.97f);
         
 
         // 특수카드 중 색깔 블랙 (4드로우, 색깔 변경)
@@ -264,14 +264,13 @@ public class CardManager : Singleton<CardManager>
     #region OtherCard
     public Card OtherCard(Item item, int count)// int count는 낼 카드 없을 때 계속 카드 먹는 거 방지용
     {
-        Debug.Log(item.color + ", "+ item.num);
         Card card;
 
         if(item.color == "black")   //블랙이면 아무거나
             card = otherCards[Random.Range(0, otherCards.Count)];
         else{
             var targetCards = otherCards.FindAll(x => x.item.color.Equals(item.color) || x.item.num == item.num);
-            for(int i=0;i<targetCards.Count-1;i++){
+            for(int i=0;i<targetCards.Count;i++){
                 Debug.Log(targetCards[i].item.color+ ",♡ "+targetCards[i].item.num);   
             }
             if(targetCards.Count <= 0 && count == 1){

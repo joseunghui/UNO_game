@@ -15,19 +15,15 @@ public class TurnManager : Singleton<TurnManager>
     [Header("Properties")]
     public bool isLoading; // 게임 끝나면 true로 해서 클릭 방지
     public bool myTurn;
-    public Button cardbtn;
-    public Button turnbtn;
-    public Button unobtn;
     enum ETurnMode {Random, My, Other}
     WaitForSeconds delay01 = new WaitForSeconds(0.1f);
     WaitForSeconds delay05 = new WaitForSeconds(0.1f);
     public static Action<bool> OnAddCard;
     public static Action<bool> onStartCard;
     public static event Action<bool> OnTurnStarted;
-    
-    int unoCount = 0;
 
-    [SerializeField] NotificationPanel notificationPanel;
+    
+    public int unoCount = 0;
     [SerializeField] TextMeshProUGUI nickname;
     [SerializeField] TextMeshProUGUI diaValue;
 
@@ -46,10 +42,6 @@ public class TurnManager : Singleton<TurnManager>
     }
 
     public IEnumerator StartGameCo(){
-        turnbtn.interactable = false;
-        unobtn.interactable = false;
-        cardbtn.interactable = false;
-
         GameSetup();
         isLoading = true;
 
@@ -70,12 +62,9 @@ public class TurnManager : Singleton<TurnManager>
 
     IEnumerator StartTurnCo(){
         isLoading = true;
-        if (myTurn)
-            Notification("내 차례!");
+        ButtonManager.Inst.turnStart(myTurn);
         yield return delay05;
         isLoading = false;
-        
-        cardbtn.interactable = true;
         OnTurnStarted?.Invoke(myTurn);
     }
 
@@ -83,35 +72,17 @@ public class TurnManager : Singleton<TurnManager>
 #if UNITY_EDITOR    // 유니티 에디터일 경우에만 치트 호출
         InputCheatKey();
 #endif
-
         if (CardManager.instance.myCards.Count >= 2)
             unoCount = 1;
         if(CardManager.instance.myCards.Count == 1 && unoCount == 1)
-            unobtn.interactable = true;
+            ButtonManager.Inst.unobtn.interactable = true;
     }
 
     public void EndTurn(){
         myTurn = !myTurn;
-        turnbtn.interactable = false;
         StartCoroutine(StartTurnCo());
+        Debug.Log("엔드턴");
     }
-
-    public void Uno(){
-        OnAddCard?.Invoke(false); // 게임이 내 기준에서 구현해서 일단 false로 넣어놓음
-        OnAddCard?.Invoke(false);
-        // 상대 움직임 구현에 따라 수정 필요
-        unobtn.interactable = false;
-        unoCount = 0;
-    }
-    
-    public void nonePutCard(){
-        OnAddCard?.Invoke(true);
-        cardbtn.interactable = false;
-        turnbtn.interactable = true;
-        Debug.Log("turn btn");
-        turnbtn.onClick.AddListener(() => Debug.Log("click turn change!") );
-    }
-
 
     void InputCheatKey()
     {
@@ -126,10 +97,5 @@ public class TurnManager : Singleton<TurnManager>
     public void StartGame()
     {
         StartCoroutine(StartGameCo());
-    }
-
-    public void Notification(string message)
-    {
-        notificationPanel.Show(message);
     }
 }
