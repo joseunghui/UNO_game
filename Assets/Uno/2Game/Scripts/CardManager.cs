@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using DG.Tweening;
@@ -191,10 +192,10 @@ public class CardManager : Singleton<CardManager>
             TurnManager.instance.EndTurn();
             return false;
         }
-        var spawnPos = Vector3.zero;
+        Debug.Log("낼 카드 : "+card.item.color+", "+card.item.num);
+        var spawnPos = isMine ? Utils.MousePos : otherCardRight.position;
         var targetCards = isMine ? myCards : otherCards;
         bool result = false;
-        //card.MoveTransform(new PRS(Vector3.zero,Utils.QI,Vector3.one),true,0.97f);
         
 
         // 특수카드 중 색깔 블랙 (4드로우, 색깔 변경)
@@ -219,7 +220,7 @@ public class CardManager : Singleton<CardManager>
                 {
                     AddCard(!isMine);
                 }
-                CardAlignment(false);
+                CardAlignment(!isMine);
             }
             result = true;
         }
@@ -245,8 +246,7 @@ public class CardManager : Singleton<CardManager>
                 {
                     AddCard(!isMine);
                     AddCard(!isMine);
-                    CardAlignment(false);
-                    result = true;
+                    CardAlignment(!isMine);
                 }
                 result = true;
             } else {
@@ -270,9 +270,6 @@ public class CardManager : Singleton<CardManager>
             card = otherCards[Random.Range(0, otherCards.Count)];
         else{
             var targetCards = otherCards.FindAll(x => x.item.color.Equals(item.color) || x.item.num == item.num);
-            for(int i=0;i<targetCards.Count;i++){
-                Debug.Log(targetCards[i].item.color+ ",♡ "+targetCards[i].item.num);   
-            }
             if(targetCards.Count <= 0 && count == 1){
                 AddCard(false);
                 OtherCard(item, 0);
