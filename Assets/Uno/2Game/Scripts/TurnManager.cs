@@ -72,16 +72,18 @@ public class TurnManager : Singleton<TurnManager>
 #if UNITY_EDITOR    // 유니티 에디터일 경우에만 치트 호출
         InputCheatKey();
 #endif
-        if (CardManager.instance.myCards.Count >= 2)
+        if(CardManager.instance.myCards.Count >= 2)
             unoCount = 1;
         if(CardManager.instance.myCards.Count == 1 && unoCount == 1)
             ButtonManager.Inst.unobtn.interactable = true;
+        if(CardManager.instance.myCards.Count != 1)
+            ButtonManager.Inst.unobtn.interactable = false;       
     }
 
     public void EndTurn(){
         myTurn = !myTurn;
-        StartCoroutine(StartTurnCo());
         Debug.Log("엔드턴");
+        StartCoroutine(StartTurnCo());
     }
 
     void InputCheatKey()
@@ -97,5 +99,10 @@ public class TurnManager : Singleton<TurnManager>
     public void StartGame()
     {
         StartCoroutine(StartGameCo());
+    }
+
+    public void GameOver(bool isMyWin){
+        isLoading = true;
+        ButtonManager.Inst.endingPopUp(isMyWin);
     }
 }

@@ -38,6 +38,10 @@ public class ButtonManager : MonoBehaviour
         turnbtn.interactable = false;
         if (myTurn)
             notificationPanel.Show("내 차례!");
-        Debug.Log("턴 시작 : "+cardbtn.interactable);
+    }
+    public void endingPopUp(bool isMyWin){
+        cardbtn.interactable = false;
+        turnbtn.interactable = false;
+        ResultPanel.Inst.Show(isMyWin ? "승리!" : "패배..");
     }
 }

@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,9 +14,7 @@ public class EntityManager : Singleton<EntityManager>
         for(int i = 0; i < targetEntities.Count; i++){
             var targetEntity = targetEntities[i];
             targetEntity.originPos = new Vector3(0, 0, 0);
-            //targetEntity.MoveTransform(targetEntity.originPos, true, 0.5f);
             targetEntity.GetComponent<Order>()?.SetOriginOrder(i);
-            
         }
     }
     
@@ -25,12 +23,17 @@ public class EntityManager : Singleton<EntityManager>
         var entity = entityObject.GetComponent<Entity>();
 
         entity.Setup(item);
-        //entity.MoveTransform(spawnPos,true,0.97f);
         entities.Add(entity);
         items.Add(item);
+        //if(TurnManager.instance.myTurn == false)
+            //Invoke("delay03",3f);
+        entity.MoveTransform(Vector3.zero, true, 0.5f);
         EntityAlignment();
 
         return true;
+    }
+    public void delay03(){
+        Debug.Log("딜레이");
     }
 
 }
