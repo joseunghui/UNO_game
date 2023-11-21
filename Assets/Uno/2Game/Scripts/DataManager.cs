@@ -27,12 +27,15 @@ public class DataManager : MonoBehaviour
     [SerializeField] private GameObject HeartGroup;
     [SerializeField] private GameObject Heart;
 
+    [Header("Option Popup")]
+    [SerializeField] private GameObject OptionPopup;
+
     public Sprite Sliver;
     public Sprite Gold;
 
     UserInfoData data;
     public bool IsMyTurn;
-    public float timeLimit;
+    private float timeLimit;
     private bool AddCardAfterTimeOut;
 
     private void Awake()
@@ -85,6 +88,12 @@ public class DataManager : MonoBehaviour
     IEnumerator StartTimer()
     {
         yield return null;
+
+        if (OptionPopup.activeSelf == true)
+        {
+            yield return new WaitUntil( () => OptionPopup.activeSelf == false);
+        }
+
         timeLimit -= Time.deltaTime;
         TimerTxt.text = Math.Round(timeLimit, 3).ToString("#.##");
     }
