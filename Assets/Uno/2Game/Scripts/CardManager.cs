@@ -27,6 +27,7 @@ public class CardManager : Singleton<CardManager>
     bool OnMyCardArea;
     enum ECardState {Nothing, CanMouseOver, CanMouseDrag}
     int putCount;
+
     private float LimitTime = (float)StartGame.TurnlimitTime;
 
     public void play(int clip){
@@ -80,8 +81,6 @@ public class CardManager : Singleton<CardManager>
         TurnManager.OnTurnStarted += OnTurnStarted;
         TurnManager.onStartCard += StartCard;
 
-
-
     }
     void OnDestroy(){
         TurnManager.OnAddCard -= AddCard;
@@ -90,11 +89,12 @@ public class CardManager : Singleton<CardManager>
 
     }
     void OnTurnStarted(bool myTurn){    // 내턴 시작하면 놓을 수 있는 개수 초기화
-        Debug.Log("시간제한 : " + LimitTime);
         putCount = 0;
         if(myTurn == false){
             if(TryPutCard(myTurn))
+            {
                 TurnManager.instance.EndTurn();
+            }
         }
     }
     void Update(){
@@ -112,7 +112,7 @@ public class CardManager : Singleton<CardManager>
         EntityManager.instance.SpawnEntity(isFront, PopItem(), Vector3.zero);
     }
 
-    void AddCard(bool isMine){
+    public void AddCard(bool isMine){
         var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Utils.QI);
         var card = cardObject.GetComponent<Card>();
         card.Setup(PopItem(), isMine);
@@ -130,7 +130,7 @@ public class CardManager : Singleton<CardManager>
             targetCard?.GetComponent<Order>().SetOriginOrder(i+1);
         }
     }
-    void CardAlignment(bool isMine){    // 카드 정렬
+    public void CardAlignment(bool isMine){    // 카드 정렬
         List<PRS> originCardPRSs = new List<PRS>();
         if(isMine)
             originCardPRSs = RoundAlignment(myCardLeft, myCardRight, myCards.Count, 0.5f, Vector3.one);
@@ -177,7 +177,7 @@ public class CardManager : Singleton<CardManager>
 
     #region 카드 내는 과정
     public bool TryPutCard(bool isMine){
-        if(putCount >= 1)   // 카드 하나 낼 수 있음
+        if (putCount >= 1)   // 카드 하나 낼 수 있음
             return false;
         items = EntityManager.instance.items;
         Item item = items[items.Count-1]; // 마지막으로 낸 카드

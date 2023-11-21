@@ -22,7 +22,6 @@ public class TurnManager : Singleton<TurnManager>
     public static Action<bool> onStartCard;
     public static event Action<bool> OnTurnStarted;
 
-    
     public int unoCount = 0;
 
     void GameSetup(){
@@ -75,7 +74,13 @@ public class TurnManager : Singleton<TurnManager>
         if(CardManager.instance.myCards.Count == 1 && unoCount == 1)
             ButtonManager.Inst.unobtn.interactable = true;
         if(CardManager.instance.myCards.Count != 1)
-            ButtonManager.Inst.unobtn.interactable = false;       
+            ButtonManager.Inst.unobtn.interactable = false;
+
+        // 턴으로 타이머 시작/멈춤 설정
+        if (myTurn)
+            DataManager.Instance.IsMyTurn = true;
+        else
+            DataManager.Instance.IsMyTurn = false;
     }
 
     public void EndTurn(){

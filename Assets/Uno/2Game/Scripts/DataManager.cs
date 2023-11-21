@@ -3,9 +3,21 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using UnityEngine.UI;
+using System.ComponentModel;
 
 public class DataManager : MonoBehaviour
 {
+    private static DataManager instance = null;
+    public static DataManager Instance
+    {
+        get
+        {
+            if (instance == null)
+                return null;
+            return instance;
+        }
+    }
+
     [Header("Status Bar")]
     [SerializeField] private TextMeshProUGUI modeTxt;
     [SerializeField] private TextMeshProUGUI TimerTxt;
@@ -19,22 +31,67 @@ public class DataManager : MonoBehaviour
     public Sprite Gold;
 
     UserInfoData data;
-    private float timeLimit;
+    public bool IsMyTurn;
+    public float timeLimit;
+    private bool AddCardAfterTimeOut;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     void Start()
     {
+        timeLimit = (float)StartGame.TurnlimitTime;
+        IsMyTurn = false;
         StartCoroutine(SetDataConnc());
     }
 
     private void Update()
     {
+        if (timeLimit > 0)
+        {
+            AddCardAfterTimeOut = false;
+            if (IsMyTurn)
+                StartCoroutine(StartTimer());
+        } else
+        {
+            // 시간 지나면 카드먹고 턴 넘기기
+            IsMyTurn = false;
+            if (!AddCardAfterTimeOut)
+            {
+                StartCoroutine(AfterTimeoutExc());
+                AddCardAfterTimeOut = true;
+            }
+                
+        }
+    }
+
+    #region after time out
+    IEnumerator AfterTimeoutExc()
+    {
+        yield return null;
+        CardManager.instance.AddCard(true);
+
+        yield return CardManager.instance.TryPutCard(false);
+        timeLimit = (float)StartGame.TurnlimitTime;
+
+    }
+    #endregion
+    #region Timer Running
+    IEnumerator StartTimer()
+    {
+        yield return null;
         timeLimit -= Time.deltaTime;
         TimerTxt.text = Math.Round(timeLimit, 3).ToString("#.##");
     }
-
+    #endregion
+    #region Set Data 
     private IEnumerator SetDataConnc()
     {
-        yield return timeLimit = (float)StartGame.TurnlimitTime;
         yield return data = UserDataIns.Instance.GetMyAllData();
 
         nicknameTxt.text = data.nickname;
@@ -44,7 +101,7 @@ public class DataManager : MonoBehaviour
         StartCoroutine(SetGradeIconImage());
         StartCoroutine(SetHeartIconList());
     }
-
+    #endregion
     #region Mode 
     IEnumerator SetModeValue()
     {
