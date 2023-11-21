@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using DG.Tweening;
@@ -8,8 +7,6 @@ using TMPro;
 
 public class CardManager : Singleton<CardManager>
 {
-    [SerializeField] TextMeshProUGUI LimitTime;
-
     [SerializeField] ItemSO itemSO;
     [SerializeField] GameObject cardPrefab;
     [SerializeField] Transform cardSpawnPoint;
@@ -30,7 +27,7 @@ public class CardManager : Singleton<CardManager>
     bool OnMyCardArea;
     enum ECardState {Nothing, CanMouseOver, CanMouseDrag}
     int putCount;
-    private float timeLimit = (float)StartGame.TurnlimitTime;
+    private float LimitTime = (float)StartGame.TurnlimitTime;
 
     public void play(int clip){
         AudioSource audioSource = GetComponent<AudioSource>();
@@ -78,8 +75,6 @@ public class CardManager : Singleton<CardManager>
 
     void Start()
     {
-        Debug.Log("시간제한 : " + timeLimit);
-        
         SetUpItemBuffer();
         TurnManager.OnAddCard += AddCard;
         TurnManager.OnTurnStarted += OnTurnStarted;
@@ -95,6 +90,7 @@ public class CardManager : Singleton<CardManager>
 
     }
     void OnTurnStarted(bool myTurn){    // 내턴 시작하면 놓을 수 있는 개수 초기화
+        Debug.Log("시간제한 : " + LimitTime);
         putCount = 0;
         if(myTurn == false){
             if(TryPutCard(myTurn))

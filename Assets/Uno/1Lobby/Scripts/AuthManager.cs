@@ -67,18 +67,7 @@ public class AuthManager : MonoBehaviour
         {
             if (Login.Instance.CustomSignUp(up_id_text.text, up_pwd_text.text))
             {
-                #region Insert user Info data
-
-                UserInfoData userInfo = new UserInfoData(); // 초기 값 세팅용 객체 생
-                userInfo.winrate = 0;
-                userInfo.grade = 3;
-                userInfo.heart = 5;
-                userInfo.freeDia = 10; // 웰컴 다이아ㅋㅋㅋ
-                userInfo.payDia = 0;
-
-                UserDataIns.Instance.InsertUserData(userInfo);
-
-                #endregion
+                UserDataIns.Instance.InsertUserData();
 
                 string alertTxt = "회원 가입이 완료 되었습니다.\n로그인 후 이용해주세요.";
                 Alert.text = alertTxt.Replace("\\n", "\n");

@@ -24,8 +24,6 @@ public class TurnManager : Singleton<TurnManager>
 
     
     public int unoCount = 0;
-    [SerializeField] TextMeshProUGUI nickname;
-    [SerializeField] TextMeshProUGUI diaValue;
 
     void GameSetup(){
         switch(eTurnMode){
