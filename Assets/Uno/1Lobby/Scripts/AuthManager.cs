@@ -35,7 +35,6 @@ public class AuthManager : MonoBehaviour
         }
 
         // 기존 유저 -> 로그인 / 신규 유저 -> 회원 가입
-        // 여기서 HavingThisUser() 를 먼저 사용하려 했지만 로그인 전에는 뒤끝 접근이 불가능 했음
         if (Login.Instance.CustomLogin(in_id_text.text, in_pwd_text.text))
         {
             // 기존유저 -> 그대로 로그인 후 게임 시작
