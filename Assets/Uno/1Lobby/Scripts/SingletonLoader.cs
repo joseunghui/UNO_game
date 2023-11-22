@@ -10,8 +10,8 @@ public class SingletonLoader : MonoBehaviour
 
     void Awake()
     {
-        EntityManager.Load(entityManager);
         GameManager.Load(gameManager);
+        EntityManager.Load(entityManager);
         TurnManager.Load(turnManager);
         CardManager.Load(cardManager);
     }

@@ -14,6 +14,7 @@ public class UserInfoData
     public int payDia;
     public int totalCnt;
     public int winCnt;
+    public float winrate;
 
     // data 디버깅 하기 위한 함수 (Debug.Log(UserData);)
     public override string ToString()
@@ -26,6 +27,7 @@ public class UserInfoData
         result.AppendLine($"payDia : {payDia}");
         result.AppendLine($"totalCnt : {totalCnt}");
         result.AppendLine($"winCnt : {winCnt}");
+        result.AppendLine($"winrate : {winrate}");
 
 
         return result.ToString();
@@ -60,6 +62,7 @@ public class UserDataIns
         param.Add("payDia", 0);
         param.Add("totalCnt", 0);
         param.Add("winCnt", 0);
+        param.Add("winrate", 0.0);
 
         // Insert excute
         Debug.Log("유저 DB Insert 실행");
@@ -106,6 +109,7 @@ public class UserDataIns
         myInfo.payDia = int.Parse(bro.Rows()[0]["payDia"]["N"].ToString());
         myInfo.totalCnt = int.Parse(bro.Rows()[0]["totalCnt"]["N"].ToString());
         myInfo.winCnt = int.Parse(bro.Rows()[0]["winCnt"]["N"].ToString());
+        myInfo.winrate = float.Parse(bro.Rows()[0]["winrate"]["N"].ToString());
 
         for (int i=0; i<bro.Rows().Count; i++)
         {
@@ -127,4 +131,16 @@ public class UserDataIns
 
     }
     #endregion
+
+
+
+    public string GetUserNicknameToInDate(string _inDate)
+    {
+        string GetNickname;
+        Backend.Social.GetUserInfoByInDate(_inDate, (callback) =>
+        {
+            GetNickname = callback.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+        });
+        return "";
+    }
 }

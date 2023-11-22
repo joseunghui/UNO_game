@@ -3,7 +3,6 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using UnityEngine.UI;
-using System.ComponentModel;
 
 public class DataManager : MonoBehaviour
 {
@@ -18,7 +17,10 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    [Header("Status Bar")]
+    [Header("Option Popup")]
+    [SerializeField] private GameObject OptionPopup;
+
+    [Header("Game Scene")]
     [SerializeField] private TextMeshProUGUI modeTxt;
     [SerializeField] private TextMeshProUGUI TimerTxt;
     [SerializeField] private Image GradeIcon;
@@ -26,9 +28,6 @@ public class DataManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI diaTxt;
     [SerializeField] private GameObject HeartGroup;
     [SerializeField] private GameObject Heart;
-
-    [Header("Option Popup")]
-    [SerializeField] private GameObject OptionPopup;
 
     public Sprite Sliver;
     public Sprite Gold;
@@ -103,12 +102,23 @@ public class DataManager : MonoBehaviour
     {
         yield return data = UserDataIns.Instance.GetMyAllData();
 
-        nicknameTxt.text = data.nickname;
-        diaTxt.text = (data.payDia + data.freeDia).ToString();
-
+        StartCoroutine(SetNicknameValue());
         StartCoroutine(SetModeValue());
         StartCoroutine(SetGradeIconImage());
         StartCoroutine(SetHeartIconList());
+    }
+    #endregion
+
+    #region nickname & dia
+    IEnumerator SetNicknameValue()
+    {
+        yield return null;
+
+        if (data.nickname == null)
+            yield break;
+
+        nicknameTxt.text = data.nickname;
+        diaTxt.text = (data.payDia + data.freeDia).ToString();
     }
     #endregion
     #region Mode 

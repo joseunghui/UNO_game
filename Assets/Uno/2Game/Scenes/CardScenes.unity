@@ -1851,6 +1851,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43f79d011ed754480abef3bc5ebb1dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BeforeGamePopup: {fileID: 2176847079320695434, guid: 2d07a1781b6374440a7320c7c63843bb, type: 3}
+  b_GradeIcon: {fileID: 0}
+  b_nicknameTxt: {fileID: 0}
+  OptionPopup: {fileID: 460949391}
   modeTxt: {fileID: 2110818134}
   TimerTxt: {fileID: 1871210091}
   GradeIcon: {fileID: 706099247}
@@ -1858,11 +1862,9 @@ MonoBehaviour:
   diaTxt: {fileID: 1012315396}
   HeartGroup: {fileID: 277447387}
   Heart: {fileID: 2374554350060012873, guid: 3243247fa01bb4c3a8db96965d26caf0, type: 3}
-  OptionPopup: {fileID: 460949391}
   Sliver: {fileID: 21300010, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   Gold: {fileID: 21300008, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   IsMyTurn: 0
-  timeLimit: 0
 --- !u!4 &1281686716
 Transform:
   m_ObjectHideFlags: 0

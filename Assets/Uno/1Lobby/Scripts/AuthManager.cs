@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.SocialPlatforms;
 using BackEnd; // 뒤끝
 
 public class AuthManager : MonoBehaviour
@@ -21,10 +20,14 @@ public class AuthManager : MonoBehaviour
     [SerializeField] public TMP_InputField up_pwd_text;
     [SerializeField] public TMP_InputField up_pwd_conf_text;
 
+    [Header("Before Game Popup")]
+    [SerializeField] public GameObject BeforeGamePopup;
+
     [Header("Level Select Popup")]
     [SerializeField] public GameObject LevelSelectPopup;
     [SerializeField] public GameObject LevelField;
 
+    #region Sign In
     // Log-in 확인 버튼 클릭
     public void DoSignIn()
     {
@@ -47,7 +50,8 @@ public class AuthManager : MonoBehaviour
  
         }
     }
-
+    #endregion
+    #region Sign Up
     // Sign-Up 확인 버튼 클릭
     public void DoSignUp()
     {
@@ -79,34 +83,7 @@ public class AuthManager : MonoBehaviour
         }
 
     }
-
-    // 레벨 선택 버튼 생성
-    void CreateLevelBtn()
-    {
-        Alert.text = "환영합니다.";
-        // 팝업 비활성화
-        SignInPopup.SetActive(false);
-        SignUpPopup.SetActive(false);
-        AccessGameBtn.SetActive(false);
-
-        // 레벨선택 필드 활성화
-        LevelSelectPopup.SetActive(true);
-
-        // user data 가져오기
-        UserInfoData allData = UserDataIns.Instance.GetMyAllData();
-
-        if (allData.nickname == null)
-        {
-            Debug.LogError("회원 정보 조회에 실패했습니다.");
-        }
-    }
-
-    // Sign-up popup open
-    void OpenSignUpPopup()
-    {
-        SignUpPopup.SetActive(true);
-    }
-
+    #endregion
 
     void Start()
     {
@@ -122,7 +99,8 @@ public class AuthManager : MonoBehaviour
             if (autoLogin.IsSuccess())
             {
                 Debug.Log("자동 로그인에 성공했습니다.");
-                CreateLevelBtn();
+
+                CreateBeforeGamePopup();
             }
         }
         else
@@ -130,4 +108,37 @@ public class AuthManager : MonoBehaviour
             Debug.LogError("초기화 실패 : " + bro); // 실패일 경우 statusCode 400대 에러 발생 
         }
     }
+
+    void CreateBeforeGamePopup()
+    {
+        // 팝업 비활성화
+        SignInPopup.SetActive(false);
+        SignUpPopup.SetActive(false);
+        AccessGameBtn.SetActive(false);
+
+        // BeforeGamePopup
+        BeforeGamePopup.SetActive(true);
+    }
+
+    // 레벨 선택 버튼 생성
+    public void CreateLevelBtn()
+    {
+        Alert.text = "환영합니다.";
+        // 팝업 비활성화
+        SignInPopup.SetActive(false);
+        SignUpPopup.SetActive(false);
+        AccessGameBtn.SetActive(false);
+        BeforeGamePopup.SetActive(false);
+
+        // 레벨선택 필드 활성화
+        LevelSelectPopup.SetActive(true);
+    }
+
+
+    // Sign-up popup open
+    void OpenSignUpPopup()
+    {
+        SignUpPopup.SetActive(true);
+    }
+
 }

@@ -13,8 +13,5 @@ public class GameManager : Singleton<GameManager>
     {
         Debug.Log("Game Manager Start!");
         TurnManager.instance.StartGame();
-        //userInfo = UserDataIns.Instance.GetMyAllData();
-        //nickname.text = userInfo.nickname;
-        //diaValue.text = (userInfo.freeDia + userInfo.payDia).ToString();
     }
 }
