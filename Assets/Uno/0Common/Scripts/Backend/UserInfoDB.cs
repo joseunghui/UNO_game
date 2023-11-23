@@ -119,6 +119,13 @@ public class UserDataIns
         return myInfo;
     }
     #endregion
+    #region inDate로 유저 닉네임 조회
+    public string GetUserNicknameToInDate(string _inDate)
+    {
+        var bro = Backend.Social.GetUserInfoByInDate(_inDate);
+        return bro.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+    }
+    #endregion
     #region user nickname change
     public void updateUserNickname()
     {
@@ -132,15 +139,4 @@ public class UserDataIns
     }
     #endregion
 
-
-
-    public string GetUserNicknameToInDate(string _inDate)
-    {
-        string GetNickname;
-        Backend.Social.GetUserInfoByInDate(_inDate, (callback) =>
-        {
-            GetNickname = callback.GetReturnValuetoJSON()["row"]["nickname"].ToString();
-        });
-        return "";
-    }
 }

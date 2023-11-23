@@ -98,8 +98,6 @@ public class AuthManager : MonoBehaviour
             BackendReturnObject autoLogin = Backend.BMember.LoginWithTheBackendToken();
             if (autoLogin.IsSuccess())
             {
-                Debug.Log("자동 로그인에 성공했습니다.");
-
                 CreateBeforeGamePopup();
             }
         }

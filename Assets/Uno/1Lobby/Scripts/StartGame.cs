@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,9 +11,7 @@ public class StartGame : MonoBehaviour
         LevelBtn = this.transform.GetComponent<Button>();
 
         if (LevelBtn != null)
-        {
             LevelBtn.onClick.AddListener(LevelSelectBtnClick);
-        }
     }
 
     private void LevelSelectBtnClick()
@@ -33,7 +29,6 @@ public class StartGame : MonoBehaviour
             TurnlimitTime = 5;
         }
         LoadingSceneManager.LoadScene("CardScenes");
-
     }
 
 }

@@ -23,81 +23,44 @@ public class RankingDataIns
             return _instance;
         }
     }
-    private static string rankingUUID = "c4207d60-88f6-11ee-acce-7fbb598f7ba2";
 
     public List<RankingData> GetRankingData()
     {
-        Debug.Log("GetRankingData() start!");
-
         List<RankingData> result = new List<RankingData>();
         string[] selectValues = { "totalCnt", "winCnt" };
 
-        // bedonggi why andaenuagoooo whywhywhywhwywhywhwyhwywhywhywhwy
-        Backend.GameData.Get("user", new Where(), selectValues, 100, bro =>
+        var GetUsersWinrateList = Backend.GameData.Get("user", new Where(), 100);
+
+        if (GetUsersWinrateList.IsSuccess() == false)
         {
-            Debug.Log("???");
-            if (bro.IsSuccess() == false)
-            {
-                Debug.Log(bro);
-                return;
-            }
+            Debug.Log(GetUsersWinrateList);
+            return null;
+        }
 
-            if (bro.GetReturnValuetoJSON()["rows"].Count <= 0)
-            {
-                Debug.Log("nobody here");
-                return;
-            }
+        if (GetUsersWinrateList.GetReturnValuetoJSON()["rows"].Count <= 0)
+        {
+            Debug.Log("nobody here");
+            return null;
+        }
 
-            for (int i=0; i < bro.GetReturnValuetoJSON()["rows"].Count; i++)
-            {
-                RankingData data = new RankingData();
-                data.winrate = (int)bro.Rows()[i]["winCnt"]["N"] / (int)bro.Rows()[i]["totalCnt"]["N"];
-                data.ranker = UserDataIns.Instance.GetUserNicknameToInDate(bro.Rows()[i]["owner_inDate"]["S"].ToString());
+        int GetWinCnt;
+        int GetTotalCnt;
 
-                result.Add(data);
-            }
-        });
+        for (int i = 0; i < GetUsersWinrateList.GetReturnValuetoJSON()["rows"].Count; i++)
+        {
+            RankingData data = new RankingData();
+
+            GetWinCnt = int.Parse(GetUsersWinrateList.Rows()[i]["winCnt"]["N"].ToString()); // (int)GetUsersWinrateList.Rows()[i]["winCnt"]["N"];
+            GetTotalCnt = int.Parse(GetUsersWinrateList.Rows()[i]["winCnt"]["N"].ToString()); // (int)GetUsersWinrateList.Rows()[i]["totalCnt"]["N"];
+
+            data.winrate = (float)GetWinCnt / (float)GetTotalCnt;
+            data.ranker = UserDataIns.Instance.GetUserNicknameToInDate(GetUsersWinrateList.Rows()[i]["owner_inDate"]["S"].ToString());
+
+            result.Add(data);
+        }
 
         return result;
     }
-    /*
-    public List<RankingData> GetRankingData2()
-    {
-        Debug.Log("GetRankingData() start!");
-        List<RankingData> rankingDatas = new List<RankingData>();
-        string rankerGamerId;
-
-        Backend.URank.User.GetRankList(rankingUUID, 100, callback =>
-        {
-            Debug.Log(callback);
-            if (callback.IsSuccess() == false)
-                return;
-
-            LitJson.JsonData rankListJson = callback.GetFlattenJSON();
-
-            for (int i=0; i < rankListJson["rows"].Count; i++)
-            {
-                rankerGamerId = rankListJson["rows"][i]["gamerInDate"].ToString();
-
-                RankingData data = new RankingData();
-
-                Backend.Social.GetUserInfoByInDate(rankerGamerId, (callback) =>
-                {
-                    string nickname = callback.GetReturnValuetoJSON()["rows"]["nickname"].ToString();
-
-                    data.rank = i + 1;
-                    data.ranker = nickname;
-                });
-                rankingDatas.Add(data);
-            }
-
-            for (int j=0; j<rankingDatas.Count; j++)
-            {
-                Debug.Log($"ranking {rankingDatas[j].rank} = {rankingDatas[j].ranker}");
-            }
-        });
-        return rankingDatas;
-    }
-    */
+    
 
 }
