@@ -1758,6 +1758,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8898343428856906842, guid: 2d07a1781b6374440a7320c7c63843bb, type: 3}
+      propertyPath: beforeNick
+      value: 
+      objectReference: {fileID: 2032874659}
     - target: {fileID: 8909332263988701654, guid: 2d07a1781b6374440a7320c7c63843bb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3010,6 +3014,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChangeNickPopup
       objectReference: {fileID: 0}
+    - target: {fileID: 2483071297688238334, guid: 0a6572c41b2c64e3492c9ce07a4dff91, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2483071297688238335, guid: 0a6572c41b2c64e3492c9ce07a4dff91, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3235,6 +3243,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2028461870}
   m_CullTransparentMesh: 1
+--- !u!114 &2032874659 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2483071295811450864, guid: 0a6572c41b2c64e3492c9ce07a4dff91, type: 3}
+  m_PrefabInstance: {fileID: 1867394061}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2035457241
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,17 +7,6 @@ using System.Linq;
 
 public class RankingDataManager : MonoBehaviour
 {
-    private static RankingDataManager instance = null;
-    public static RankingDataManager Instance
-    {
-        get
-        {
-            if (null == instance)
-                return null;
-            return instance;
-        }
-    }
-
     [Header("Before Game Popup")]
     [SerializeField] private GameObject BeforeGamePopup;
     [SerializeField] private Image GradeIcon;
@@ -26,11 +15,15 @@ public class RankingDataManager : MonoBehaviour
     [SerializeField] private GameObject RankingList;
     [SerializeField] private GameObject RankerPrefab;
 
+    [Header("Change Nickname Popup")]
+    [SerializeField] private GameObject ChangeNickPopup;
+    [SerializeField] private TextMeshProUGUI beforeNick;
+
     public Sprite Sliver;
     public Sprite Gold;
 
     List<RankingData> ranks;
-    public UserInfoData userInfoData;
+    UserInfoData userInfoData;
     
     void Start()
     {
@@ -44,6 +37,7 @@ public class RankingDataManager : MonoBehaviour
         yield return ranks = RankingDataIns.Instance.GetRankingData();
 
         nicknameTxt.text = userInfoData.nickname;
+        beforeNick.text = userInfoData.nickname;
 
         if (userInfoData.grade == 1)
         {

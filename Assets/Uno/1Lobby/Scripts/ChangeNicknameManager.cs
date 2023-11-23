@@ -6,13 +6,8 @@ using UnityEngine;
 public class ChangeNicknameManager : MonoBehaviour
 {
     [Header("Change Nickname Popup")]
-    [SerializeField] private TextMeshProUGUI beforeNick;
+    [SerializeField] private GameObject ChangeNickPopup;
     [SerializeField] private TextMeshProUGUI afterNick;
-
-    private void Start()
-    {
-        beforeNick.text = RankingDataManager.Instance.userInfoData.nickname;
-    }
 
     public void ChangeNickConfirmBtnClick()
     {
@@ -26,5 +21,8 @@ public class ChangeNicknameManager : MonoBehaviour
             yield break;
 
         UserDataIns.Instance.updateUserNickname(afterNick.text);
+
+        ChangeNickPopup.SetActive(false);
+        LoadingSceneManager.LoadScene("MainScenes");
     }
 }
