@@ -1126,5 +1126,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChangeNickPopup: {fileID: 2483071297688238334}
-  beforeNick: {fileID: 2483071295811450864}
   afterNick: {fileID: 2483071297296855544}
