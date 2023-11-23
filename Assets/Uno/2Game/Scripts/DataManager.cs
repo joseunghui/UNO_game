@@ -35,6 +35,7 @@ public class DataManager : MonoBehaviour
     UserInfoData data;
     public bool IsMyTurn;
     private float timeLimit;
+    private int mode;
     private bool AddCardAfterTimeOut;
 
     private void Awake()
@@ -48,6 +49,13 @@ public class DataManager : MonoBehaviour
     void Start()
     {
         timeLimit = (float)StartGame.TurnlimitTime;
+
+        if (timeLimit == 20)
+            mode = 0;
+        if (timeLimit == 10)
+            mode = 1;
+        if (timeLimit == 5)
+            mode = 2;
         IsMyTurn = false;
         StartCoroutine(SetDataConnc());
     }
@@ -130,15 +138,15 @@ public class DataManager : MonoBehaviour
             yield break;
 
         // mode
-        if (timeLimit == 20)
+        if (mode == 0)
         {
             modeTxt.text = "EASY";
         }
-        else if (timeLimit == 10)
+        else if (mode == 1)
         {
             modeTxt.text = "NAR";
         }
-        else if (timeLimit == 5)
+        else if (mode == 2)
         {
             modeTxt.text = "HARD";
         }
@@ -184,4 +192,20 @@ public class DataManager : MonoBehaviour
         }
     }
     #endregion
+
+    public void ResetThisGame()
+    {
+        // 게임 모드를 동일하게 유지하고 다시 실행해야함
+        Debug.Log($"게임 리셋 => 현재 모드 {mode}");
+    }
+
+    public void BackToLobbyBtnClick()
+    {
+        Destroy(TurnManager.instance);
+        Destroy(CardManager.instance);
+        Destroy(EntityManager.instance);
+
+        LoadingSceneManager.LoadScene("MainScenes");
+        // 이렇게 돌아가서 다시 레벨 선택 하면 카드 배포가 안됨(TurnManager 안돌아감)
+    }
 }
