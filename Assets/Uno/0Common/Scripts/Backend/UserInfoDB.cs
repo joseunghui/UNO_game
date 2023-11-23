@@ -127,14 +127,30 @@ public class UserDataIns
     }
     #endregion
     #region user nickname change
-    public void updateUserNickname()
+    public void updateUserNickname(string _nick)
     {
+        // 우선 중복 확인
+        BackendReturnObject bro = Backend.BMember.CheckNicknameDuplication(_nick);
 
+        if (bro.IsSuccess())
+        {
+            Backend.BMember.UpdateNickname(_nick);
+        }
     }
     #endregion
     #region userInfo update(change userInfo)
-    public void UserDataUpdate()
+    public void UserDataUpdate(UserInfoData updateData)
     {
+        Param param = new Param();
+
+        param.Add("grade", updateData.grade);
+        param.Add("heart", updateData.heart);
+        param.Add("freeDia", updateData.freeDia);
+        param.Add("payDia", updateData.payDia);
+        param.Add("totalCnt", updateData.totalCnt);
+        param.Add("winCnt", updateData.winCnt);
+
+        Backend.GameData.Update("user", new Where(), param);
 
     }
     #endregion

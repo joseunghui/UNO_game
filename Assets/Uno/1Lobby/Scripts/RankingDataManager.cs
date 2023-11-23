@@ -7,6 +7,17 @@ using System.Linq;
 
 public class RankingDataManager : MonoBehaviour
 {
+    private static RankingDataManager instance = null;
+    public static RankingDataManager Instance
+    {
+        get
+        {
+            if (null == instance)
+                return null;
+            return instance;
+        }
+    }
+
     [Header("Before Game Popup")]
     [SerializeField] private GameObject BeforeGamePopup;
     [SerializeField] private Image GradeIcon;
@@ -19,7 +30,7 @@ public class RankingDataManager : MonoBehaviour
     public Sprite Gold;
 
     List<RankingData> ranks;
-    UserInfoData userInfoData;
+    public UserInfoData userInfoData;
     
     void Start()
     {
@@ -29,7 +40,6 @@ public class RankingDataManager : MonoBehaviour
     #region ranking data
     IEnumerator SetTotalDataConnc()
     {
-        Debug.Log("SetTotalDataConnc() start!");
         yield return userInfoData = UserDataIns.Instance.GetMyAllData();
         yield return ranks = RankingDataIns.Instance.GetRankingData();
 

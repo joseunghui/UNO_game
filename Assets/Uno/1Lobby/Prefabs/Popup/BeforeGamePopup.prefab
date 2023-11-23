@@ -1930,7 +1930,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3650132285469976553}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2483071297688238334, guid: 0a6572c41b2c64e3492c9ce07a4dff91, type: 3}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &9056998108064193175
 GameObject:
   m_ObjectHideFlags: 0
