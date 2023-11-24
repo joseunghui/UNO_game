@@ -41,8 +41,7 @@ public class AuthManager : MonoBehaviour
         if (Login.Instance.CustomLogin(in_id_text.text, in_pwd_text.text))
         {
             // 기존유저 -> 그대로 로그인 후 게임 시작
-            // level 선택 버튼 생성
-            CreateLevelBtn();
+            LoadingSceneManager.LoadScene("MainScenes");
         } else {
             // 신규유저 등록 필요 -> 회원가입 유도
             Alert.text = "회원 정보가 없습니다. 회원 가입 후 이용해주세요.";
