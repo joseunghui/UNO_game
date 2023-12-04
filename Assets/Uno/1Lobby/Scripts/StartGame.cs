@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class StartGame : MonoBehaviour
 {
     public static int TurnlimitTime;                    // 레벨 별 턴 제한 시간
-    public string keyStr = "havingHeart";
-    public int havingHeart;
+    public string keyStr = "havingHeart";               // 보유 하트 수 playerPrefs 해시키
+    public int havingHeart;                             // 보유 하트 수 (DB)
     private DateTime GameQuitTime = new DateTime(1990, 1, 1).ToLocalTime();
-    private const int MAX_HEART = 5;                    //하트 최대값
+    private const int MAX_HEART = 5;                    // 하트 최대값
     public int HeartRechargeInterval = 30;              // 하트 충전 간격(단위:분)
-    private Coroutine RechargeTimerCoroutine = null;
-    private int RechargeRemainTime = 0;
+    private Coroutine RechargeTimerCoroutine = null;    // 하트 생성 틴
+    private int RechargeRemainTime = 0;                 // 남은 시간 
 
     private void Awake()
     {
@@ -27,25 +27,20 @@ public class StartGame : MonoBehaviour
     //게임 초기화, 중간 이탈, 중간 복귀 시 실행되는 함수
     public void OnApplicationFocus(bool value)
     {
-        Debug.Log("OnApplicationFocus() : " + value);
+        LoadHeartInfo();
+        LoadAppQuitTime();
+
         if (value)
-        {
-            LoadHeartInfo();
-            LoadAppQuitTime();
             SetRechargeScheduler();
-        }
-        else
-        {
-            SaveHeartInfo();
-            SaveAppQuitTime();
-        }
+
+        StartCoroutine(SaveUserHeartData()); // 종료할때 마다 실제 디비에 하트 수 저장
     }
     //게임 종료 시 실행되는 함수
     public void OnApplicationQuit()
     {
-        Debug.Log("GoodsRechargeTester: OnApplicationQuit()");
         SaveHeartInfo();
         SaveAppQuitTime();
+        StartCoroutine(SaveUserHeartData()); // 종료할때 마다 실제 디비에 하트 수 저장
     }
 
     public void Init()
@@ -53,8 +48,6 @@ public class StartGame : MonoBehaviour
         havingHeart = 0;
         RechargeRemainTime = 0;
         GameQuitTime = new DateTime(1990, 1, 1).ToLocalTime();
-
-        Debug.Log($"heartRechargeTime : {RechargeRemainTime}m");
     }
 
     #region OnClickLevelSelectBtn()
@@ -133,7 +126,7 @@ public class StartGame : MonoBehaviour
             StopCoroutine(RechargeTimerCoroutine);
         }
         var minDiff = (int)((DateTime.Now.ToLocalTime() - GameQuitTime).TotalMinutes);
-        Debug.Log("TimeDifference In Sec :" + minDiff + "s");
+        Debug.Log("TimeDifference In Min :" + minDiff + "m");
 
         var heartToAdd = minDiff / HeartRechargeInterval; // 30분 마다 1개
         Debug.Log("Heart to add : " + heartToAdd);
@@ -256,5 +249,11 @@ public class StartGame : MonoBehaviour
         Debug.Log("havingHeart : " + havingHeart);
     }
     #endregion
-
+    #region SaveUserHeartData() 게임 종료 전에 하트 수 디비에 저장
+    private IEnumerator SaveUserHeartData()
+    {
+        yield return new WaitForSeconds(0.1f);
+        UserDataIns.Instance.UserHeartDataUpdate(PlayerPrefs.GetInt(keyStr));
+    }
+    #endregion
 }

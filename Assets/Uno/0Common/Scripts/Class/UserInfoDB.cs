@@ -194,5 +194,14 @@ public class UserDataIns
         Backend.GameData.Update("user", new Where(), param);
     }
     #endregion
+    #region user's heart update(change userInfo)
+    public void UserHeartDataUpdate(int tempHeart)
+    {
+        Param param = new Param();
 
+        param.Add("heart", tempHeart);
+
+        Backend.GameData.Update("user", new Where(), param);
+    }
+    #endregion
 }
