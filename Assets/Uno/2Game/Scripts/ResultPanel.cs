@@ -11,8 +11,9 @@ public class ResultPanel : MonoBehaviour
     void Awake() => Inst = this;
     public TMP_Text resultTMP;
 
-    public void Show(string message){
-        //resultTMP.text = message;
+    public void Show(bool isMyWin){
+        resultTMP.text = isMyWin ? "승리!" : "패배..";
+        resultTMP.color = isMyWin ? new Color32(0,153,255,255) : new Color32(171,35,25,255);
         transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InOutQuad);
     }
 

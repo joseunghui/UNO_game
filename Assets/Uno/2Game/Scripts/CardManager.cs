@@ -33,10 +33,9 @@ public class CardManager : Singleton<CardManager>
     public void play(int clip){
         AudioSource audioSource = GetComponent<AudioSource>();
         if(clip == 1) 
-           audioSource.clip = AddCardSound;
+           audioSource.PlayOneShot(AddCardSound);
         else
-            audioSource.clip = DownCardSound;
-        audioSource.Play();
+            audioSource.PlayOneShot(DownCardSound);
     }
 
     public Item PopItem(){
@@ -100,7 +99,6 @@ public class CardManager : Singleton<CardManager>
     void Update(){
         if(isMyCardDrag)
         {
-            
             CardDrag();
         }  
         
@@ -118,7 +116,7 @@ public class CardManager : Singleton<CardManager>
         card.Setup(PopItem(), isMine);
         (isMine ? myCards : otherCards).Add(card);
         
-        //play(1);
+        play(1);
 
         SetOriginOrder(isMine);
         CardAlignment(isMine);
@@ -252,7 +250,7 @@ public class CardManager : Singleton<CardManager>
             }
         }
         if(result){
-            //play(2);
+            play(2);
         }
         return result;
     }

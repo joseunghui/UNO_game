@@ -11,6 +11,7 @@ public class ButtonManager : MonoBehaviour
     public Button turnbtn;
     public Button unobtn;
      [SerializeField] NotificationPanel notificationPanel;
+     [SerializeField] ResultPanel resultPanel;
     void Start()
     {
         turnbtn.interactable = false;
@@ -42,6 +43,6 @@ public class ButtonManager : MonoBehaviour
     public void endingPopUp(bool isMyWin){
         cardbtn.interactable = false;
         turnbtn.interactable = false;
-        ResultPanel.Inst.Show(isMyWin ? "승리!" : "패배..");
+        resultPanel.Show(isMyWin);
     }
 }

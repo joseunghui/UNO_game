@@ -25,9 +25,10 @@ public class EntityManager : Singleton<EntityManager>
         entity.Setup(item);
         entities.Add(entity);
         items.Add(item);
-        //if(TurnManager.instance.myTurn == false)
-            //Invoke("delay03",3f);
-        entity.MoveTransform(Vector3.zero, true, 0.5f);
+        if(TurnManager.instance.myTurn == false)
+            entity.MoveTransform(Vector3.zero, true, 1f);
+        else
+            entity.MoveTransform(Vector3.zero, true, 0.5f);
         EntityAlignment();
 
         return true;

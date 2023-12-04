@@ -17,7 +17,7 @@ public class TurnManager : Singleton<TurnManager>
     public bool myTurn;
     enum ETurnMode {Random, My, Other}
     WaitForSeconds delay01 = new WaitForSeconds(0.1f);
-    WaitForSeconds delay05 = new WaitForSeconds(0.1f);
+    WaitForSeconds delay02 = new WaitForSeconds(2f);
     public static Action<bool> OnAddCard;
     public static Action<bool> onStartCard;
     public static event Action<bool> OnTurnStarted;
@@ -60,8 +60,10 @@ public class TurnManager : Singleton<TurnManager>
     IEnumerator StartTurnCo(){
         isLoading = true;
         ButtonManager.Inst.turnStart(myTurn);
-        yield return delay05;
+        yield return delay01;
         isLoading = false;
+        if(myTurn == false)
+            yield return delay02;
         OnTurnStarted?.Invoke(myTurn);
     }
 
@@ -85,8 +87,12 @@ public class TurnManager : Singleton<TurnManager>
 
     public void EndTurn(){
         myTurn = !myTurn;
-        Debug.Log("엔드턴");
-        StartCoroutine(StartTurnCo());
+        if(CardManager.instance.myCards.Count == 0)
+            StartCoroutine(GameOver(true));
+        if(CardManager.instance.otherCards.Count == 0)
+            StartCoroutine(GameOver(false));
+        else
+            StartCoroutine(StartTurnCo());
     }
 
     void InputCheatKey()
@@ -104,8 +110,9 @@ public class TurnManager : Singleton<TurnManager>
         StartCoroutine(StartGameCo());
     }
 
-    public void GameOver(bool isMyWin){
+    public IEnumerator GameOver(bool isMyWin){
         isLoading = true;
         ButtonManager.Inst.endingPopUp(isMyWin);
+        yield return delay01;
     }
 }
