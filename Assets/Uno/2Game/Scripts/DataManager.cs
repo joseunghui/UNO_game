@@ -32,7 +32,7 @@ public class DataManager : MonoBehaviour
     public Sprite Sliver;
     public Sprite Gold;
 
-    UserInfoData data;
+    private UserInfoData data;
     public bool IsMyTurn;
     private float timeLimit;
     private int mode;
@@ -108,7 +108,18 @@ public class DataManager : MonoBehaviour
     #region Set Data 
     private IEnumerator SetDataConnc()
     {
-        yield return data = UserDataIns.Instance.GetMyAllData();
+        UserDataIns.Instance.GetMyAllData();
+        data = new UserInfoData();
+        data.nickname = UserDataIns.userInfo.nickname;
+        data.heart = UserDataIns.userInfo.heart;
+        data.grade = UserDataIns.userInfo.grade;
+        data.freeDia = UserDataIns.userInfo.freeDia;
+        data.payDia = UserDataIns.userInfo.payDia;
+        data.totalCnt = UserDataIns.userInfo.totalCnt;
+        data.winCnt = UserDataIns.userInfo.winCnt;
+
+        if (data == null)
+            yield break;
 
         StartCoroutine(SetNicknameValue());
         StartCoroutine(SetModeValue());
@@ -182,7 +193,6 @@ public class DataManager : MonoBehaviour
             LoadingSceneManager.LoadScene("MainScenes");
         }
 
-        Debug.Log($"Heart : {data.heart}");
         // heart Icon Image
         for (int i = 0; i < data.heart; i++)
         {
@@ -201,11 +211,6 @@ public class DataManager : MonoBehaviour
 
     public void BackToLobbyBtnClick()
     {
-        Destroy(TurnManager.instance);
-        Destroy(CardManager.instance);
-        Destroy(EntityManager.instance);
-
         LoadingSceneManager.LoadScene("MainScenes");
-        // 이렇게 돌아가서 다시 레벨 선택 하면 카드 배포가 안됨(TurnManager 안돌아감)
     }
 }

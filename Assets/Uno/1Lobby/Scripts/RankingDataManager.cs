@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
-using System.Linq;
 
 public class RankingDataManager : MonoBehaviour
 {
@@ -15,56 +14,82 @@ public class RankingDataManager : MonoBehaviour
     [SerializeField] private GameObject RankingList;
     [SerializeField] private GameObject RankerPrefab;
 
-    [Header("Change Nickname Popup")]
-    [SerializeField] private GameObject ChangeNickPopup;
-    [SerializeField] private TextMeshProUGUI beforeNick;
-
     public Sprite Sliver;
     public Sprite Gold;
 
-    List<RankingData> ranks;
-    UserInfoData userInfoData;
+    private List<Ranking> rankList;
+    private UserInfoData userInfoData;
+    public static int UserHeartCount;
     
-    void Start()
+    private void Awake()
     {
         StartCoroutine(SetTotalDataConnc());
     }
 
-    #region ranking data
-    IEnumerator SetTotalDataConnc()
+    #region SetTotalDataConnc()
+    private IEnumerator SetTotalDataConnc()
     {
-        yield return userInfoData = UserDataIns.Instance.GetMyAllData();
-        yield return ranks = RankingDataIns.Instance.GetRankingData();
+        UserDataIns.Instance.GetMyAllData();
+        userInfoData = new UserInfoData();
+        userInfoData.nickname = UserDataIns.userInfo.nickname;
+        userInfoData.nickChange = UserDataIns.userInfo.nickChange;
+        userInfoData.heart = UserDataIns.userInfo.heart;
+        userInfoData.grade = UserDataIns.userInfo.grade;
+        userInfoData.freeDia = UserDataIns.userInfo.freeDia;
+        userInfoData.payDia = UserDataIns.userInfo.payDia;
+        userInfoData.totalCnt = UserDataIns.userInfo.totalCnt;
+        userInfoData.winCnt = UserDataIns.userInfo.winCnt;
+        UserHeartCount = userInfoData.heart; // 하트만 퍼블릭 선언(상속받은 StartGame 스크립트에서 사용)
 
-        nicknameTxt.text = userInfoData.nickname;
-        beforeNick.text = userInfoData.nickname;
-
-        if (userInfoData.grade == 1)
+        RankingData.Instance.RankingGet();
+        rankList = new List<Ranking>();
+        for (int i = 0; i<RankingData.ranks.Count; i++)
         {
-            GradeIcon.GetComponent<Image>().sprite = Sliver;
-        } else if (userInfoData.grade == 2)
-        {
-            GradeIcon.GetComponent<Image>().sprite = Gold;
+            rankList.Add(RankingData.ranks[i]);
         }
 
+        if (userInfoData == null)
+            yield break;
 
-        for (int i=0; i<ranks.Count; i++)
+        StartCoroutine(SetRankingPopupUI());
+    }
+    #endregion
+    #region SetRankingPopupUI()
+    private IEnumerator SetRankingPopupUI()
+    {
+        if (userInfoData == null)
+            yield break;
+
+        nicknameTxt.text = userInfoData.nickname;
+        if (userInfoData.grade == 1)
+            GradeIcon.GetComponent<Image>().sprite = Sliver;
+        else if (userInfoData.grade == 2)
+            GradeIcon.GetComponent<Image>().sprite = Gold;
+
+        ResetRankingList();
+
+        for (int i = 0; i < rankList.Count; i++)
         {
             GameObject rank = Instantiate(RankerPrefab, RankingList.transform.position, Quaternion.identity);
 
-            rank.transform.localScale = new Vector3(0.012f, 0.012f, 0);
             rank.transform.SetParent(RankingList.transform);
+            rank.transform.localScale = RankingList.transform.localScale;
+            rank.transform.Find("Rank").GetComponent<TextMeshProUGUI>().text = (i + 1).ToString();
+            rank.transform.Find("RankerNick").GetComponent<TextMeshProUGUI>().text = rankList[i].user;
         }
+    }
+    #endregion
+    #region ResetRankingList()
+    private void ResetRankingList()
+    {
+        var childs = RankingList.transform.GetComponentsInChildren<Transform>();
 
-        List<RankingData> newRank = ranks.OrderBy(t => t.winrate).ToList();
-
-        List<GameObject> rankLists = new List<GameObject>();
-        for (int k=0; k< newRank.Count; k++)
+        foreach (var child in childs)
         {
-            rankLists.Add(RankingList.transform.GetChild(k).gameObject);
-            int thisIndex = k;
-            rankLists[k].transform.Find("Rank").GetComponent<TextMeshProUGUI>().text = (thisIndex + 1).ToString();
-            rankLists[k].transform.Find("RankerNick").GetComponent<TextMeshProUGUI>().text = newRank[thisIndex].ranker;
+            if (child != RankingList.transform)
+            {
+                Destroy(child); 
+            }
         }
     }
     #endregion
