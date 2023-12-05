@@ -130,6 +130,17 @@ public class UserDataIns
         return userInfoJson["inDate"].ToString();
     }
     #endregion
+    #region lastUpdateTime 조회
+    public DateTime GetUserLastUpdateTime()
+    {
+        var bro = Backend.GameData.GetMyData("user", new Where(), 1);
+
+        if (bro.IsSuccess() == false)
+            return new DateTime();
+
+        return DateTime.Parse(bro.Rows()[0]["updatedAt"]["S"].ToString());
+    }
+    #endregion
     #region user nickname change
     public bool updateUserNickname(string _nick, bool IsFree)
     {

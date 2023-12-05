@@ -75,9 +75,6 @@ public class RankingDataManager : MonoBehaviour
     {
         yield return new WaitForFixedUpdate();
 
-        Debug.Log($"rankList.Count check >> {rankList.Count}");
-        Debug.Log($"check >> {RankingList.transform.childCount}");
-
         if (RankingList.transform.childCount == 0)
         {
             for (int i = 0; i < rankList.Count; i++)
