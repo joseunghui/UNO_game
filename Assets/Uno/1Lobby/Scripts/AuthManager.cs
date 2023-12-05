@@ -24,10 +24,6 @@ public class AuthManager : MonoBehaviour
     [Header("Before Game Popup")]
     [SerializeField] private GameObject BeforeGamePopup;
 
-    [Header("Level Select Popup")]
-    [SerializeField] private GameObject LevelSelectPopup;
-    [SerializeField] private GameObject LevelField;
-
     private void Awake()
     {
         var bro = Backend.Initialize(true); // 뒤끝 초기화
@@ -133,23 +129,6 @@ public class AuthManager : MonoBehaviour
 
     }
     #endregion
-
-    #region 랭킹 페이지 -> 컴퓨터와의 대결 클릭 후 레벨 선택
-    // 레벨 선택 버튼 생성
-    public void CreateLevelBtn()
-    {
-        Alert.text = "환영합니다.";
-        // 팝업 비활성화
-        SignInPopup.SetActive(false);
-        SignUpPopup.SetActive(false);
-        AccessGameBtn.SetActive(false);
-        BeforeGamePopup.SetActive(false);
-
-        // 레벨선택 필드 활성화
-        LevelSelectPopup.SetActive(true);
-    }
-    #endregion
-
 
 
 }

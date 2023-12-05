@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class StartGame : MonoBehaviour
 {
+    [SerializeField] private GameObject AlertMessage;
+
     public static int TurnlimitTime;                    // 레벨 별 턴 제한 시간
     public string keyStr = "havingHeart";               // 보유 하트 수 playerPrefs 해시키
     public int havingHeart;                             // 보유 하트 수 (DB)
@@ -53,15 +55,23 @@ public class StartGame : MonoBehaviour
     #region OnClickLevelSelectBtn()
     public void OnClickLevelSelectBtn(int mode)
     {
-        TurnlimitTime = 20;
-        if (mode == 1)
-            TurnlimitTime = 10;
-        else if (mode == 2)
-            TurnlimitTime = 5;
+        if (havingHeart <= 0)
+        {
+            AlertMessage.SetActive(true);
+            return;
+        }
+        else
+        {
+            TurnlimitTime = 20;
+            if (mode == 1)
+                TurnlimitTime = 10;
+            else if (mode == 2)
+                TurnlimitTime = 5;
 
-        UseHeart();
+            UseHeart();
 
-        LoadingSceneManager.LoadScene("CardScenes");
+            LoadingSceneManager.LoadScene("CardScenes");
+        }
     }
     #endregion
     #region LoadHeartInfo() 유저의 하트 수 playerPrefs 에서 가져오기

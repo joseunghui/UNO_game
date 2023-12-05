@@ -85,7 +85,7 @@ public class UserDataIns
         }
 
         // ranking date Insert
-        RankingData.Instance.InsertRanking(0);
+        RankingData.Instance.InsertRanking();
     }
     #endregion
     #region Get user all data

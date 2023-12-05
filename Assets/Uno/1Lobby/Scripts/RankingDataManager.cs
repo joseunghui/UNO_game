@@ -11,8 +11,10 @@ public class RankingDataManager : MonoBehaviour
     [SerializeField] private Image GradeIcon;
     [SerializeField] private TextMeshProUGUI nicknameTxt;
 
+    [Header("Ranking List")]
     [SerializeField] private GameObject RankingList;
     [SerializeField] private GameObject RankerPrefab;
+
 
     public Sprite Sliver;
     public Sprite Gold;
@@ -90,4 +92,5 @@ public class RankingDataManager : MonoBehaviour
         }
     }
     #endregion
+
 }

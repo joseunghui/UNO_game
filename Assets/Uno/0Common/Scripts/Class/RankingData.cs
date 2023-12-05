@@ -28,16 +28,18 @@ public class RankingData
     }
     string rankUUID = "c4207d60-88f6-11ee-acce-7fbb598f7ba2";
     string tableName = "user";
-    string rowInDate = string.Empty;
     public static List<Ranking> ranks = new List<Ranking>();
     #endregion
 
     #region Init Insert Ranking Data
-    public void InsertRanking(int tempWinrate)
+    public void InsertRanking()
     {
         // 랭킹을 삽입하기 위해서는 게임 데이터에서 사용하는 데이터의 inDate값이 필요합니다.  
         // 따라서 데이터를 불러온 후, 해당 데이터의 inDate값을 추출하는 작업을 해야합니다.  
         var bro = Backend.GameData.GetMyData(tableName, new Where());
+
+        string rowInDate = string.Empty;
+        int winrate = 0;
 
         if (bro.IsSuccess() == false)
         {
@@ -48,6 +50,7 @@ public class RankingData
         if (bro.FlattenRows().Count > 0)
         {
             rowInDate = bro.FlattenRows()[0]["inDate"].ToString();
+            winrate = int.Parse(bro.FlattenRows()[0]["winrate"].ToString());
         }
         else
         {
@@ -62,6 +65,7 @@ public class RankingData
         }
 
         Param param = new Param();
+        param.Add("winrate", winrate);
 
         // 추출된 rowIndate를 가진 데이터에 param값으로 수정을 진행하고 랭킹에 데이터를 업데이트합니다.  
         var rankBro = Backend.URank.User.UpdateUserScore(rankUUID, tableName, rowInDate, param);
