@@ -9,7 +9,7 @@ public class StartGame : MonoBehaviour
 
     public static int TurnlimitTime;                    // 레벨 별 턴 제한 시간
     public string keyStr = "havingHeart";               // 보유 하트 수 playerPrefs 해시키
-    public int havingHeart;                             // 보유 하트 수 (DB)
+    public static int havingHeart;                             // 보유 하트 수 (DB)
     private DateTime GameQuitTime = new DateTime(1990, 1, 1).ToLocalTime();
     private const int MAX_HEART = 5;                    // 하트 최대값
     public int HeartRechargeInterval = 30;              // 하트 충전 간격(단위:분)
@@ -30,6 +30,7 @@ public class StartGame : MonoBehaviour
         if (havingHeart == 0)
             Init();
     }
+
     public void Init()
     {
         havingHeart = 0;
@@ -100,8 +101,8 @@ public class StartGame : MonoBehaviour
 
         while (RechargeRemainTime > 0)
         {
+            Debug.Log($"havingHeart >> {havingHeart}");
             RechargeRemainTime -= 1;
-            Debug.Log($"RechargeRemainTime >> {RechargeRemainTime}");
             yield return new WaitForSeconds(60.0f); // 60s = 1m
         }
 
