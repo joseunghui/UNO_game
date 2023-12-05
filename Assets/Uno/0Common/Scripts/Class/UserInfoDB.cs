@@ -118,14 +118,19 @@ public class UserDataIns
 
     }
     #endregion
-    #region inDate로 유저 닉네임 조회
-    public string GetUserNicknameToInDate(string _inDate)
+    #region inDate 조회
+    public string GetUserInDate()
     {
-        var bro = Backend.Social.GetUserInfoByInDate(_inDate);
-        return bro.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+        var bro = Backend.BMember.GetUserInfo();
+
+        if (bro.IsSuccess() == false)
+            return null;
+
+        LitJson.JsonData userInfoJson = bro.GetReturnValuetoJSON()["row"];
+        return userInfoJson["inDate"].ToString();
     }
     #endregion
-    #region user winrate change
+    #region user nickname change
     public bool updateUserNickname(string _nick, bool IsFree)
     {
         bool result = false;
@@ -149,12 +154,17 @@ public class UserDataIns
     public void updateUserWinrate(int _totalCnt, int _winCnt)
     {
         int _winrate = (_winCnt / _totalCnt) * 100;
-        Param param = new Param();
-        param.Add("winrate", _winrate);
-        param.Add("totalCnt", _totalCnt);
-        param.Add("winCnt", _winCnt);
+        Param userParam = new Param();
+        userParam.Add("winrate", _winrate);
+        userParam.Add("totalCnt", _totalCnt);
+        userParam.Add("winCnt", _winCnt);
         
-        Backend.GameData.Update("user", new Where(), param);
+        Backend.GameData.Update("user", new Where(), userParam);
+
+        // 랭킹 정보도 업데이트
+        Param rankingParam = new Param();
+        rankingParam.Add("winrate", _winrate);
+        Backend.URank.User.UpdateUserScore("c4207d60-88f6-11ee-acce-7fbb598f7ba2", "user", GetUserInDate(), rankingParam);
     }
     #endregion
     #region user changeNick info update(change nick)
