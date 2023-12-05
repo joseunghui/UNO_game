@@ -21,9 +21,10 @@ public class RankingDataManager : MonoBehaviour
     private UserInfoData userInfoData;
     public static int UserHeartCount;
     
-    private void Awake()
+    private void Start()
     {
         StartCoroutine(SetTotalDataConnc());
+        StartCoroutine(SetRankingPopupRankingUI());
     }
 
     #region SetTotalDataConnc()
@@ -39,7 +40,7 @@ public class RankingDataManager : MonoBehaviour
         userInfoData.payDia = UserDataIns.userInfo.payDia;
         userInfoData.totalCnt = UserDataIns.userInfo.totalCnt;
         userInfoData.winCnt = UserDataIns.userInfo.winCnt;
-        UserHeartCount = userInfoData.heart; // ÇÏÆ®¸¸ ÆÛºí¸¯ ¼±¾ğ(»ó¼Ó¹ŞÀº StartGame ½ºÅ©¸³Æ®¿¡¼­ »ç¿ë)
+        UserHeartCount = userInfoData.heart; // í•˜íŠ¸ë§Œ í¼ë¸”ë¦­ ì„ ì–¸(ìƒì†ë°›ì€ StartGame ìŠ¤í¬ë¦½íŠ¸ì—ì„œ ì‚¬ìš©)
 
         RankingData.Instance.RankingGet();
         rankList = new List<Ranking>();
@@ -51,11 +52,11 @@ public class RankingDataManager : MonoBehaviour
         if (userInfoData == null)
             yield break;
 
-        StartCoroutine(SetRankingPopupUI());
+        StartCoroutine(SetRankingPopupUserInfoUI());
     }
     #endregion
-    #region SetRankingPopupUI()
-    private IEnumerator SetRankingPopupUI()
+    #region SetRankingPopupUserInfoUI()
+    private IEnumerator SetRankingPopupUserInfoUI()
     {
         if (userInfoData == null)
             yield break;
@@ -65,30 +66,26 @@ public class RankingDataManager : MonoBehaviour
             GradeIcon.GetComponent<Image>().sprite = Sliver;
         else if (userInfoData.grade == 2)
             GradeIcon.GetComponent<Image>().sprite = Gold;
-
-        ResetRankingList();
-
-        for (int i = 0; i < rankList.Count; i++)
-        {
-            GameObject rank = Instantiate(RankerPrefab, RankingList.transform.position, Quaternion.identity);
-
-            rank.transform.SetParent(RankingList.transform);
-            rank.transform.localScale = RankingList.transform.localScale;
-            rank.transform.Find("Rank").GetComponent<TextMeshProUGUI>().text = (i + 1).ToString();
-            rank.transform.Find("RankerNick").GetComponent<TextMeshProUGUI>().text = rankList[i].user;
-        }
     }
     #endregion
-    #region ResetRankingList()
-    private void ResetRankingList()
+    #region SetRankingPopupRankingUI()
+    private IEnumerator SetRankingPopupRankingUI()
     {
-        var childs = RankingList.transform.GetComponentsInChildren<Transform>();
+        yield return new WaitForFixedUpdate();
 
-        foreach (var child in childs)
+        Debug.Log($"rankList.Count check >> {rankList.Count}");
+        Debug.Log($"check >> {RankingList.transform.childCount}");
+
+        if (RankingList.transform.childCount == 0)
         {
-            if (child != RankingList.transform)
+            for (int i = 0; i < rankList.Count; i++)
             {
-                Destroy(child); 
+                GameObject rank = Instantiate(RankerPrefab, RankingList.transform.position, Quaternion.identity);
+
+                rank.transform.SetParent(RankingList.transform);
+                rank.transform.localScale = RankingList.transform.localScale;
+                rank.transform.Find("Rank").GetComponent<TextMeshProUGUI>().text = (i + 1).ToString();
+                rank.transform.Find("RankerNick").GetComponent<TextMeshProUGUI>().text = rankList[i].user;
             }
         }
     }
