@@ -130,15 +130,34 @@ public class UserDataIns
         return userInfoJson["inDate"].ToString();
     }
     #endregion
-    #region lastUpdateTime 조회
-    public DateTime GetUserLastUpdateTime()
+    #region Game Recoding Insert (게임 대진 기록)
+    public void InsertGameRecoding(string loserUUID)
     {
-        var bro = Backend.GameData.GetMyData("user", new Where(), 1);
+        Param param = new Param();
+        param.Add("loser", loserUUID); 
+
+        var bro = Backend.GameData.Insert("game_recode", param);
+
+        // 성공 or 실패
+        if (bro.IsSuccess())
+        {
+            Debug.Log("대진 기록 데이터 삽입 실패 >> " + bro);
+        }
+        else
+        {
+            Debug.Log("대진 기록 데이터 삽입 실패 >> " + bro);
+        }
+    }
+    #endregion
+    #region Game Recoding lastGameAt 조회(마지막 하트 소모 시간 기록 가져오는 용도)
+    public DateTime GetUserLastGameTime()
+    {        
+        var bro = Backend.PlayerData.GetMyData("game_recode", 1);
 
         if (bro.IsSuccess() == false)
             return new DateTime();
 
-        return DateTime.Parse(bro.Rows()[0]["updatedAt"]["S"].ToString());
+        return DateTime.Parse(bro.Rows()[0]["inDate"]["S"].ToString());
     }
     #endregion
     #region user nickname change

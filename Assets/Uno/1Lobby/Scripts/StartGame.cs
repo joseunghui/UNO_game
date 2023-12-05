@@ -21,7 +21,7 @@ public class StartGame : MonoBehaviour
         // 유저의 하트 수 가져오기
         havingHeart = RankingDataManager.UserHeartCount;
         // 유저의 마지막 게임 접속 시간 가져오기 
-        GameQuitTime = UserDataIns.Instance.GetUserLastUpdateTime();
+        GameQuitTime = UserDataIns.Instance.GetUserLastGameTime();
 
         Debug.Log($"GameQuitTime >> {GameQuitTime}");
         Debug.Log($"Now Time >> {DateTime.Now}");
@@ -35,7 +35,7 @@ public class StartGame : MonoBehaviour
         havingHeart = 0;
         RechargeRemainTime = 0;
         // 유저의 마지막 게임 접속 시간 가져오기 
-        GameQuitTime = UserDataIns.Instance.GetUserLastUpdateTime();
+        GameQuitTime = UserDataIns.Instance.GetUserLastGameTime();
     }
 
     #region OnClickLevelSelectBtn()
@@ -127,8 +127,6 @@ public class StartGame : MonoBehaviour
             return;
 
         havingHeart--;
-        PlayerPrefs.SetInt(keyStr, havingHeart);
-        PlayerPrefs.Save();
 
         if (RechargeTimerCoroutine == null)
         {
@@ -147,9 +145,15 @@ public class StartGame : MonoBehaviour
             yield break;
 
         if (PlayerPrefs.HasKey(keyStr))
+        {
             UserDataIns.Instance.UserHeartDataUpdate(PlayerPrefs.GetInt(keyStr));
+        }   
         else
+        {
+            PlayerPrefs.SetInt(keyStr, havingHeart);
+            PlayerPrefs.Save();
             UserDataIns.Instance.UserHeartDataUpdate(havingHeart);
+        }
     }
     #endregion
     #region 게임 중단, 이탈, 종료, 복귀
