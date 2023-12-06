@@ -17,7 +17,7 @@ public class TurnManager : Singleton<TurnManager>
     public bool myTurn;
     enum ETurnMode {Random, My, Other}
     WaitForSeconds delay01 = new WaitForSeconds(0.1f);
-    WaitForSeconds delay02 = new WaitForSeconds(2f);
+    WaitForSeconds delay02 = new WaitForSeconds(1f);
     public static Action<bool> OnAddCard;
     public static Action<bool> onStartCard;
     public static event Action<bool> OnTurnStarted;
@@ -53,7 +53,6 @@ public class TurnManager : Singleton<TurnManager>
         }
         yield return delay01;
         onStartCard?.Invoke(true);
-        unoCount = 1;
         StartCoroutine(StartTurnCo());
     }
 
@@ -71,12 +70,14 @@ public class TurnManager : Singleton<TurnManager>
 #if UNITY_EDITOR    // 유니티 에디터일 경우에만 치트 호출
         InputCheatKey();
 #endif
-        if(CardManager.instance.myCards.Count >= 2)
+        int myCards = CardManager.instance.myCards.Count;
+        int otherCards = CardManager.instance.otherCards.Count;
+        if(myCards > 1 || otherCards > 1){
             unoCount = 1;
-        if(CardManager.instance.myCards.Count == 1 && unoCount == 1)
-            ButtonManager.Inst.unobtn.interactable = true;
-        if(CardManager.instance.myCards.Count != 1)
             ButtonManager.Inst.unobtn.interactable = false;
+        }
+        if(otherCards == 1 || myCards == 1 && unoCount == 1)
+            ButtonManager.Inst.unobtn.interactable = true;
 
         // 턴으로 타이머 시작/멈춤 설정
         if (myTurn)
@@ -113,6 +114,6 @@ public class TurnManager : Singleton<TurnManager>
     public IEnumerator GameOver(bool isMyWin){
         isLoading = true;
         ButtonManager.Inst.endingPopUp(isMyWin);
-        yield return delay01;
+        yield break;
     }
 }

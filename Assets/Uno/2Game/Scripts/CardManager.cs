@@ -21,7 +21,6 @@ public class CardManager : Singleton<CardManager>
     public AudioClip AddCardSound;
     public AudioClip DownCardSound;
     List<Item> itemBuffer;
-    List<Item> items;
     Card selectCard;
     bool isMyCardDrag;
     bool OnMyCardArea;
@@ -40,12 +39,13 @@ public class CardManager : Singleton<CardManager>
 
     public Item PopItem(){
         if(itemBuffer.Count == 0){
-            items = EntityManager.instance.items;
-            for(int i = 0; i<items.Count-1; i++){
-                itemBuffer.Add(items[i]);     
-            }
-            for(int i = items.Count-2; i >= 0; i--){
-                EntityManager.instance.items.Remove(items[i]);
+            
+            List<Item> items = EntityManager.instance.items;
+            int count = items.Count;
+            for(int i = 0; i<count-1; i++){
+                itemBuffer.Add(items[i]);
+                items.RemoveAt(i);
+                //Destroy(EntityManager.instance.entitiesObj[i]);
             }
             MixCard();
         }
@@ -177,16 +177,14 @@ public class CardManager : Singleton<CardManager>
     public bool TryPutCard(bool isMine){
         if (putCount >= 1)   // 카드 하나 낼 수 있음
             return false;
-        items = EntityManager.instance.items;
+        List<Item> items = EntityManager.instance.items;
         Item item = items[items.Count-1]; // 마지막으로 낸 카드
         Card card = isMine ? selectCard : OtherCard(item, 1);
         
         if(card == null){
-            Debug.Log("왔나");
             TurnManager.instance.EndTurn();
             return false;
         }
-        Debug.Log("낼 카드 : "+card.item.color+", "+card.item.num);
         var spawnPos = isMine ? Utils.MousePos : otherCardRight.position;
         var targetCards = isMine ? myCards : otherCards;
         bool result = false;
@@ -263,7 +261,7 @@ public class CardManager : Singleton<CardManager>
         if(item.color == "black")   //블랙이면 아무거나
             card = otherCards[Random.Range(0, otherCards.Count)];
         else{
-            var targetCards = otherCards.FindAll(x => x.item.color.Equals(item.color) || x.item.num == item.num);
+            var targetCards = otherCards.FindAll(x => x.item.color.Equals(item.color) || x.item.num == item.num || x.item.color.Equals("black"));
             if(targetCards.Count <= 0 && count == 1){
                 AddCard(false);
                 OtherCard(item, 0);

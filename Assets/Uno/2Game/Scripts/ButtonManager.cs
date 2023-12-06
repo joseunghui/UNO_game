@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class ButtonManager : MonoBehaviour
 {
@@ -21,11 +22,29 @@ public class ButtonManager : MonoBehaviour
         });
     }
     public void Uno(){
-        TurnManager.OnAddCard?.Invoke(false); // 게임이 내 기준에서 구현해서 일단 false로 넣어놓음
-        TurnManager.OnAddCard?.Invoke(false);
-        // 상대 움직임 구현에 따라 수정 필요
-        unobtn.interactable = false;
+        bool turn = TurnManager.instance.myTurn;
+        int random = Random.Range(0,100);
+        int per = 0;
+        switch(StartGame.TurnlimitTime){
+            case 5:
+                per = 80; break;
+            case 10:
+                per = 50; break;
+            default:
+                per = 20; break;
+        }Debug.Log("우노 TurnTimeLimit: "+StartGame.TurnlimitTime+", per: "+per);
+        if (random < per){
+            TurnManager.OnAddCard?.Invoke(true);
+            TurnManager.OnAddCard?.Invoke(true);
+            Debug.Log("나 +2");
+        } else{
+            TurnManager.OnAddCard?.Invoke(false);
+            TurnManager.OnAddCard?.Invoke(false);
+            unobtn.interactable = false;
+            Debug.Log("상대 +2");
+        }
         TurnManager.instance.unoCount = 0;
+        unobtn.interactable = false;
     }
     
     public void nonePutCard(){

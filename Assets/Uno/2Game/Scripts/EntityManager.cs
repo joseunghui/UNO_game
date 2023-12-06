@@ -7,6 +7,7 @@ public class EntityManager : Singleton<EntityManager>
     public GameObject entityPrefab;
     const int MAX_ENTITY_COUNT = 1;
     public List<Entity> entities;
+    public List<GameObject> entitiesObj;
     public List<Item> items;
 
     public void EntityAlignment(){
@@ -25,6 +26,7 @@ public class EntityManager : Singleton<EntityManager>
         entity.Setup(item);
         entities.Add(entity);
         items.Add(item);
+        entitiesObj.Add(entityObject);
         if(TurnManager.instance.myTurn == false)
             entity.MoveTransform(Vector3.zero, true, 1f);
         else
@@ -32,9 +34,6 @@ public class EntityManager : Singleton<EntityManager>
         EntityAlignment();
 
         return true;
-    }
-    public void delay03(){
-        Debug.Log("딜레이");
     }
 
 }
