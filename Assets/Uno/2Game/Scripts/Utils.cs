@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-    [System.Serializable]
+[System.Serializable]
 public class PRS{   // 카드원본위치
     public Vector3 pos;
     public Quaternion rot;
