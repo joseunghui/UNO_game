@@ -85,7 +85,7 @@ public class UserDataIns
         }
 
         // ranking date Insert
-        RankingData.Instance.InsertRanking(0);
+        RankingData.Instance.InsertRanking();
     }
     #endregion
     #region Get user all data
@@ -118,14 +118,49 @@ public class UserDataIns
 
     }
     #endregion
-    #region inDate로 유저 닉네임 조회
-    public string GetUserNicknameToInDate(string _inDate)
+    #region inDate 조회
+    public string GetUserInDate()
     {
-        var bro = Backend.Social.GetUserInfoByInDate(_inDate);
-        return bro.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+        var bro = Backend.BMember.GetUserInfo();
+
+        if (bro.IsSuccess() == false)
+            return null;
+
+        LitJson.JsonData userInfoJson = bro.GetReturnValuetoJSON()["row"];
+        return userInfoJson["inDate"].ToString();
     }
     #endregion
-    #region user winrate change
+    #region Game Recoding Insert (게임 대진 기록)
+    public void InsertGameRecoding(string loserUUID)
+    {
+        Param param = new Param();
+        param.Add("loser", loserUUID); 
+
+        var bro = Backend.GameData.Insert("game_recode", param);
+
+        // 성공 or 실패
+        if (bro.IsSuccess())
+        {
+            Debug.Log("대진 기록 데이터 삽입 실패 >> " + bro);
+        }
+        else
+        {
+            Debug.Log("대진 기록 데이터 삽입 실패 >> " + bro);
+        }
+    }
+    #endregion
+    #region Game Recoding lastGameAt 조회(마지막 하트 소모 시간 기록 가져오는 용도)
+    public DateTime GetUserLastGameTime()
+    {        
+        var bro = Backend.PlayerData.GetMyData("game_recode", 1);
+
+        if (bro.IsSuccess() == false)
+            return new DateTime();
+
+        return DateTime.Parse(bro.Rows()[0]["inDate"]["S"].ToString());
+    }
+    #endregion
+    #region user nickname change
     public bool updateUserNickname(string _nick, bool IsFree)
     {
         bool result = false;
@@ -149,12 +184,17 @@ public class UserDataIns
     public void updateUserWinrate(int _totalCnt, int _winCnt)
     {
         int _winrate = (_winCnt / _totalCnt) * 100;
-        Param param = new Param();
-        param.Add("winrate", _winrate);
-        param.Add("totalCnt", _totalCnt);
-        param.Add("winCnt", _winCnt);
+        Param userParam = new Param();
+        userParam.Add("winrate", _winrate);
+        userParam.Add("totalCnt", _totalCnt);
+        userParam.Add("winCnt", _winCnt);
         
-        Backend.GameData.Update("user", new Where(), param);
+        Backend.GameData.Update("user", new Where(), userParam);
+
+        // 랭킹 정보도 업데이트
+        Param rankingParam = new Param();
+        rankingParam.Add("winrate", _winrate);
+        Backend.URank.User.UpdateUserScore("c4207d60-88f6-11ee-acce-7fbb598f7ba2", "user", GetUserInDate(), rankingParam);
     }
     #endregion
     #region user changeNick info update(change nick)
