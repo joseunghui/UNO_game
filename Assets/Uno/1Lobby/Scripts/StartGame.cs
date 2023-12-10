@@ -16,6 +16,16 @@ public class StartGame : MonoBehaviour
     private Coroutine RechargeTimerCoroutine = null;    // 하트 생성 틴
     private int RechargeRemainTime = 0;                 // 남은 시간 
 
+    [Serializable]
+    public enum Mode
+    {
+        Easy,
+        Normal,
+        Hard,
+    }
+    
+    public Mode mode = Mode.Easy;
+
     private void Awake()
     {
         // 유저의 하트 수 가져오기
@@ -40,7 +50,7 @@ public class StartGame : MonoBehaviour
     }
 
     #region OnClickLevelSelectBtn()
-    public void OnClickLevelSelectBtn(int mode)
+    public void OnClickLevelSelectBtn(int modeInt)
     {
         if (havingHeart <= 0)
         {
@@ -49,20 +59,34 @@ public class StartGame : MonoBehaviour
         }
         else
         {
-            TurnlimitTime = 20;
-            if (mode == 1)
-                TurnlimitTime = 10;
-            else if (mode == 2)
-                TurnlimitTime = 5;
-
+            SetLevelToMode(modeInt);
             UseHeart();
 
             LoadingSceneManager.LoadScene("CardScenes");
         }
     }
     #endregion
- 
 
+    #region SetLevelToMode() 레벨 선택에 따른 시간(모드) 설정
+    private void SetLevelToMode(int _modeInt)
+    {
+        switch(_modeInt)
+        {
+            case 0:
+                TurnlimitTime = 20;
+                mode = Mode.Easy;
+                break;
+            case 1:
+                TurnlimitTime = 10;
+                mode = Mode.Normal;
+                break;
+            case 2:
+                TurnlimitTime = 5;
+                mode = Mode.Hard;
+                break;
+        }
+    }
+    #endregion
     #region SetRechargeScheduler() 30분 경과할 때 마다 하트 충전
     public void SetRechargeScheduler(Action onFinish = null)
     {

@@ -4,7 +4,7 @@ using TMPro;
 using System.Collections;
 using UnityEngine.UI;
 
-public class DataManager : MonoBehaviour
+public class DataManager : StartGame
 {
     private static DataManager instance = null;
     public static DataManager Instance
@@ -35,7 +35,6 @@ public class DataManager : MonoBehaviour
     private UserInfoData data;
     public bool IsMyTurn;
     private float timeLimit;
-    private int mode;
     private bool AddCardAfterTimeOut;
 
     private void Awake()
@@ -48,15 +47,8 @@ public class DataManager : MonoBehaviour
 
     void Start()
     {
-        timeLimit = (float)StartGame.TurnlimitTime;
+        timeLimit = (float)TurnlimitTime;
 
-        if (timeLimit == 20)
-            mode = 0;
-        if (timeLimit == 10)
-            mode = 1;
-        if (timeLimit == 5)
-            mode = 2;
-        IsMyTurn = false;
         StartCoroutine(SetDataConnc());
     }
 
@@ -67,6 +59,8 @@ public class DataManager : MonoBehaviour
             AddCardAfterTimeOut = false;
             if (IsMyTurn)
                 StartCoroutine(StartTimer());
+            else
+                timeLimit = (float)TurnlimitTime;
         } else
         {
             // 시간 지나면 카드먹고 턴 넘기기
@@ -87,12 +81,12 @@ public class DataManager : MonoBehaviour
         CardManager.instance.AddCard(true);
 
         yield return CardManager.instance.TryPutCard(false);
-        timeLimit = (float)StartGame.TurnlimitTime;
 
+        timeLimit = (float)TurnlimitTime;
     }
     #endregion
     #region Timer Running
-    IEnumerator StartTimer()
+    public IEnumerator StartTimer()
     {
         yield return null;
 
@@ -143,23 +137,20 @@ public class DataManager : MonoBehaviour
     #region Mode 
     IEnumerator SetModeValue()
     {
-        yield return null;
-
         if (timeLimit == 0)
             yield break;
 
-        // mode
-        if (mode == 0)
+        switch(mode)
         {
-            modeTxt.text = "EASY";
-        }
-        else if (mode == 1)
-        {
-            modeTxt.text = "NAR";
-        }
-        else if (mode == 2)
-        {
-            modeTxt.text = "HARD";
+            case Mode.Easy:
+                modeTxt.text = "EASY";
+                break;
+            case Mode.Normal:
+                modeTxt.text = "NOR";
+                break;
+            case Mode.Hard:
+                modeTxt.text = "HARD";
+                break;
         }
     }
     #endregion
@@ -205,8 +196,14 @@ public class DataManager : MonoBehaviour
 
     public void ResetThisGame()
     {
-        // 게임 모드를 동일하게 유지하고 다시 실행해야함
-        Debug.Log($"게임 리셋 => 현재 모드 {mode}");
+        int modeInt = 0;
+
+        if (mode == Mode.Normal)
+            modeInt = 1;
+        else if (mode == Mode.Hard)
+            modeInt = 2;
+
+        OnClickLevelSelectBtn(modeInt);
     }
 
     public void BackToLobbyBtnClick()

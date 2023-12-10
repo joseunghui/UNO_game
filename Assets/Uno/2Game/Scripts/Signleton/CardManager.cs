@@ -27,8 +27,6 @@ public class CardManager : Singleton<CardManager>
     enum ECardState {Nothing, CanMouseOver, CanMouseDrag}
     int putCount;
 
-    private float LimitTime = (float)StartGame.TurnlimitTime;
-
     public void play(int clip){
         AudioSource audioSource = GetComponent<AudioSource>();
         if(clip == 1) 
@@ -76,8 +74,13 @@ public class CardManager : Singleton<CardManager>
     void Start()
     {
         SetUpItemBuffer();
+        TurnManager.OnAddCard -= AddCard;
         TurnManager.OnAddCard += AddCard;
+
+        TurnManager.OnTurnStarted -= OnTurnStarted;
         TurnManager.OnTurnStarted += OnTurnStarted;
+
+        TurnManager.onStartCard -= StartCard;
         TurnManager.onStartCard += StartCard;
 
     }
@@ -97,6 +100,7 @@ public class CardManager : Singleton<CardManager>
         }
     }
     void Update(){
+
         if(isMyCardDrag)
         {
             CardDrag();

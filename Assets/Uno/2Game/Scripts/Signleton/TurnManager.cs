@@ -113,6 +113,10 @@ public class TurnManager : Singleton<TurnManager>
 
     public IEnumerator GameOver(bool isMyWin){
         isLoading = true;
+
+        // 타이머 종료
+        Destroy(DataManager.Instance);
+
         ButtonManager.Inst.endingPopUp(isMyWin);
         yield break;
     }
