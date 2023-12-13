@@ -11,17 +11,24 @@ public class SceneManagerEx : MonoBehaviour
     // Scene Change Method
     public void LoadScene(Define.Scene type)
     {
-        Managers.Clear();
+        CurrentScene.Clear();
 
-        StartCoroutine("LoadScene", GetSceneName(type));
+        Debug.Log($"type : {type}");
+        
+
+        //StartCoroutine("BeforeLoadScene", GetSceneName(type));
+
+        SceneManager.LoadScene(GetSceneName(type));
     }
 
-    IEnumerator LoadScene(string nextSceneName = null)
+    IEnumerator BeforeLoadScene(string nextSceneName)
     {
+        Debug.Log($"nextSceneName : {nextSceneName}");
+
         if (nextSceneName == null)
             yield break;
 
-        SceneManager.LoadScene(nextSceneName);
+        
 
         UI_ProgressBar progressBar = null;
         progressBar.Progress(SceneManager.LoadSceneAsync(nextSceneName));
@@ -29,7 +36,7 @@ public class SceneManagerEx : MonoBehaviour
 
 
     // Enum속 씬 타입을 string으로 가져오기
-    string GetSceneName(Define.Scene type)
+    public string GetSceneName(Define.Scene type)
     {
         return System.Enum.GetName(typeof(Define.Scene), type);
     }

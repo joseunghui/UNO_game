@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Uno/1Lobby/Main.unity
     guid: 9cb40339641614bb4b5b5e0cc8e55c63
   - enabled: 1
+    path: Assets/Uno/0Common/Scenes/Login.unity
+    guid: fcfb00600857e0543af8efbb54ff46aa
+  - enabled: 1
     path: Assets/Uno/2Game/Scenes/Game.unity
     guid: c9326d9310d43fc4fa7314cbbb2ca22b
   - enabled: 1

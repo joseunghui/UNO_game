@@ -9,6 +9,7 @@ public class LoginScene : BaseScene
     {
         base.init();
 
+        // here is Login Scene
         ScenType = Define.Scene.Login;
 
         // Managers.UI.ShowScene<UI_Inven>();

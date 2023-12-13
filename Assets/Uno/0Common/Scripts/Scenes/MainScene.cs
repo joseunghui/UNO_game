@@ -1,6 +1,5 @@
 using BackEnd;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainScene : BaseScene
@@ -20,13 +19,7 @@ public class MainScene : BaseScene
         BackendReturnObject autoLogin = Backend.BMember.LoginWithTheBackendToken();
         if (autoLogin.IsSuccess())
         {
-            // 팝업 비활성화
-            // SignInPopup.SetActive(false);
-            // SignUpPopup.SetActive(false);
-            // AccessGameBtn.SetActive(false);
-
-            // BeforeGamePopup
-            // BeforeGamePopup.SetActive(true);
+            Managers.UI.ShowScene<UI_EnterGame>();
         }
         else 
             yield break;

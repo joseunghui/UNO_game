@@ -45,19 +45,36 @@ public class Define
     // Popup
     public enum Popups
     {
-
+        UI_SignIn,
+        UI_SignUp,
     }
 
-    // Scene
-    public enum GameObjects
+    // Texts
+    public enum Texts
     {
+        EnterGameText,
+    }
 
+    // Button
+    public enum Buttons
+    {
+        EnterGameButton,
+    }
+
+    // Image
+    public enum Images
+    {
+        EnterGameImage,
     }
 
     // Game Object
     public enum Progress
     {
         ProgressBar,
+    }
+    public enum EnterGame
+    {
+        UI_EnterGame,
     }
     #endregion
 }
