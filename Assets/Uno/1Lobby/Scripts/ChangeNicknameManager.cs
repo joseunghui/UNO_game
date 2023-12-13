@@ -103,7 +103,7 @@ public class ChangeNicknameManager : MonoBehaviour
             beforeNick.text = "이미 존재하는 닉네임 입니다.";
         }
         ChangeNickPopup.SetActive(false);
-        LoadingSceneManager.LoadScene("MainScenes");
+        Managers.Scene.LoadScene(Define.Scene.Main);
     }
     #endregion
 }

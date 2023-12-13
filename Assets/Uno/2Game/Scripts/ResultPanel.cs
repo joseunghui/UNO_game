@@ -18,7 +18,7 @@ public class ResultPanel : MonoBehaviour
     }
 
     public void Restart(){
-        LoadingSceneManager.LoadScene("mainScenes");
+        Managers.Scene.LoadScene(Define.Scene.Main);
     }
 
     void Start() => ScaleZero();

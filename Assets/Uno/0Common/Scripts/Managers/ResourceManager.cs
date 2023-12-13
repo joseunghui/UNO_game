@@ -13,7 +13,7 @@ public class ResourceManager
     public GameObject Instantiate(string path, Transform parent = null)
     {
         // 원본을 메모리에 로드(original)
-        GameObject original = Load<GameObject>($"../Uno/0Common/Prefabs/{path}");
+        GameObject original = Load<GameObject>($"Prefabs/{path}");
         if (original == null)
         {
             Debug.Log($"Failed to load prefab : {path}");

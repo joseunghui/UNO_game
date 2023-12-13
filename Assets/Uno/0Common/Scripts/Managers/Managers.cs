@@ -7,13 +7,13 @@ public class Managers : MonoBehaviour
     static Managers s_instance; // 유일성이 보장된다
     static Managers Instance { get { Init(); return s_instance; } } // 유일한 매니저를 갖고온다
 
-    // InputManager _input = new InputManager();
     ResourceManager _resource = new ResourceManager();
     SceneManagerEx _scene = new SceneManagerEx();
+    UIManager _ui = new UIManager();
 
-    // public static InputManager Input { get { return Instance._input; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
+    public static UIManager UI { get { return Instance._ui; } }
 
     // Start is called before the first frame update
     void Start()
@@ -21,11 +21,6 @@ public class Managers : MonoBehaviour
         Init();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // _input.OnUpdate();
-    }
 
     static void Init()
     {
@@ -53,5 +48,6 @@ public class Managers : MonoBehaviour
     {
         // Sound.Clear();
         Scene.Clear();
+        UI.Clear();
     }
 }

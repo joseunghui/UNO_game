@@ -181,7 +181,7 @@ public class DataManager : StartGame
         if (data.heart == 0)
         {
             // 하트 없기 때문에 로비로 이동
-            LoadingSceneManager.LoadScene("MainScenes");
+            Managers.Scene.LoadScene(Define.Scene.Main);
         }
 
         // heart Icon Image
@@ -208,6 +208,6 @@ public class DataManager : StartGame
 
     public void BackToLobbyBtnClick()
     {
-        LoadingSceneManager.LoadScene("MainScenes");
+        Managers.Scene.LoadScene(Define.Scene.Main);
     }
 }

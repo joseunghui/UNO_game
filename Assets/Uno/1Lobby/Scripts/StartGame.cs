@@ -62,7 +62,7 @@ public class StartGame : MonoBehaviour
             SetLevelToMode(modeInt);
             UseHeart();
 
-            LoadingSceneManager.LoadScene("CardScenes");
+            Managers.Scene.LoadScene(Define.Scene.Game);
         }
     }
     #endregion

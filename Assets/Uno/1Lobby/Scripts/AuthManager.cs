@@ -65,70 +65,7 @@ public class AuthManager : MonoBehaviour
         });
     }
 
-    #region Sign In
-    // Log-in 확인 버튼 클릭
-    public void DoSignIn()
-    {
 
-        if (in_id_text.text == null)
-        {
-            Alert.text = "아이디를 입력해주세요.";
-        }
-
-        // 기존 유저 -> 로그인 / 신규 유저 -> 회원 가입
-        if (Login.Instance.CustomLogin(in_id_text.text, in_pwd_text.text))
-        {
-            // 기존유저 -> 그대로 로그인 후 게임 시작
-            LoadingSceneManager.LoadScene("MainScenes");
-        }
-        else
-        {
-            // 신규유저 등록 필요 -> 회원가입 유도
-            Alert.text = "회원 정보가 없습니다. 회원 가입 후 이용해주세요.";
-            Invoke("OpenSignUpPopup", 0.5f);
-
-        }
-    }
-    #endregion
-    #region Sign Up
-    // Sign-up popup open
-    void OpenSignUpPopup()
-    {
-        SignUpPopup.SetActive(true);
-    }
-    // Sign-Up 확인 버튼 클릭
-    public void DoSignUp()
-    {
-        if (up_id_text.text != null || up_id_text.text != "")
-        {
-            Alert.text = null;
-        }
-
-        if (up_id_text.text == null)
-        {
-            Alert.text = "아이디를 입력해주세요.";
-        }
-
-        // 비번 정규식 넣어서 수정해야함
-        if (up_pwd_conf_text.text == up_pwd_text.text && up_pwd_text != null)
-        {
-            if (Login.Instance.CustomSignUp(up_id_text.text, up_pwd_text.text))
-            {
-                UserDataIns.Instance.InsertUserData();
-
-                string alertTxt = "회원 가입이 완료 되었습니다.\n로그인 후 이용해주세요.";
-                Alert.text = alertTxt.Replace("\\n", "\n");
-                SignUpPopup.SetActive(false);
-            }
-
-        }
-        else
-        {
-            Alert.text = "확인한 비밀번호가 일치하지 않습니다.";
-        }
-
-    }
-    #endregion
 
 
 }
