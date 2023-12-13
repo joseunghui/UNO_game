@@ -14,7 +14,7 @@ public class UI_ProgressBar : UI_Base
 
     public override void init()
     {
-        Bind<GameObject>(typeof(Define.Progress));
+        Bind<Image>(typeof(Define.Progress));
         progress = Get<GameObject>((int)Define.Progress.ProgressBar).GetComponent<Image>();
 
         // progress bar connect

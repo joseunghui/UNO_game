@@ -16,9 +16,8 @@ public class SceneManagerEx : MonoBehaviour
         Debug.Log($"type : {type}");
         
 
-        //StartCoroutine("BeforeLoadScene", GetSceneName(type));
+        StartCoroutine("BeforeLoadScene", GetSceneName(type));
 
-        SceneManager.LoadScene(GetSceneName(type));
     }
 
     IEnumerator BeforeLoadScene(string nextSceneName)
@@ -28,7 +27,7 @@ public class SceneManagerEx : MonoBehaviour
         if (nextSceneName == null)
             yield break;
 
-        
+        SceneManager.LoadScene(nextSceneName);
 
         UI_ProgressBar progressBar = null;
         progressBar.Progress(SceneManager.LoadSceneAsync(nextSceneName));
