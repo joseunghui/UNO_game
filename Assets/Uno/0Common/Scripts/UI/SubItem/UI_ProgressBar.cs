@@ -17,8 +17,10 @@ public class UI_ProgressBar : UI_Popup
         Bind<GameObject>(typeof(Define.Progress));
         Bind<Image>(typeof(Define.Progress));
 
-        progress = GetImage((int)Define.Progress.ProgressBar).GetComponent<Image>();
+        GameObject go = GetGameObject((int)Define.Progress.UI_ProgressBar);
+        progress = GetImage((int)Define.Progress.UI_ProgressBar);
 
+        go.transform.localScale = go.transform.lossyScale;
         // progress bar connect
         // StartCoroutine(Progress());
     }

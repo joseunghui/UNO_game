@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using DG.Tweening;
+using UnityEngine.UI;
 
 public class UI_NotificationPopup : UI_Popup
 {
-    float time = 1.0f;
+    Image image;
 
-
+    float time = 0f;
 
     private void Start()
     {
@@ -19,23 +19,30 @@ public class UI_NotificationPopup : UI_Popup
     {
         base.init();
 
-
         Bind<GameObject>(typeof(Define.NotiPopup));
+        Bind<Image>(typeof(Define.NotiPopup));
+        Bind<TextMeshProUGUI>(typeof(Define.NotiPopup));    
 
         GetGameObject((int)Define.NotiPopup.UI_NotificationPopup);
+        image = GetImage((int)Define.NotiPopup.NotiImage);
         GetText((int)Define.NotiPopup.NotiText);
 
-        StartCoroutine(DisappearPopup());
+        StartCoroutine(CoDisappearPopup());
     }
 
-    private IEnumerator DisappearPopup()
+    IEnumerator CoDisappearPopup()
     {
-        transform.localScale = new Vector3(0f, 0f, 0f);
-
-        if (transform == null)
+        if (image == null)
             yield break;
 
+        while (time <= 1.0f) 
+        {
+            yield return null;
+            image.transform.localScale = Vector3.one * (1 - time);
+            time += Time.deltaTime;
+        }
 
-        yield return new WaitForSeconds(1.2f);
+        Destroy(gameObject);
     }
+
 }

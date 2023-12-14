@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // UI sorting + Load 를 담당하는 매니저
 public class UIManager : MonoBehaviour
@@ -29,6 +30,12 @@ public class UIManager : MonoBehaviour
         Canvas canvas = Utill.GetOrAddComponent<Canvas>(go);
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
         canvas.overrideSorting = true;
+
+        CanvasScaler canvasScaler = Utill.GetOrAddComponent<CanvasScaler>(go);
+        canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        canvasScaler.referenceResolution = new Vector2(1920, 1080);
+        canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+        canvasScaler.referencePixelsPerUnit = 100;
 
         if (sort)
         {
@@ -92,6 +99,7 @@ public class UIManager : MonoBehaviour
 
         return Utill.GetOrAddComponent<T>(go);
     }
+
 
     // 특정 팝업 삭제
     public void ClosePopup(UI_Popup popup)

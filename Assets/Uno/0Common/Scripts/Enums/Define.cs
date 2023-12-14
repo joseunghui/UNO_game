@@ -53,6 +53,7 @@ public class Define
     public enum NotiPopup
     {
         UI_NotificationPopup,
+        NotiImage,
         NotiText,
     }
 
@@ -77,7 +78,7 @@ public class Define
     // Game Object
     public enum Progress
     {
-        ProgressBar,
+        UI_ProgressBar,
     }
     public enum EnterGame
     {
