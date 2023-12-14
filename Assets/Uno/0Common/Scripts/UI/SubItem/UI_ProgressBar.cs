@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_ProgressBar : UI_Base
+public class UI_ProgressBar : UI_Popup
 {
     Image progress;
 
@@ -14,11 +14,13 @@ public class UI_ProgressBar : UI_Base
 
     public override void init()
     {
+        Bind<GameObject>(typeof(Define.Progress));
         Bind<Image>(typeof(Define.Progress));
-        progress = Get<GameObject>((int)Define.Progress.ProgressBar).GetComponent<Image>();
+
+        progress = GetImage((int)Define.Progress.ProgressBar).GetComponent<Image>();
 
         // progress bar connect
-        StartCoroutine(Progress());
+        // StartCoroutine(Progress());
     }
 
     public IEnumerator Progress(AsyncOperation op = null)

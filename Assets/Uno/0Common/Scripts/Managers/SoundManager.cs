@@ -12,8 +12,6 @@ public class SoundManager
     // 캐싱을 위한 Dic
     Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
 
-
-
     public void init()
     {
         // 게임 오브젝트 중 @Sound 이름인거 찾기
@@ -58,6 +56,23 @@ public class SoundManager
         AudioClip audioClip = GetOrAddAudioClip(path, type);
         Play(audioClip, type, pitch);
     }
+
+    /*
+    public void SetBgmVolume(float volume){
+    AudioSource bgmSource = GameManager.instance.GetComponent<AudioSource>();
+    bgmSource.volume = volume;
+}
+public void SetEffectVolume(float volume){
+    AudioSource effectSource = CardManager.instance.GetComponent<AudioSource>();
+    effectSource.volume = volume;
+}
+public void CannotClick(){
+    TurnManager.instance.isLoading = true;
+}
+public void CanClick(){
+    TurnManager.instance.isLoading = false;
+}
+ */
 
     // 오디오 클립을 직접 받는 Play() 버전
     public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f) // 기본은 Effect
@@ -115,20 +130,5 @@ public class SoundManager
 
         return audioClip;
     }
-    /*
-        public void SetBgmVolume(float volume){
-        AudioSource bgmSource = GameManager.instance.GetComponent<AudioSource>();
-        bgmSource.volume = volume;
-    }
-    public void SetEffectVolume(float volume){
-        AudioSource effectSource = CardManager.instance.GetComponent<AudioSource>();
-        effectSource.volume = volume;
-    }
-    public void CannotClick(){
-        TurnManager.instance.isLoading = true;
-    }
-    public void CanClick(){
-        TurnManager.instance.isLoading = false;
-    }
-     */
+
 }

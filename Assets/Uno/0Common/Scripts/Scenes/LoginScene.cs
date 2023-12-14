@@ -12,7 +12,7 @@ public class LoginScene : BaseScene
         // here is Login Scene
         ScenType = Define.Scene.Login;
 
-        // Managers.UI.ShowScene<UI_Inven>();
+        // Managers.UI.ShowScene<UI_SignUpPopup>();
     }
 
 

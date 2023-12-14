@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameScene : MonoBehaviour
+public class GameScene : BaseScene
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void init()
     {
-        
+        base.init();
+
+        // BGM
+        Managers.Sound.Play("GameBGM", Define.Sound.BGM);
+
+        TurnManager.instance.StartGame();
+
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Clear()
     {
-        
+        Debug.Log("Game Scene Clear!!!");
     }
 }

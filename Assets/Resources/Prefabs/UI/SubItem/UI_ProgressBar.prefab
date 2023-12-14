@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3731056101383302405}
   - component: {fileID: 13314348838029932}
+  - component: {fileID: 1338814222042027265}
   m_Layer: 5
   m_Name: UI_ProgressBar
   m_TagString: Untagged
@@ -45,6 +46,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6455951658880418005}
   m_CullTransparentMesh: 1
+--- !u!114 &1338814222042027265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6455951658880418005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54b8c4880f0a1e541aa9f79210be9f4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7545070817016697930
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,7 +128,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0
+  m_FillAmount: 0.525
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0

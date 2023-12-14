@@ -11,8 +11,8 @@ public class ButtonManager : MonoBehaviour
     public Button cardbtn;
     public Button turnbtn;
     public Button unobtn;
-     [SerializeField] NotificationPanel notificationPanel;
-     [SerializeField] ResultPanel resultPanel;
+    
+    [SerializeField] ResultPanel resultPanel;
     void Start()
     {
         turnbtn.interactable = false;
@@ -57,7 +57,10 @@ public class ButtonManager : MonoBehaviour
         cardbtn.interactable = myTurn;
         turnbtn.interactable = false;
         if (myTurn)
-            notificationPanel.Show("내 차례!");
+        {
+            Managers.UI.ShowPopup<UI_NotificationPopup>();
+        }
+            
     }
     public void endingPopUp(bool isMyWin){
         cardbtn.interactable = false;

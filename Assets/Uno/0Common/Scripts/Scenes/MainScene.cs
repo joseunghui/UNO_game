@@ -9,6 +9,8 @@ public class MainScene : BaseScene
         base.init();
 
         ScenType = Define.Scene.Main;
+        // BGM
+        Managers.Sound.Play("BGM", Define.Sound.BGM);
 
         StartCoroutine(BackendLoginExcu());
     }

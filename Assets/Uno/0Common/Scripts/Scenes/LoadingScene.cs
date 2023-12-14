@@ -11,7 +11,11 @@ public class LoadingScene : BaseScene
 
         ScenType = Define.Scene.Loading; // here is Loadging Scene
 
-        Managers.UI.MakeSubItem<UI_ProgressBar>();
+        Debug.Log("this is LoadingScene");
+        Debug.Log($" ");
+
+        Transform parent = GameObject.Find("Background").transform;
+        Managers.UI.MakeSubItem<UI_ProgressBar>(parent);
     }
 
 

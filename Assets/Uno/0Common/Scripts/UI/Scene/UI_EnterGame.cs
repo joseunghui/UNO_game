@@ -13,6 +13,8 @@ public class UI_EnterGame : UI_Scene
     }
     public override void init()
     {
+        base.init();
+
         Bind<GameObject>(typeof(Define.EnterGame));
         Bind<Button>(typeof(Define.Buttons));
         Bind<Image>(typeof(Define.Images));

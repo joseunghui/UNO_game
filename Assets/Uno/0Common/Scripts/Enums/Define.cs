@@ -49,6 +49,13 @@ public class Define
         UI_SignUp,
     }
 
+    // NotiPopup
+    public enum NotiPopup
+    {
+        UI_NotificationPopup,
+        NotiText,
+    }
+
     // Texts
     public enum Texts
     {
