@@ -12,8 +12,6 @@ public class GameScene : BaseScene
         Managers.Sound.Play("GameBGM", Define.Sound.BGM);
 
         TurnManager.instance.StartGame();
-
-
     }
 
     public override void Clear()
