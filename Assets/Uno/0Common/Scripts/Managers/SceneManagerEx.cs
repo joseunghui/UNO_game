@@ -6,24 +6,23 @@ using UnityEngine.SceneManagement;
 public class SceneManagerEx : MonoBehaviour
 {
     public BaseScene CurrentScene { get { return GameObject.FindObjectOfType<BaseScene>(); } }
-
+    public string nextSceneName;
 
     // Scene Change Method
     public void LoadScene(Define.Scene type)
     {
         Managers.Clear();
 
-        Debug.Log($"type : {type}");
+        nextSceneName = GetSceneName(type);
 
         // 일단 로딩 씬으로 이동 
         SceneManager.LoadScene(GetSceneName(Define.Scene.Loading));
-
-
-        SceneManager.LoadScene(GetSceneName(type));
-
     }
 
-    
+    public void LoadScene(string nextScene)
+    {
+        SceneManager.LoadScene(nextScene);
+    }
 
     // Enum속 씬 타입을 string으로 가져오기
     public string GetSceneName(Define.Scene type)

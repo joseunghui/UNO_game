@@ -27,6 +27,7 @@ public abstract class UI_Base : MonoBehaviour
             else
                 objects[i] = Utill.FindChild<T>(gameObject, names[i], true);
 
+            // TODO DELETE
             if (objects[i] == null)
                 Debug.Log($"Binding Failed >> {names[i]}");
         }

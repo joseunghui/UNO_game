@@ -42,19 +42,32 @@ public class Define
 
 
     #region UI
+
+    // Scene
+    public enum LoadgingVideo
+    {
+        UI_LoadingVideo,
+        LoadingImage,
+        LoadingVideo,
+        LoadingBar,
+    }
+
+
     // Popup
     public enum Popups
     {
         UI_SignIn,
         UI_SignUp,
     }
-
-    // NotiPopup
     public enum NotiPopup
     {
         UI_NotificationPopup,
         NotiImage,
         NotiText,
+    }
+    public enum Progress
+    {
+        UI_ProgressBar,
     }
 
     // Texts
@@ -75,11 +88,7 @@ public class Define
         EnterGameImage,
     }
 
-    // Game Object
-    public enum Progress
-    {
-        UI_ProgressBar,
-    }
+    // Game Object(SubItem)
     public enum EnterGame
     {
         UI_EnterGame,
