@@ -103,7 +103,6 @@ public class Define
     // Popup
     public enum SignUpPopup
     {
-        UI_SignUp,
         CloseBtn,
         IDInputField,
         PasswordInputField,

@@ -19,7 +19,11 @@ public class UIManager : MonoBehaviour
             GameObject root = GameObject.Find("@UI_Root");
 
             if (root == null)
-                root = new GameObject { name = "@UI_Root" };
+            {
+                root = new GameObject(); 
+                root.transform.name = "@UI_Root";
+                root.transform.position = Vector3.zero;
+            }
 
             return root;
         }
@@ -27,15 +31,15 @@ public class UIManager : MonoBehaviour
 
     public void SetCanvas(GameObject go, bool sort = true)
     {
+        // 기존 캔버스 있으면 새로 만들지 않기
+        if (GameObject.FindWithTag("Canvas") != null)
+            return;
+
         Canvas canvas = Utill.GetOrAddComponent<Canvas>(go);
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.overrideSorting = true;
+        CanvasOptionSetting(canvas);
 
         CanvasScaler canvasScaler = Utill.GetOrAddComponent<CanvasScaler>(go);
-        canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        canvasScaler.referenceResolution = new Vector2(1920, 1080);
-        canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
-        canvasScaler.referencePixelsPerUnit = 100;
+        CanvasScalerOptionSetting(canvasScaler);
 
         if (sort)
         {
@@ -72,13 +76,20 @@ public class UIManager : MonoBehaviour
         if (string.IsNullOrEmpty(name))
             name = typeof(T).Name;
 
-        GameObject go = Managers.Resource.Instantiate($"UI/Popup/{name}"); // Scene에 프리팹(GameObject) 생성
+        GameObject rootObject = Root;  // @UI_Root 생성
+        Canvas canvas = Utill.GetOrAddComponent<Canvas>(rootObject);
+        CanvasScaler canvasScaler = Utill.GetOrAddComponent<CanvasScaler>(rootObject);
+
+        CanvasOptionSetting(canvas);
+        CanvasScalerOptionSetting(canvasScaler);
+
+        GameObject go = Managers.Resource.Instantiate($"UI/Popup/{name}", rootObject.transform); // Scene에 프리팹(GameObject) 생성
 
         T popup = Utill.GetOrAddComponent<T>(go); // 제너릭 타입의 popup으로 컴포넌트(Component) 생성
 
         _popupStack.Push(popup); // 큐에 순차적으로 넣기
 
-        go.transform.SetParent(Root.transform);
+        go.transform.SetParent(rootObject.transform);
 
         return null;
     }
@@ -106,6 +117,7 @@ public class UIManager : MonoBehaviour
         if (string.IsNullOrEmpty(name))
             name = typeof(T).Name;
 
+        
         GameObject go = Managers.Resource.Instantiate($"UI/SubItem/{name}");
 
         // 기존에 이미 있는 캔버스 안에 SubItem을 만드는 경우
@@ -163,5 +175,19 @@ public class UIManager : MonoBehaviour
     {
         CloseAllPopup();
         _sceneUI = null;
+    }
+
+    public void CanvasOptionSetting(Canvas canvas)
+    {
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.overrideSorting = true;
+    }
+
+    public void CanvasScalerOptionSetting(CanvasScaler scaler)
+    {
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920, 1080);
+        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+        scaler.referencePixelsPerUnit = 100;
     }
 }

@@ -13,6 +13,8 @@ public class LoginScene : BaseScene
 
         // 처음에는 회원가입
         Managers.UI.ShowPopup<UI_SignUp>();
+
+        
     }
 
     public override void Clear()

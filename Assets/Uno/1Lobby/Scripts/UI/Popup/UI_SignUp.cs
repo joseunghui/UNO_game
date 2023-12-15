@@ -16,10 +16,9 @@ public class UI_SignUp : UI_Popup
         base.init();
 
         // Resources > Prefabs > UI 
-        Bind<GameObject>(typeof(Define.SignUpPopup));
-
-        Get<InputField>((int)Define.SignUpPopup.IDInputField).interactable = true;
-        Get<InputField>((int)Define.SignUpPopup.PasswordInputField).interactable = true;
+        Bind<InputField>(typeof(Define.SignUpPopup));
+        Bind<Button>(typeof(Define.SignUpPopup));
+        Bind<TextMeshProUGUI>(typeof(Define.SignUpPopup));
 
         GetButton((int)Define.SignUpPopup.DoBtn).gameObject.BindEvent((PointerEventData) =>
         {
