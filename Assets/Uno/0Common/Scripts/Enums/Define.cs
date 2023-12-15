@@ -43,8 +43,6 @@ public class Define
         UI_SignUp,
         UI_SignIn,
         UI_NotificationPopup,
-
-
     }
 
     public enum UI_Scene
@@ -67,16 +65,14 @@ public class Define
 
         CloseBtn,
         DoBtn,
-
-
     }
 
     public enum Texts
     {
         EnterGameText,
-
         NotiText,
-
+        IDText,
+        
     }
 
     public enum Videos
@@ -98,31 +94,5 @@ public class Define
         LoadingVideo,
         LoadingBar,
     }
-
-
-    // Popup
-    public enum SignUpPopup
-    {
-        CloseBtn,
-        IDInputField,
-        PasswordInputField,
-        DoBtn,
-    }
-    public enum NotiPopup
-    {
-        UI_NotificationPopup,
-        NotiImage,
-        NotiText,
-    }
-
-
-    // SubItem
-    public enum EnterGameBtn
-    {
-        UI_EnterGame,
-        EnterGameButton,
-        EnterGameText,
-    }
-
     #endregion
 }

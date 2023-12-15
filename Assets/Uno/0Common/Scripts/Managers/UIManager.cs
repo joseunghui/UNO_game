@@ -79,6 +79,7 @@ public class UIManager : MonoBehaviour
         GameObject rootObject = Root;  // @UI_Root »ý¼º
         Canvas canvas = Utill.GetOrAddComponent<Canvas>(rootObject);
         CanvasScaler canvasScaler = Utill.GetOrAddComponent<CanvasScaler>(rootObject);
+        Utill.GetOrAddComponent<GraphicRaycaster>(rootObject);
 
         CanvasOptionSetting(canvas);
         CanvasScalerOptionSetting(canvasScaler);

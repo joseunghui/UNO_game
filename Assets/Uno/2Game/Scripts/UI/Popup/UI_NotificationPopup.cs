@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
 
 public class UI_NotificationPopup : UI_Popup
@@ -19,11 +18,8 @@ public class UI_NotificationPopup : UI_Popup
     {
         base.init();
 
-        Bind<GameObject>(typeof(Define.NotiPopup));
-
-        GetGameObject((int)Define.NotiPopup.UI_NotificationPopup);
-        image = GetImage((int)Define.NotiPopup.NotiImage);
-        GetText((int)Define.NotiPopup.NotiText);
+        Bind<Image>(typeof(Define.Images));
+        image = GetImage((int)Define.Images.NotiImage);
 
         StartCoroutine(CoDisappearPopup());
     }
