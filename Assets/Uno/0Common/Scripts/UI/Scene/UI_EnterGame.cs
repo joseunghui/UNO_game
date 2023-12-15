@@ -1,3 +1,4 @@
+using BackEnd;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -23,8 +24,18 @@ public class UI_EnterGame : UI_Scene
         GetText((int)Define.Texts.EnterGameText).GetComponent<TextMeshProUGUI>().text = "게임시작";
         GetButton((int)Define.Buttons.EnterGameButton).gameObject.BindEvent( (PointerEventData) =>
         {
-            Debug.Log("Enter Game!");
-            Managers.Scene.LoadScene(Define.Scene.Login);
+            // 로그인 했으면 Game, 아니면 Login
+            // 기등록된 로컬 기기 자동 로그인
+            BackendReturnObject autoLogin = Backend.BMember.LoginWithTheBackendToken();
+
+            if (autoLogin.IsSuccess())
+            {
+                Managers.Scene.LoadScene(Define.Scene.Game);
+            }
+            else
+            {
+                Managers.Scene.LoadScene(Define.Scene.Login);
+            }
         });
 
     }

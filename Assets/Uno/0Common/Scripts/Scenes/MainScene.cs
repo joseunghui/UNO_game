@@ -11,20 +11,7 @@ public class MainScene : BaseScene
         ScenType = Define.Scene.Main;
         // BGM
         Managers.Sound.Play("BGM", Define.Sound.BGM);
-
-        StartCoroutine(BackendLoginExcu());
-    }
-
-    IEnumerator BackendLoginExcu()
-    {
-        // 기등록된 로컬 기기 자동 로그인
-        BackendReturnObject autoLogin = Backend.BMember.LoginWithTheBackendToken();
-        if (autoLogin.IsSuccess())
-        {
-            Managers.UI.ShowScene<UI_EnterGame>();
-        }
-        else 
-            yield break;
+        Managers.UI.ShowScene<UI_EnterGame>();
     }
 
 
