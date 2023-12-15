@@ -29,7 +29,7 @@ public class StartGame : MonoBehaviour
     private void Awake()
     {
         // 유저의 하트 수 가져오기
-        havingHeart = RankingDataManager.UserHeartCount;
+        // havingHeart = RankingDataManager.UserHeartCount;
         // 유저의 마지막 게임 접속 시간 가져오기 
         GameQuitTime = UserDataIns.Instance.GetUserLastGameTime();
 

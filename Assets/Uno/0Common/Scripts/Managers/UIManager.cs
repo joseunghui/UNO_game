@@ -31,10 +31,6 @@ public class UIManager : MonoBehaviour
 
     public void SetCanvas(GameObject go, bool sort = true)
     {
-        // 기존 캔버스 있으면 새로 만들지 않기
-        if (GameObject.FindWithTag("Canvas") != null)
-            return;
-
         Canvas canvas = Utill.GetOrAddComponent<Canvas>(go);
         CanvasOptionSetting(canvas);
 
@@ -123,6 +119,7 @@ public class UIManager : MonoBehaviour
 
         // 기존에 이미 있는 캔버스 안에 SubItem을 만드는 경우
         GameObject parentCanvas = GameObject.FindWithTag("Canvas");
+
         go.transform.SetParent(parentCanvas.transform);
 
         return Utill.GetOrAddComponent<T>(go);

@@ -47,24 +47,29 @@ public class Define
 
     public enum UI_Scene
     {
-        UI_LoadingVideo
+        UI_LoadingVideo,
+        UI_Ranking,
     }
 
     public enum Images
     {
         LoadingImage,
         LoadingBar,
-
+        MyGradeIconImage,
         NotiImage,
 
     }
 
     public enum Buttons
     {
-        EnterGameButton,
-
         CloseBtn,
         DoBtn,
+
+        EnterGameButton,
+
+        NickChangeBtn,
+        EnterPVPGameBtn,
+        EnterPVCGameBtn,
     }
 
     public enum Texts
@@ -72,7 +77,8 @@ public class Define
         EnterGameText,
         NotiText,
         IDText,
-        
+
+        MyNicknameText,
     }
 
     public enum Videos

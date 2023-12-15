@@ -2,20 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameScene : BaseScene
+public class MatchScene : BaseScene
 {
     protected override void init()
     {
         base.init();
 
-        // BGM
-        Managers.Sound.Play("GameBGM", Define.Sound.BGM);
+        ScenType = Define.Scene.Match; // here is Match Scene
 
-        // TurnManager.instance.StartGame();
     }
 
     public override void Clear()
     {
-        Debug.Log("Game Scene Clear!!!");
+        Debug.Log("Match Scene Clear!!!");
     }
 }
