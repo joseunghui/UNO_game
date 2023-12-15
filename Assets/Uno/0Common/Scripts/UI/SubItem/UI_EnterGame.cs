@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_EnterGame : UI_Scene
+public class UI_EnterGame : UI_SubItem
 {
     private void Start()
     {
@@ -16,9 +15,8 @@ public class UI_EnterGame : UI_Scene
     {
         base.init();
 
-        Bind<GameObject>(typeof(Define.EnterGame));
+        // 가져와야 할 것 : 버튼, 텍스트
         Bind<Button>(typeof(Define.Buttons));
-        Bind<Image>(typeof(Define.Images));
         Bind<TextMeshProUGUI>(typeof(Define.Texts));
 
         GetText((int)Define.Texts.EnterGameText).GetComponent<TextMeshProUGUI>().text = "게임시작";
@@ -30,7 +28,8 @@ public class UI_EnterGame : UI_Scene
 
             if (autoLogin.IsSuccess())
             {
-                Managers.Scene.LoadScene(Define.Scene.Game);
+                // 로그인 후에는 랭킹 팝업 open
+                Managers.UI.ShowPopup<UI_SignIn>();
             }
             else
             {

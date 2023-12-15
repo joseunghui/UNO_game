@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Utill
 {
+    // 해당 씬에 이미 있는 캔버스 컴포넌트 뽑아오기 -> subItem 
+    public static Canvas GetParentCanvasComponent(GameObject go)
+    {
+        return null;
+    }
+
+
+
     // 해당 게임 오브젝트의 컴포넌트를 뽑아오거나 생성하기
     public static T GetOrAddComponent<T>(GameObject go) where T : Component
     {

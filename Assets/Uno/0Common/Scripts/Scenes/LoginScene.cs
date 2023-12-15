@@ -9,31 +9,11 @@ public class LoginScene : BaseScene
     {
         base.init();
 
-        // here is Login Scene
-        ScenType = Define.Scene.Login;
+        ScenType = Define.Scene.Login; // here is Login Scene
 
-        // Managers.UI.ShowScene<UI_SignUpPopup>();
+        // 처음에는 회원가입
+        Managers.UI.ShowPopup<UI_SignUp>();
     }
-
-
-
-    #region Sign In
-    // Log-in 확인 버튼 클릭
-    public void DoSignIn()
-    {
-
-    }
-    #endregion
-    #region Sign Up
-    // Sign-Up 확인 버튼 클릭
-    public void DoSignUp()
-    {
-        
-
-    }
-    #endregion
-
-
 
     public override void Clear()
     {

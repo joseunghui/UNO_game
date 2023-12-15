@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class GameMode
 {
     // 유저간 대결(PVP), AI와 대결(PVC)

@@ -84,7 +84,7 @@ public class UIManager : MonoBehaviour
     }
 
     // SubItem 전용 Instantiate()
-    public T MakeSubItem<T>(Transform parent = null, string name = null) where T : UI_Base
+    public T MakeSubItemInNewCanvas<T>(Transform parent = null, string name = null) where T : UI_Base
     {
         if (string.IsNullOrEmpty(name))
             name = typeof(T).Name;
@@ -96,6 +96,21 @@ public class UIManager : MonoBehaviour
         {
             go.transform.SetParent(parent);
         }
+
+        return Utill.GetOrAddComponent<T>(go);
+    }
+
+    // SubItem 전용 Instantiate() v2
+    public T MakeSubItemInOldCanvas<T>(string name = null) where T : UI_Base
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+        GameObject go = Managers.Resource.Instantiate($"UI/SubItem/{name}");
+
+        // 기존에 이미 있는 캔버스 안에 SubItem을 만드는 경우
+        GameObject parentCanvas = GameObject.FindWithTag("Canvas");
+        go.transform.SetParent(parentCanvas.transform);
 
         return Utill.GetOrAddComponent<T>(go);
     }

@@ -20,8 +20,6 @@ public class UI_NotificationPopup : UI_Popup
         base.init();
 
         Bind<GameObject>(typeof(Define.NotiPopup));
-        Bind<Image>(typeof(Define.NotiPopup));
-        Bind<TextMeshProUGUI>(typeof(Define.NotiPopup));    
 
         GetGameObject((int)Define.NotiPopup.UI_NotificationPopup);
         image = GetImage((int)Define.NotiPopup.NotiImage);

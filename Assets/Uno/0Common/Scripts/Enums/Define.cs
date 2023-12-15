@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Playables;
-
 public class Define
 {
     // Scene 타입 관리
@@ -42,8 +37,60 @@ public class Define
 
 
     #region UI
-
     // Scene
+    public enum UI_Popup
+    {
+        UI_SignUp,
+        UI_SignIn,
+        UI_NotificationPopup,
+
+
+    }
+
+    public enum UI_Scene
+    {
+        UI_LoadingVideo
+    }
+
+    public enum Images
+    {
+        LoadingImage,
+        LoadingBar,
+
+        NotiImage,
+
+    }
+
+    public enum Buttons
+    {
+        EnterGameButton,
+
+        CloseBtn,
+        DoBtn,
+
+
+    }
+
+    public enum Texts
+    {
+        EnterGameText,
+
+        NotiText,
+
+    }
+
+    public enum Videos
+    {
+        LoadingVideo,
+
+    }
+
+    public enum InputFields
+    {
+        IDInputField,
+        PasswordInputField,
+
+    }
     public enum LoadgingVideo
     {
         UI_LoadingVideo,
@@ -54,10 +101,13 @@ public class Define
 
 
     // Popup
-    public enum Popups
+    public enum SignUpPopup
     {
-        UI_SignIn,
         UI_SignUp,
+        CloseBtn,
+        IDInputField,
+        PasswordInputField,
+        DoBtn,
     }
     public enum NotiPopup
     {
@@ -65,33 +115,15 @@ public class Define
         NotiImage,
         NotiText,
     }
-    public enum Progress
-    {
-        UI_ProgressBar,
-    }
 
-    // Texts
-    public enum Texts
+
+    // SubItem
+    public enum EnterGameBtn
     {
+        UI_EnterGame,
+        EnterGameButton,
         EnterGameText,
     }
 
-    // Button
-    public enum Buttons
-    {
-        EnterGameButton,
-    }
-
-    // Image
-    public enum Images
-    {
-        EnterGameImage,
-    }
-
-    // Game Object(SubItem)
-    public enum EnterGame
-    {
-        UI_EnterGame,
-    }
     #endregion
 }
