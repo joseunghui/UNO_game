@@ -11,7 +11,8 @@ public class MainScene : BaseScene
         ScenType = Define.Scene.Main;
         // BGM
         Managers.Sound.Play("BGM", Define.Sound.BGM);
-        Managers.UI.MakeSubItemInOldCanvas<UI_EnterGame>();
+        UI_EnterGame ui_EnterGame = Managers.UI.MakeSubItemInOldCanvas<UI_EnterGame>();
+        ui_EnterGame.transform.localPosition = Vector3.zero;
     }
 
 
