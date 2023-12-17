@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityManager : Singleton<EntityManager>
+public class EntityManager : PVCGameController
 {
     public GameObject entityPrefab;
     const int MAX_ENTITY_COUNT = 1;
@@ -27,7 +27,7 @@ public class EntityManager : Singleton<EntityManager>
         entities.Add(entity);
         items.Add(item);
         entitiesObj.Add(entityObject);
-        if(TurnManager.instance.myTurn == false)
+        if(Turn.myTurn == false)
             entity.MoveTransform(Vector3.zero, true, 1f);
         else
             entity.MoveTransform(Vector3.zero, true, 0.5f);

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 using TMPro;
 
-public class TurnManager : Singleton<TurnManager>
+public class TurnManager : PVCGameController
 {
     [Header("Develop")]
     [SerializeField] [Tooltip("시작 턴 모드를 정합니다")] ETurnMode eTurnMode;
@@ -66,31 +66,31 @@ public class TurnManager : Singleton<TurnManager>
         OnTurnStarted?.Invoke(myTurn);
     }
 
-    public void Update(){
+/*    public void Update(){
 #if UNITY_EDITOR    // 유니티 에디터일 경우에만 치트 호출
         InputCheatKey();
 #endif
-        int myCards = CardManager.instance.myCards.Count;
-        int otherCards = CardManager.instance.otherCards.Count;
+        int myCards = Card.myCards.Count;
+        int otherCards = Card.otherCards.Count;
         if(myCards > 1 || otherCards > 1){
             unoCount = 1;
-            // ButtonManager.Inst.unobtn.interactable = false;
+            ButtonManager.Inst.unobtn.interactable = false;
         }
-        // if(otherCards == 1 || myCards == 1 && unoCount == 1)
-            // ButtonManager.Inst.unobtn.interactable = true;
+        if(otherCards == 1 || myCards == 1 && unoCount == 1)
+            ButtonManager.Inst.unobtn.interactable = true;
 
-/*        // 턴으로 타이머 시작/멈춤 설정
+*//*        // 턴으로 타이머 시작/멈춤 설정
         if (myTurn)
             DataManager.Instance.IsMyTurn = true;
         else
-            DataManager.Instance.IsMyTurn = false;*/
-    }
+            DataManager.Instance.IsMyTurn = false;*//*
+    }*/
 
     public void EndTurn(){
         myTurn = !myTurn;
-        if(CardManager.instance.myCards.Count == 0)
+        if(Card.myCards.Count == 0)
             StartCoroutine(GameOver(true));
-        if(CardManager.instance.otherCards.Count == 0)
+        if(Card.otherCards.Count == 0)
             StartCoroutine(GameOver(false));
         else
             StartCoroutine(StartTurnCo());

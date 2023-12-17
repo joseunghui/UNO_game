@@ -24,20 +24,20 @@ public class UI_LevelSelect : UI_Popup
 
         GetButton((int)Define.Buttons.EasyBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            StartCoroutine(CoButtonClickSoundPlay());
             gameLevel = (int)GameMode.PVCMode.EASY;
+            StartCoroutine(CoButtonClickSoundPlay());
         });
 
         GetButton((int)Define.Buttons.NormalBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            StartCoroutine(CoButtonClickSoundPlay());
             gameLevel = (int)GameMode.PVCMode.NORMAL;
+            StartCoroutine(CoButtonClickSoundPlay());
         });
 
         GetButton((int)Define.Buttons.HardBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            StartCoroutine(CoButtonClickSoundPlay());
             gameLevel = (int)GameMode.PVCMode.HARD;
+            StartCoroutine(CoButtonClickSoundPlay());
         });
     }
 
@@ -45,5 +45,6 @@ public class UI_LevelSelect : UI_Popup
     {
         yield return null;
         Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
+        Managers.UI.ClosePopup(this);
     }
 }

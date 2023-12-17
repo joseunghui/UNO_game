@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-public class Card : MonoBehaviour
+using System;
+public class Card : CardManager
 {
     [SerializeField] SpriteRenderer card;
     [SerializeField] SpriteRenderer image;
@@ -24,19 +25,21 @@ public class Card : MonoBehaviour
     
     void OnMouseOver(){
         if(isFront)
-            CardManager.instance.CardMouseOver(this);
+            CardMouseOver(this);
     }
+
+
     void OnMouseExit(){
         if(isFront)
-            CardManager.instance.CardMouseExit(this);
+            CardMouseExit(this);
     }
     void OnMouseDown(){
         if(isFront)
-            CardManager.instance.CardMouseDown();
+            CardMouseDown();
     }
     void OnMouseUp(){
         if(isFront)
-            CardManager.instance.CardMouseUp();
+            CardMouseUp();
     }
 
     public void MoveTransform(PRS prs, bool useDotween, float dotweenTime = 0){

@@ -17,14 +17,9 @@ public class GameScene : BaseScene
         Managers.Sound.Play("GameBGM", Define.Sound.BGM);
 
         Managers.UI.ShowPopup<UI_LevelSelect>();
-
-        
-
-    }
-
-    IEnumerator CoSelectedGameMode()
-    {
-        yield return null;
+        UI_GameBar gameBar = Managers.UI.MakeSubItemInOldCanvas<UI_GameBar>();
+        gameBar.transform.localScale = Vector3.one;
+        gameBar.transform.localPosition = new Vector3(0, 0, 0);
         
     }
 

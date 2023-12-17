@@ -897,7 +897,7 @@ GameObject:
   - component: {fileID: 4495581524402499873}
   - component: {fileID: 5817744695500764606}
   m_Layer: 5
-  m_Name: GameBar
+  m_Name: UI_GameBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

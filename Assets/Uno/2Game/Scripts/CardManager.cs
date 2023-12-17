@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 using DG.Tweening;
 using TMPro;
 
-public class CardManager : Singleton<CardManager>
+public class CardManager : PVCGameController
 {
     [SerializeField] ItemSO itemSO;
     [SerializeField] GameObject cardPrefab;
@@ -38,7 +38,7 @@ public class CardManager : Singleton<CardManager>
     public Item PopItem(){
         if(itemBuffer.Count == 0){
             
-            List<Item> items = EntityManager.instance.items;
+            List<Item> items = Entity.items;
             int count = items.Count;
             for(int i = 0; i<count-1; i++){
                 itemBuffer.Add(items[i]);
@@ -95,7 +95,7 @@ public class CardManager : Singleton<CardManager>
         if(myTurn == false){
             if(TryPutCard(myTurn))
             {
-                TurnManager.instance.EndTurn();
+                Turn.EndTurn();
             }
         }
     }
@@ -111,7 +111,7 @@ public class CardManager : Singleton<CardManager>
     }
     
     void StartCard(bool isFront){
-        EntityManager.instance.SpawnEntity(isFront, PopItem(), Vector3.zero);
+        Entity.SpawnEntity(isFront, PopItem(), Vector3.zero);
     }
 
     public void AddCard(bool isMine){
@@ -181,12 +181,12 @@ public class CardManager : Singleton<CardManager>
     public bool TryPutCard(bool isMine){
         if (putCount >= 1)   // 카드 하나 낼 수 있음
             return false;
-        List<Item> items = EntityManager.instance.items;
+        List<Item> items = Entity.items;
         Item item = items[items.Count-1]; // 마지막으로 낸 카드
         Card card = isMine ? selectCard : OtherCard(item, 1);
         
         if(card == null){
-            TurnManager.instance.EndTurn();
+            Turn.EndTurn();
             return false;
         }
         var spawnPos = isMine ? Utils.MousePos : otherCardRight.position;
@@ -197,7 +197,7 @@ public class CardManager : Singleton<CardManager>
         // 특수카드 중 색깔 블랙 (4드로우, 색깔 변경)
         if (card.item.color.Equals("black"))
         {
-            EntityManager.instance.SpawnEntity(isMine, card.item, spawnPos);
+            Entity.SpawnEntity(isMine, card.item, spawnPos);
             targetCards.Remove(card);
             card.transform.DOKill();
             DestroyImmediate(card.gameObject);
@@ -223,7 +223,7 @@ public class CardManager : Singleton<CardManager>
         else
         {
             if(card.item.color == item.color || card.item.num == item.num || item.color.Equals("black")) { // 카드 낼 때 조건
-                EntityManager.instance.SpawnEntity(isMine, card.item, spawnPos);
+                Entity.SpawnEntity(isMine, card.item, spawnPos);
                 targetCards.Remove(card);
                 card.transform.DOKill();
                 DestroyImmediate(card.gameObject);
@@ -301,10 +301,10 @@ public class CardManager : Singleton<CardManager>
         if(eCardState != ECardState.CanMouseDrag)
             return;
         if(OnMyCardArea)
-            EntityManager.instance.EntityAlignment();
+            Entity.EntityAlignment();
         else{
             if(TryPutCard(true)){
-                TurnManager.instance.EndTurn();
+                Turn.EndTurn();
             }
         }
             
@@ -316,7 +316,7 @@ public class CardManager : Singleton<CardManager>
         
         if(!OnMyCardArea){
             selectCard.MoveTransform(new PRS(Utils.MousePos, Utils.QI, selectCard.originPRS.scale), false);
-            EntityManager.instance.EntityAlignment();
+            Entity.EntityAlignment();
         }
     }
     void DetectCardArea(){  // MyCardArea랑 마우스랑 겹치는 부분이 있으면 true
@@ -334,11 +334,11 @@ public class CardManager : Singleton<CardManager>
         card.GetComponent<Order>().SetMostFrontOrder(isEnlarge);
     }
     void SetECardState(){
-        if(TurnManager.instance.isLoading)  // 게임 로딩중일땐 아무것도 안되고
+        if(Turn.isLoading)  // 게임 로딩중일땐 아무것도 안되고
             eCardState = ECardState.Nothing;
-        else if(!TurnManager.instance.myTurn || putCount == 1)   // 드래그 못하게
+        else if(!Turn.myTurn || putCount == 1)   // 드래그 못하게
             eCardState = ECardState.CanMouseOver;
-        else if(TurnManager.instance.myTurn && putCount == 0)    // 내 턴일땐 가능
+        else if(Turn.myTurn && putCount == 0)    // 내 턴일땐 가능
             eCardState = ECardState.CanMouseDrag;
         
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class ButtonManager : MonoBehaviour
+public class ButtonManager : TurnManager
 {
     public static ButtonManager Inst {get; private set;}
     void Awake() => Inst = this;
@@ -17,12 +17,12 @@ public class ButtonManager : MonoBehaviour
     {
         turnbtn.interactable = false;
         turnbtn.onClick.AddListener(() =>{
-            TurnManager.instance.EndTurn();
+            EndTurn();
             turnbtn.interactable = false;
         });
     }
     public void Uno(){
-        bool turn = TurnManager.instance.myTurn;
+        bool turn = myTurn;
         int random = Random.Range(0,100);
         int per = 0;
 
@@ -36,7 +36,7 @@ public class ButtonManager : MonoBehaviour
             unobtn.interactable = false;
             Debug.Log("상대 +2");
         }
-        TurnManager.instance.unoCount = 0;
+        unoCount = 0;
         unobtn.interactable = false;
     }
     
