@@ -1,4 +1,5 @@
 using BackEnd;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,6 +41,7 @@ public class DataManager : MonoBehaviour
         UserDataIns.Instance.GetMyAllData();
 
         userInfoData.nickname = UserDataIns.userInfo.nickname;
+        userInfoData.nickChange = UserDataIns.userInfo.nickChange;
         userInfoData.heart = UserDataIns.userInfo.heart;
         userInfoData.grade = UserDataIns.userInfo.grade;
         userInfoData.freeDia = UserDataIns.userInfo.freeDia;
@@ -48,19 +50,55 @@ public class DataManager : MonoBehaviour
         userInfoData.winCnt = UserDataIns.userInfo.winCnt;
 
         RankingData.Instance.RankingGet();
-        Debug.Log($"RankingData.ranks.Count : {RankingData.ranks.Count}");
+        
         for (int i=0; i < RankingData.ranks.Count; i++)
         {
             rankingDatas.Add(RankingData.ranks[i]);
         }
     }
 
-
-    public void UpdataUserData()
+    public void UpdataUserData(Define.UpdateDateSort dateSort = Define.UpdateDateSort.RecodingGameResult, UserInfoData _data = null)
     {
+        Debug.Log(_data.ToString());
 
+        switch (dateSort)
+        {
+            case Define.UpdateDateSort.UsingDia:
+                StartCoroutine(CoUsingDia(_data.freeDia, _data.payDia));
+                break;
+            case Define.UpdateDateSort.UsingHeart:
+                StartCoroutine(CoUsingHeart(_data.heart));
+                break;
+            case Define.UpdateDateSort.ChangeNick:
+                StartCoroutine(CoChangeNick(_data));
+                break;
+            case Define.UpdateDateSort.RecodingGameResult:
+                StartCoroutine(CoRecodingGameResult(_data));
+                break;
+        }
     }
 
+    IEnumerator CoUsingDia(int afterFreeDia, int afterPayDia)
+    {
+        yield break;
+    }
+
+    IEnumerator CoUsingHeart(int afterHeart)
+    {
+        yield break;
+    }
+
+    IEnumerator CoChangeNick(UserInfoData afterUserData)
+    {
+        yield break;
+    }
+
+    IEnumerator CoRecodingGameResult(UserInfoData afterGame)
+    {
+        yield break;
+    }
+
+    // Å»Åð
     public void DeleteUserData()
     {
         // ·©Å·±îÁö °°ÀÌ »èÁ¦

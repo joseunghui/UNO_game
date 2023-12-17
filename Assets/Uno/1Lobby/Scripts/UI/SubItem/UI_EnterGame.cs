@@ -22,6 +22,8 @@ public class UI_EnterGame : UI_SubItem
         GetText((int)Define.Texts.EnterGameText).GetComponent<TextMeshProUGUI>().text = "게임시작";
         GetButton((int)Define.Buttons.EnterGameButton).gameObject.BindEvent( (PointerEventData) =>
         {
+            Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
+
             // 로그인 했으면 Game, 아니면 Login
             // 기등록된 로컬 기기 자동 로그인
             BackendReturnObject autoLogin = Backend.BMember.LoginWithTheBackendToken();

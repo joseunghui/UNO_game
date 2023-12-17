@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 public class UI_Ranking : UI_Popup
 {
+    private UserInfoData data;
     private void Start()
     {
         init();
@@ -16,23 +17,26 @@ public class UI_Ranking : UI_Popup
     {
         base.init();
 
+        // data setting
+        data = Managers.Data.userInfoData;
+
         Bind<Button>(typeof(Define.Buttons));
         Bind<Image>(typeof(Define.Images));
         Bind<TextMeshProUGUI>(typeof(Define.Texts));
+
+        GetText((int)Define.Texts.MyNicknameText).gameObject.GetComponent<TextMeshProUGUI>().text = data.nickname;
 
         // nick name change button
         GetButton((int)Define.Buttons.NickChangeBtn).gameObject.BindEvent((PointerEventData) =>
         {
             // nick name change popup open
-            // Managers.UI.ShowPopup<UI_NickChange>();
+            Managers.UI.ShowPopup<UI_NickChange>();
         });
 
         // pvc game start btn
         // level select -> Move to Game Scene
         GetButton((int)Define.Buttons.EnterPVCGameBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            //TODO
-            // 게임씬 이동 -> 레벨선택 팝업 -> 레벨에 따른 모드 enum PVCMode 사용 (선언은 BaseScene.cs)
             Managers.Scene.LoadScene(Define.Scene.Game);
         });
 
@@ -43,5 +47,6 @@ public class UI_Ranking : UI_Popup
             Managers.Scene.LoadScene(Define.Scene.Match);
         });
     }
+
 
 }

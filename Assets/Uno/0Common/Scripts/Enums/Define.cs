@@ -19,6 +19,15 @@ public class Define
         MaxCount,
     }
 
+    // Data
+    public enum UpdateDateSort
+    {
+        UsingDia,
+        UsingHeart,
+        RecodingGameResult,
+        ChangeNick,
+
+    }
     #region Event
     public enum UIEvent
     {
@@ -59,6 +68,8 @@ public class Define
         MyGradeIconImage,
         NotiImage,
 
+        DiaIconImage,
+        HeartIconImage,
     }
 
     public enum Buttons
@@ -84,6 +95,9 @@ public class Define
         IDText,
 
         MyNicknameText,
+        UpdateNicknameText,
+        NeededDiaText,
+        MyDiaText,
     }
 
     public enum Videos
@@ -96,6 +110,7 @@ public class Define
     {
         IDInputField,
         PasswordInputField,
+        NicknameInputField,
 
     }
     public enum LoadgingVideo

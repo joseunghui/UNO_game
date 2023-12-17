@@ -10,7 +10,6 @@ public abstract class BaseScene : MonoBehaviour
     // 객체 자체는 public 으로, Set은 protected로 선언해주기(자식 스크립트에서 접근 가능)
     public Define.Scene ScenType { get; protected set; } = Define.Scene.UnKnown; // 초기 설정 UnKnown
 
-
     void Awake()
     {
         init();

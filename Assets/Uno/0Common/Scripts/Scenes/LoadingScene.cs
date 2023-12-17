@@ -13,6 +13,9 @@ public class LoadingScene : BaseScene
     protected override void init()
     {
         base.init();
+
+        Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
+
         ScenType = Define.Scene.Loading; // here is Loadging Scene
 
         Managers.UI.ShowScene<UI_LoadingVideo>();

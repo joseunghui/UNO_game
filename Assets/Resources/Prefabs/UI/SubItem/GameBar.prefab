@@ -457,7 +457,7 @@ GameObject:
   - component: {fileID: 1439160864376923779}
   - component: {fileID: 2751500048845934031}
   m_Layer: 5
-  m_Name: MyHeartImageList
+  m_Name: HeartIconImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -534,7 +534,7 @@ GameObject:
   - component: {fileID: 8378447013856567995}
   - component: {fileID: 2806542503732073}
   m_Layer: 5
-  m_Name: MyDiaImage
+  m_Name: DiaIconImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
