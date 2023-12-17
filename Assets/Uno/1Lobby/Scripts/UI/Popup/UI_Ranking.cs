@@ -31,8 +31,9 @@ public class UI_Ranking : UI_Popup
         // level select -> Move to Game Scene
         GetButton((int)Define.Buttons.EnterPVCGameBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            //TODO 레벨선택 팝업 -> 레벨에 따른 모드 enum PVCMode 사용 
-            // Managers.UI.ShowPopup<UI_LevelSelect>();
+            //TODO
+            // 게임씬 이동 -> 레벨선택 팝업 -> 레벨에 따른 모드 enum PVCMode 사용 (선언은 BaseScene.cs)
+            Managers.Scene.LoadScene(Define.Scene.Game);
         });
 
         // pvp game start btn

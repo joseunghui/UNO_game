@@ -25,14 +25,7 @@ public class ButtonManager : MonoBehaviour
         bool turn = TurnManager.instance.myTurn;
         int random = Random.Range(0,100);
         int per = 0;
-        switch(StartGame.TurnlimitTime){
-            case 5:
-                per = 80; break;
-            case 10:
-                per = 50; break;
-            default:
-                per = 20; break;
-        }Debug.Log("우노 TurnTimeLimit: "+StartGame.TurnlimitTime+", per: "+per);
+
         if (random < per){
             TurnManager.OnAddCard?.Invoke(true);
             TurnManager.OnAddCard?.Invoke(true);

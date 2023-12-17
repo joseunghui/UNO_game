@@ -43,6 +43,7 @@ public class Define
         UI_SignUp,
         UI_SignIn,
         UI_NotificationPopup,
+        UI_LevelSelect,
     }
 
     public enum UI_Scene
@@ -70,6 +71,10 @@ public class Define
         NickChangeBtn,
         EnterPVPGameBtn,
         EnterPVCGameBtn,
+
+        EasyBtn,
+        NormalBtn,
+        HardBtn,
     }
 
     public enum Texts

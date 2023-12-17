@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // UI sorting + Load 를 담당하는 매니저
-public class UIManager : MonoBehaviour
+public class UIManager
 {
     int _order = 10;
 

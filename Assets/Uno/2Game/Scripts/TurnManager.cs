@@ -76,14 +76,14 @@ public class TurnManager : Singleton<TurnManager>
             unoCount = 1;
             // ButtonManager.Inst.unobtn.interactable = false;
         }
-        if(otherCards == 1 || myCards == 1 && unoCount == 1)
+        // if(otherCards == 1 || myCards == 1 && unoCount == 1)
             // ButtonManager.Inst.unobtn.interactable = true;
 
-        // 턴으로 타이머 시작/멈춤 설정
+/*        // 턴으로 타이머 시작/멈춤 설정
         if (myTurn)
             DataManager.Instance.IsMyTurn = true;
         else
-            DataManager.Instance.IsMyTurn = false;
+            DataManager.Instance.IsMyTurn = false;*/
     }
 
     public void EndTurn(){
@@ -115,7 +115,7 @@ public class TurnManager : Singleton<TurnManager>
         isLoading = true;
 
         // 타이머 종료
-        Destroy(DataManager.Instance);
+        // Destroy(DataManager.Instance);
 
         ButtonManager.Inst.endingPopUp(isMyWin);
         yield break;

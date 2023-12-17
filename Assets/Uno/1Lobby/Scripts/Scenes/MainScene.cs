@@ -15,7 +15,6 @@ public class MainScene : BaseScene
         ui_EnterGame.transform.localPosition = Vector3.zero;
     }
 
-
     public override void Clear()
     {
         Debug.Log("Main Scene Clear!!!");

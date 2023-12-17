@@ -42,7 +42,10 @@ public class UI_SignIn : UI_Popup
             if (Login.Instance.CustomLogin(id_text, pw_text))
             {
                 Managers.UI.ClosePopup();
-                Managers.Scene.LoadScene(Define.Scene.Game);
+
+                // 로그인 후에는 랭킹 팝업 open
+                Managers.Data.SelectUserData();
+                Managers.UI.ShowPopup<UI_Ranking>();
             }
         }
         yield break;

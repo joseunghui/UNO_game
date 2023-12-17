@@ -7,11 +7,13 @@ public class Managers : MonoBehaviour
     static Managers s_instance; // 유일성이 보장된다
     static Managers Instance { get { Init(); return s_instance; } } // 유일한 매니저를 갖고온다
 
+    DataManager _data = new DataManager();
     ResourceManager _resource = new ResourceManager();
     SoundManager _sound = new SoundManager();
     SceneManagerEx _scene = new SceneManagerEx();
     UIManager _ui = new UIManager();
 
+    public static DataManager Data { get { return Instance._data; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
@@ -37,6 +39,9 @@ public class Managers : MonoBehaviour
 
             DontDestroyOnLoad(go);
             s_instance = go.GetComponent<Managers>();
+
+            // data
+            s_instance._data.init();
 
             // sound
             s_instance._sound.init();

@@ -102,6 +102,8 @@ public class RankingData
         // score 내림차순 정렬
         List<Ranking> sortedRanks = ranks.OrderByDescending(rank => rank.score).ToList();
         ranks = sortedRanks;
+
+        Debug.Log($"ranks.Count : {ranks.Count}");
     }
     #endregion
 }

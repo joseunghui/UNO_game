@@ -10,8 +10,8 @@ public class GameMode
     // PVC 모드에서 레벨(난이도)에 따른 모드
     public enum PVCMode
     {
-        EASY,
-        NORMAL,
-        HARD,
+        EASY = 0,
+        NORMAL = 1,
+        HARD = 2,
     }
 }

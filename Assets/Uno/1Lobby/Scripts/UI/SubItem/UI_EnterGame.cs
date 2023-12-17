@@ -29,6 +29,7 @@ public class UI_EnterGame : UI_SubItem
             if (autoLogin.IsSuccess())
             {
                 // 로그인 후에는 랭킹 팝업 open
+                Managers.Data.SelectUserData();
                 Managers.UI.ShowPopup<UI_Ranking>();
             }
             else

@@ -44,6 +44,9 @@ public class UI_SignUp : UI_Popup
 
             if (Login.Instance.CustomSignUp(id_text, pw_text))
             {
+                // Game Data Insert
+                Managers.Data.InsertUserData();
+
                 Managers.UI.ClosePopup();
                 Managers.UI.ShowPopup<UI_SignIn>();
             }
