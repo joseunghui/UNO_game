@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UI_LevelSelect : UI_Popup
 {
+    PVCGameController controller;
+
     private void Start()
     {
         init();
@@ -15,6 +17,7 @@ public class UI_LevelSelect : UI_Popup
     {
         base.init();
 
+        controller = Utill.GetOrAddComponent<PVCGameController>(gameObject);
         // game BGM Stop
         Managers.Sound.Clear();
 
@@ -22,25 +25,28 @@ public class UI_LevelSelect : UI_Popup
 
         GetButton((int)Define.Buttons.EasyBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            StartCoroutine(CoButtonClickSoundPlay());
+            StartCoroutine("CoButtonClickSoundPlay", GameMode.PVCMode.EASY);
         });
 
         GetButton((int)Define.Buttons.NormalBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            StartCoroutine(CoButtonClickSoundPlay());
+            StartCoroutine("CoButtonClickSoundPlay", GameMode.PVCMode.NORMAL);
         });
 
         GetButton((int)Define.Buttons.HardBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            StartCoroutine(CoButtonClickSoundPlay());
+            StartCoroutine("CoButtonClickSoundPlay", GameMode.PVCMode.HARD);
         });
     }
 
-    IEnumerator CoButtonClickSoundPlay()
+    IEnumerator CoButtonClickSoundPlay(GameMode.PVCMode mode)
     {
-        yield return null;
+        yield return controller.GameLevel = mode;
+
         Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
-        Managers.UI.ClosePopup(this);
+        yield return null;
+
+        Managers.UI.ClosePopup();
     }
 
 }

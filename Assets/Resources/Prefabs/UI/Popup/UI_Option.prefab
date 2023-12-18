@@ -1159,7 +1159,7 @@ GameObject:
   - component: {fileID: 1089046180733983444}
   - component: {fileID: 6934282634856899315}
   m_Layer: 5
-  m_Name: EndBtn
+  m_Name: StopGameBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1799,7 +1799,7 @@ GameObject:
   - component: {fileID: 3570822086748450927}
   - component: {fileID: 6380203228639957876}
   m_Layer: 5
-  m_Name: RestartBtn
+  m_Name: RestartGameBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

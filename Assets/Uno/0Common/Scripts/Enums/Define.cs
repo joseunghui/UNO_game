@@ -88,6 +88,10 @@ public class Define
         HardBtn,
 
         OptionBtn,
+        RestartGameBtn,
+        StopGameBtn,
+
+
         HeartPlusBtn,
 
     }

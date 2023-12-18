@@ -21,5 +21,17 @@ public class UI_Option : UI_Popup
         {
             Managers.UI.ClosePopup(this);
         });
+
+        GetButton((int)Define.Buttons.RestartGameBtn).gameObject.BindEvent((PointerEventData) =>
+        {
+            PVCGameController controller = Utill.GetOrAddComponent<PVCGameController>(gameObject);
+
+            Debug.Log("Restart Button Click");
+        });
+
+        GetButton((int)Define.Buttons.StopGameBtn).gameObject.gameObject.BindEvent((PointerEventData) =>
+        {
+            Debug.Log("Stop Button Click");
+        });
     }
 }

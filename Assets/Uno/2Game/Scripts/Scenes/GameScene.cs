@@ -5,9 +5,12 @@ using UnityEngine;
 
 public class GameScene : BaseScene
 {
+
     protected override void init()
     {
         base.init();
+
+        ScenType = Define.Scene.Game; // here is Game Scene
 
         Managers.UI.ShowPopup<UI_LevelSelect>();
 
