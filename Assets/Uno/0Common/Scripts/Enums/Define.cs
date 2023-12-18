@@ -86,6 +86,10 @@ public class Define
         EasyBtn,
         NormalBtn,
         HardBtn,
+
+        OptionBtn,
+        HeartPlusBtn,
+
     }
 
     public enum Texts
@@ -94,10 +98,19 @@ public class Define
         NotiText,
         IDText,
 
+        RankText,
+        RankerNickText,
+
         MyNicknameText,
         UpdateNicknameText,
         NeededDiaText,
         MyDiaText,
+
+    }
+
+    public enum Groups
+    {
+        RankingList,
     }
 
     public enum Videos

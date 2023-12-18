@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UI_GameBar : UI_SubItem
 {
@@ -13,5 +15,13 @@ public class UI_GameBar : UI_SubItem
     {
         base.init();
 
+        Bind<Button>(typeof(Define.Buttons));
+
+        GetButton((int)Define.Buttons.OptionBtn).gameObject.BindEvent((PointerEventData) =>
+        {
+            Managers.UI.ShowPopup<UI_Option>();
+        });
+
+        
     }
 }

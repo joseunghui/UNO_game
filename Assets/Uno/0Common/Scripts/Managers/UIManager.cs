@@ -92,7 +92,7 @@ public class UIManager
     }
 
     // SubItem 전용 Instantiate()
-    public T MakeSubItemInNewCanvas<T>(Transform parent = null, string name = null) where T : UI_Base
+    public T MakeSubItem<T>(Transform parent = null, string name = null) where T : UI_Base
     {
         if (string.IsNullOrEmpty(name))
             name = typeof(T).Name;
@@ -119,6 +119,40 @@ public class UIManager
 
         // 기존에 이미 있는 캔버스 안에 SubItem을 만드는 경우
         GameObject parentCanvas = GameObject.FindWithTag("Canvas");
+
+        go.transform.SetParent(parentCanvas.transform);
+
+        return Utill.GetOrAddComponent<T>(go);
+    }
+
+    // SubItem 전용 Instantiate() v3
+    public T MakeSubItemInTop<T>(string name = null) where T : UI_Base
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+
+        GameObject go = Managers.Resource.Instantiate($"UI/SubItem/{name}");
+
+        // 기존에 이미 있는 캔버스 안에 SubItem을 만드는 경우
+        GameObject parentCanvas = GameObject.FindWithTag("Top");
+
+        go.transform.SetParent(parentCanvas.transform);
+
+        return Utill.GetOrAddComponent<T>(go);
+    }
+
+    // SubItem 전용 Instantiate() v4
+    public T MakeSubItemInContent<T>(string name = null) where T : UI_Base
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+
+        GameObject go = Managers.Resource.Instantiate($"UI/SubItem/{name}");
+
+        // 기존에 이미 있는 캔버스 안에 SubItem을 만드는 경우
+        GameObject parentCanvas = GameObject.FindWithTag("Content");
 
         go.transform.SetParent(parentCanvas.transform);
 

@@ -10,13 +10,13 @@ public class PVCGameController : MonoBehaviour
     static PVCGameController g_instance; // 유일성이 보장된다
     static PVCGameController Instance { get { init(); return Instance; } } // 유일한 매니저를 갖고온다
 
-    TurnManager _turn = new TurnManager();
-    EntityManager _entity = new EntityManager();
-    CardManager _card = new CardManager();
+    // TurnManager _turn = new TurnManager();
 
-    public static TurnManager Turn { get { return Instance._turn; } }
-    public static EntityManager Entity { get { return Instance._entity; } }
-    public static CardManager Card { get { return Instance._card; } }
+    // public static TurnManager Turn { get { return Instance._turn; } }
+
+    // 미정
+    public WaitForSeconds delay01 = new WaitForSeconds(0.1f);
+    public WaitForSeconds delay02 = new WaitForSeconds(1f);
 
     static void init()
     {

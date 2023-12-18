@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6675758930859991303}
   - component: {fileID: 5862955246837884220}
   m_Layer: 5
-  m_Name: UI_Ranker
+  m_Name: UI_Ranking_Ranker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 1473509379418438972}
   - component: {fileID: 6549036647718019092}
   m_Layer: 5
-  m_Name: Rank
+  m_Name: RankText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 8671106340186079932}
   - component: {fileID: 5325536668801777839}
   m_Layer: 5
-  m_Name: RankerNick
+  m_Name: RankerNickText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
