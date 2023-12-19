@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SoundManager 
@@ -37,6 +38,17 @@ public class SoundManager
 
             // BGM인 경우 루프(반복재생) 돌게하기
             _audioSources[(int)Define.Sound.BGM].loop = true;
+
+            // volume
+            if (PlayerPrefs.HasKey("BGMVolume"))
+            {
+                _audioSources[(int)Define.Sound.BGM].volume = PlayerPrefs.GetFloat("BGMVolume");
+            }
+
+            if (PlayerPrefs.HasKey("EffectVolume"))
+            {
+                _audioSources[(int)Define.Sound.Effect].volume = PlayerPrefs.GetFloat("EffectVolume");
+            }
         }
     }
 
@@ -115,4 +127,35 @@ public class SoundManager
         return audioClip;
     }
 
+    public float GetAudioSourceVolume(Define.Sound _audioType)
+    {
+        float volume;
+        if (_audioType == Define.Sound.BGM)
+        {
+            volume = _audioSources[(int)Define.Sound.BGM].volume;
+        }
+        else
+        {
+            volume = _audioSources[(int)Define.Sound.Effect].volume;
+        }
+        return volume;
+    }
+
+    // Set BGM Volume
+    public void SetAudioSourceVolume(Define.Sound _audioType, float _volume = 1.0f)
+    {
+        if (_audioType == Define.Sound.BGM)
+        {
+            _audioSources[(int)Define.Sound.BGM].volume = _volume;
+            Debug.Log($"BGM Volume >> {_audioSources[(int)Define.Sound.BGM].volume}");
+            Debug.Log($"value >> {_volume}");
+        }
+        else
+        {
+            _audioSources[(int)Define.Sound.Effect].volume = _volume;
+            Debug.Log($"Effect Volume >> {_audioSources[(int)Define.Sound.Effect].volume}");
+            Debug.Log($"value >> {_volume}");
+        }
+        
+    }
 }

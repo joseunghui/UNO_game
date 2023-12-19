@@ -45,6 +45,7 @@ public class UI_LevelSelect : UI_Popup
 
         Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
         yield return null;
+        Managers.Sound.Play("GameBGM", Define.Sound.BGM);
 
         Managers.UI.ClosePopup();
     }

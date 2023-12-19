@@ -19,6 +19,7 @@ public class UI_GameBar : UI_SubItem
 
         GetButton((int)Define.Buttons.OptionBtn).gameObject.BindEvent((PointerEventData) =>
         {
+            Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
             Managers.UI.ShowPopup<UI_Option>();
         });
 

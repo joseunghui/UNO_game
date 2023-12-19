@@ -123,6 +123,12 @@ public class Define
 
     }
 
+    public enum Sliders
+    {
+        BGMVolumeSlider,
+        EffectVolumeSlider,
+    }
+
     public enum InputFields
     {
         IDInputField,
