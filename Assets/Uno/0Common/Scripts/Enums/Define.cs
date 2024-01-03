@@ -85,8 +85,7 @@ public class Define
         DoBtn,
 
         EnterGameButton,
-
-        NickChangeBtn,
+        
         EnterPVPGameBtn,
         EnterPVCGameBtn,
 
@@ -98,8 +97,9 @@ public class Define
         RestartGameBtn,
         StopGameBtn,
 
-
-        HeartPlusBtn,
+        MailBtn,
+        ShopBtn,
+        NickChangeBtn,
 
     }
 

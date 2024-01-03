@@ -28,7 +28,20 @@ public class UI_Ranking : UI_Popup
         Bind<GameObject>(typeof(Define.Groups));
 
         GetText((int)Define.Texts.MyNicknameText).gameObject.GetComponent<TextMeshProUGUI>().text = data.nickname;
-        
+
+        // mail button
+        GetButton((int)Define.Buttons.MailBtn).gameObject.BindEvent((PointerEventData) =>
+        {
+            Debug.Log("mail button click");
+        });
+
+        // shop button
+        GetButton((int)Define.Buttons.ShopBtn).gameObject.BindEvent((PointerEventData) =>
+        {
+            Debug.Log("shop button click");
+        });
+
+
         // nick name change button
         GetButton((int)Define.Buttons.NickChangeBtn).gameObject.BindEvent((PointerEventData) =>
         {
@@ -37,16 +50,24 @@ public class UI_Ranking : UI_Popup
         });
 
         // pvc game start btn
+        if (data.heart < 1)
+            GetButton((int)Define.Buttons.EnterPVCGameBtn).interactable = false;
         // level select -> Move to Game Scene
         GetButton((int)Define.Buttons.EnterPVCGameBtn).gameObject.BindEvent((PointerEventData) =>
         {
+            data.heart -= 1;
+            Managers.Data.SetUserInfoData(data);
             Managers.Scene.LoadScene(Define.Scene.Game);
         });
 
         // pvp game start btn
+        if (data.heart < 1)
+            GetButton((int)Define.Buttons.EnterPVPGameBtn).interactable = false;
         // Move To Match Scene
         GetButton((int)Define.Buttons.EnterPVPGameBtn).gameObject.BindEvent((PointerEventData) =>
         {
+            data.heart -= 1;
+            Managers.Data.SetUserInfoData(data);
             Managers.Scene.LoadScene(Define.Scene.Match);
         });
 

@@ -132,9 +132,9 @@ public class DataManager : MonoBehaviour
         return userInfoData;
     }
 
-    public void SetUserProfileData(UserInfoData pUserProfileData)
+    public void SetUserInfoData(UserInfoData pUserInfoData)
     {
-        userInfoData = pUserProfileData;
+        userInfoData = pUserInfoData;
     }
 
     public List<Ranking> GetAllRankingData()
