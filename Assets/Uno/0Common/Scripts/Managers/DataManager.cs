@@ -7,8 +7,8 @@ using Random = System.Random;
 
 public class DataManager : MonoBehaviour
 {
-    public UserInfoDB _user = new UserInfoDB();
-    public RankingData _rank = new RankingData();
+    UserInfoDB _user = new UserInfoDB();
+    RankingData _rank = new RankingData();
 
     public UserInfoDB User { get { return _user; } }
     public RankingData Rank { get { return _rank; } }
@@ -150,38 +150,63 @@ public class DataManager : MonoBehaviour
         switch (dateSort)
         {
             case Define.UpdateDateSort.UsingDia:
-                StartCoroutine(CoUsingDia(_data.freeDia, _data.payDia));
+                UsingDia(_data.freeDia, _data.payDia);
                 break;
             case Define.UpdateDateSort.UsingHeart:
-                StartCoroutine(CoUsingHeart(_data.heart));
+                UsingHeart(_data.heart);
                 break;
             case Define.UpdateDateSort.ChangeNick:
-                StartCoroutine(CoChangeNick(_data));
+                ChangeNick(_data);
                 break;
             case Define.UpdateDateSort.RecodingGameResult:
-                StartCoroutine(CoRecodingGameResult(_data));
+                RecodingGameResult(_data);
                 break;
         }
     }
 
-    IEnumerator CoUsingDia(int afterFreeDia, int afterPayDia)
+    void UsingDia(int afterFreeDia, int afterPayDia)
     {
-        yield break;
+        if (afterFreeDia + afterPayDia < 0)
+            return;
+
+        User.UserDiaDataUpdate(afterFreeDia, afterPayDia);
     }
 
-    IEnumerator CoUsingHeart(int afterHeart)
+    void UsingHeart(int afterHeart)
     {
-        yield break;
+        return;
     }
 
-    IEnumerator CoChangeNick(UserInfoData afterUserData)
+    void ChangeNick(UserInfoData afterUserData)
     {
-        yield break;
+        if (string.IsNullOrEmpty(afterUserData.nickname))
+            return;
+
+        if (afterUserData.nickChange)
+        {
+            User.updateUserNickname(afterUserData.nickname, afterUserData.nickChange);
+            userInfoData.nickChange = false;
+        }
+        else
+        {
+            userInfoData.freeDia = afterUserData.freeDia;
+            userInfoData.payDia = afterUserData.payDia;
+            User.updateUserNickname(afterUserData.nickname, afterUserData.nickChange);
+            User.UserDiaDataUpdate(afterUserData.freeDia, afterUserData.payDia);
+        }
+        
+        // sync ranking data
+        for (int i = 0; i < rankingDatas.Count; i++)
+        {
+            if (rankingDatas[i].user == userInfoData.nickname)
+                rankingDatas[i].user = afterUserData.nickname;
+        }
+        userInfoData.nickname = afterUserData.nickname;
     }
 
-    IEnumerator CoRecodingGameResult(UserInfoData afterGame)
+    void RecodingGameResult(UserInfoData afterGame)
     {
-        yield break;
+        return;
     }
 
     // Ε»Επ

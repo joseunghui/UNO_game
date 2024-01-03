@@ -147,9 +147,8 @@ public class UserInfoDB
     }
     #endregion
     #region user nickname change
-    public bool updateUserNickname(string _nick, bool IsFree)
+    public void updateUserNickname(string _nick, bool IsFree)
     {
-        bool result = false;
         // 우선 중복 확인
         BackendReturnObject bro = Backend.BMember.CheckNicknameDuplication(_nick);
 
@@ -161,9 +160,8 @@ public class UserInfoDB
             var callback = Backend.BMember.UpdateNickname(_nick);
 
             if (callback.IsSuccess() == true)
-                result = true;
+                Debug.Log("nickname change success");
         }
-        return result;
     }
     #endregion
     #region user winrate change(change ranking)
@@ -194,12 +192,12 @@ public class UserInfoDB
     }
     #endregion
     #region user dia info update(change user's dia)
-    public void UserDiaDataUpdate(UserInfoData changeDia)
+    public void UserDiaDataUpdate(int _freeDia, int _payDia)
     {
         Param param = new Param();
 
-        param.Add("freeDia", changeDia.freeDia);
-        param.Add("payDia", changeDia.payDia);
+        param.Add("freeDia", _freeDia);
+        param.Add("payDia", _payDia);
 
         var bro = Backend.GameData.Update("user", new Where(), param);
     }

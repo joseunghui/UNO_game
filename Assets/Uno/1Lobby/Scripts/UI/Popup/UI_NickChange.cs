@@ -22,9 +22,6 @@ public class UI_NickChange : UI_Popup
 
         data = Managers.Data.GetUserInfoData();
 
-        Debug.Log($"freeDia >> {data.freeDia}");
-        Debug.Log($"payDia >> {data.payDia}");
-
         Bind<Image>(typeof(Define.Images));
         Bind<Button>(typeof(Define.Buttons));
         Bind<TMP_InputField>(typeof(Define.InputFields));
@@ -36,16 +33,22 @@ public class UI_NickChange : UI_Popup
         Get<TMP_InputField>((int)Define.InputFields.NicknameInputField).placeholder.GetComponent<TextMeshProUGUI>().text = data.nickname;
         
         GetText((int)Define.Texts.MyDiaText).gameObject.GetComponent<TextMeshProUGUI>().text = totalDia.ToString();
-        neededDia = Int32.Parse(GetText((int)Define.Texts.NeededDiaText).gameObject.GetComponent<TextMeshProUGUI>().text);
+        neededDia = int.Parse(GetText((int)Define.Texts.NeededDiaText).gameObject.GetComponent<TextMeshProUGUI>().text);
 
         Button doBtn = GetButton((int)Define.Buttons.DoBtn);
-        if (neededDia > totalDia)
+        if (neededDia > totalDia && data.nickChange == false)
             doBtn.interactable = false;
 
         doBtn.gameObject.BindEvent((PointerEventData) =>
         {
             string updateNickname = GetText((int)Define.Texts.UpdateNicknameText).gameObject.GetComponent<TextMeshProUGUI>().text;
-            StartCoroutine("ChangeNickExcu", updateNickname);
+            ChangeNickExcu(updateNickname);
+            
+
+            GameObject rankingPage = GameObject.Find(Define.UI_Scene.UI_Ranking.ToString());
+
+            Managers.UI.ClosePopup(rankingPage.GetOrAddComponent<UI_Ranking>());
+            Managers.UI.ShowPopup<UI_Ranking>();
         });
 
         GetButton((int)Define.Buttons.CloseBtn).gameObject.BindEvent((PointerEventData) =>
@@ -56,19 +59,24 @@ public class UI_NickChange : UI_Popup
 
 
     #region ChangeNickExcu()
-    private IEnumerator ChangeNickExcu(string _nick)
+    private void ChangeNickExcu(string _nick)
     {
-        if (data == null)
-            yield break;
+        if (string.IsNullOrEmpty(_nick))
+            return;
 
-        if (data.nickname == _nick)
-            yield break;
-
-        if (totalDia < neededDia)
-            yield break;
-
+        // DataManager SetUserInfoData()
+        if (data.nickChange)
+        {
+            data.nickname = _nick;
+        }
+        else
+        {
+            data.nickname = _nick;
+            data.payDia = (data.freeDia - neededDia > 0) ? data.payDia : (data.freeDia - neededDia) + data.payDia;
+            data.freeDia = (data.freeDia - neededDia > 0) ? data.freeDia - neededDia : 0;
+        }
         Managers.Data.UpdataUserData(Define.UpdateDateSort.ChangeNick, data);
-
+        Managers.UI.Clear();
     }
     #endregion
 }
