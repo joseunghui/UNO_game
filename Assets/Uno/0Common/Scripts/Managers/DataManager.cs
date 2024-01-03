@@ -174,7 +174,11 @@ public class DataManager : MonoBehaviour
 
     void UsingHeart(int afterHeart)
     {
-        return;
+        if (afterHeart < 0)
+            return;
+
+        userInfoData.heart = afterHeart;
+        User.UserHeartDataUpdate(afterHeart);
     }
 
     void ChangeNick(UserInfoData afterUserData)

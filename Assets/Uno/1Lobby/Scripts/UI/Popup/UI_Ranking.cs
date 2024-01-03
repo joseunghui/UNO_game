@@ -53,24 +53,24 @@ public class UI_Ranking : UI_Popup
         });
 
         // pvc game start btn
-        if (data.heart < 1)
-            GetButton((int)Define.Buttons.EnterPVCGameBtn).interactable = false;
         // level select -> Move to Game Scene
         GetButton((int)Define.Buttons.EnterPVCGameBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            data.heart -= 1;
-            Managers.Data.SetUserInfoData(data);
+            if (data.heart < 1)
+                return;
+
+            SetUserHeart();
             Managers.Scene.LoadScene(Define.Scene.Game);
         });
 
         // pvp game start btn
-        if (data.heart < 1)
-            GetButton((int)Define.Buttons.EnterPVPGameBtn).interactable = false;
         // Move To Match Scene
         GetButton((int)Define.Buttons.EnterPVPGameBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            data.heart -= 1;
-            Managers.Data.SetUserInfoData(data);
+            if (data.heart < 1)
+                return;
+
+            SetUserHeart();
             Managers.Scene.LoadScene(Define.Scene.Match);
         });
 
@@ -78,7 +78,13 @@ public class UI_Ranking : UI_Popup
         SetRankingData();
     }
 
-    public void SetUserData()
+    void SetUserHeart()
+    {
+        data.heart -= 1;
+        Managers.Data.UpdataUserData(Define.UpdateDateSort.UsingHeart, data);
+    }
+
+    void SetUserData()
     {
         GetText((int)Define.Texts.MyNicknameText).gameObject.GetComponent<TextMeshProUGUI>().text = data.nickname;
 
@@ -100,7 +106,7 @@ public class UI_Ranking : UI_Popup
         }
     }
 
-    public void SetRankingData()
+    void SetRankingData()
     {
         // ranking data 
         GameObject rankingList = Get<GameObject>((int)Define.Groups.RankingList);
