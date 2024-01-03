@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class UI_GameBar_Timer : MonoBehaviour
+public class UI_GameBar_Timer : UI_SubItem
 {
-    // Start is called before the first frame update
-    void Start()
+    string _timeer;
+    private void Start()
     {
-        
+        Init();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Init()
     {
-        
+        base.Init();
+
+        Bind<TextMeshProUGUI>(typeof(Define.Texts));
+
+        GetText((int)Define.Texts.TimerText).GetComponent<TextMeshProUGUI>().text = _timeer;
+    }
+
+    public void SetTimer(string timer)
+    {
+        _timeer = timer;
     }
 }

@@ -10,9 +10,9 @@ public class LoadingScene : BaseScene
     public static string nextScene;
     Image progressBarImage;
 
-    protected override void init()
+    protected override void Init()
     {
-        base.init();
+        base.Init();
 
         Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
 

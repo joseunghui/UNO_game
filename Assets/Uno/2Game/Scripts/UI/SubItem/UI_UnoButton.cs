@@ -6,11 +6,11 @@ public class UI_UnoButton : UI_Popup
 {
     private void Start()
     {
-        init();
+        Init();
     }
 
-    public override void init()
+    public override void Init()
     {
-        base.init();
+        base.Init();
     }
 }

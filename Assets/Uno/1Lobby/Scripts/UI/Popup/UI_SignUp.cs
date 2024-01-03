@@ -11,12 +11,12 @@ public class UI_SignUp : UI_Popup
 
     private void Start()
     {
-        init();
+        Init();
     }
 
-    public override void init()
+    public override void Init()
     {
-        base.init();
+        base.Init();
 
         // Resources > Prefabs > UI > Popup
         Bind<Button>(typeof(Define.Buttons));
@@ -39,17 +39,13 @@ public class UI_SignUp : UI_Popup
     {
         if (pw_text != null && id_text != null)
         {
-            Debug.Log($"id_text >> {id_text}");
-            Debug.Log($"pw_text >> {pw_text}");
-
-            if (Login.Instance.CustomSignUp(id_text, pw_text))
+            if (Managers.Data.CustomSignUp(id_text, pw_text))
             {
                 // Game Data Insert
                 Managers.Data.InsertUserData();
-
-                Managers.UI.ClosePopup();
-                Managers.UI.ShowPopup<UI_SignIn>();
             }
+            Managers.UI.ClosePopup();
+            Managers.UI.ShowPopup<UI_SignIn>();
         }
         yield break;
         

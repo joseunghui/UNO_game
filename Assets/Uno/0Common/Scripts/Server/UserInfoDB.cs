@@ -36,24 +36,10 @@ public class UserInfoData
     }
 }
 #endregion
-public class UserDataIns
+public class UserInfoDB
 {
-    private static UserDataIns _instance = null;
-    public static UserInfoData userInfo;
+    public UserInfoData userInfo;
     private string userInfoDataRowInData = string.Empty;
-    #region UserInfo Data Instance
-    public static UserDataIns Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = new UserDataIns();
-            }
-            return _instance;
-        }
-    }
-    #endregion
 
     #region userInfo Insert(sign up)
     public void InsertUserData()
@@ -85,17 +71,17 @@ public class UserDataIns
         }
 
         // ranking date Insert
-        RankingData.Instance.InsertRanking();
+        Managers.Data.Rank.InsertRanking();
     }
     #endregion
     #region Get user all data
     public void GetMyAllData()
     {
         var bro = Backend.GameData.GetMyData("user", new Where()); // game data
-        var getNick = Backend.BMember.GetUserInfo();
+        var getNick = Backend.UserNickName;
 
         // 실패 처리
-        if (bro.IsSuccess() == false || getNick.IsSuccess() == false)
+        if (bro.IsSuccess() == false)
             Debug.LogError(bro);
 
         // 조회는 성공 했는데 데이터가 없는 경우
@@ -104,7 +90,7 @@ public class UserDataIns
 
         userInfo = new UserInfoData(); // 객체 초기화
 
-        userInfo.nickname = getNick.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+        userInfo.nickname = getNick;
         userInfo.nickChange = bool.Parse(bro.Rows()[0]["nickChange"]["BOOL"].ToString());
         userInfo.grade = int.Parse(bro.Rows()[0]["grade"]["N"].ToString());
         userInfo.heart = int.Parse(bro.Rows()[0]["heart"]["N"].ToString());

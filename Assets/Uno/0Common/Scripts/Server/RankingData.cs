@@ -13,23 +13,9 @@ public class Ranking
 
 public class RankingData
 {
-    #region instance & parameter
-    private static RankingData _instance = null;
-    public static RankingData Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = new RankingData();
-            }
-            return _instance;
-        }
-    }
     string rankUUID = "c4207d60-88f6-11ee-acce-7fbb598f7ba2";
     string tableName = "user";
-    public static List<Ranking> ranks = new List<Ranking>();
-    #endregion
+    public List<Ranking> ranks = new List<Ranking>();
 
     #region Init Insert Ranking Data
     public void InsertRanking()

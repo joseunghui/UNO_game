@@ -13,7 +13,7 @@ public class SoundManager
     // 캐싱을 위한 Dic
     Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
 
-    public void init()
+    public void Init()
     {
         // 게임 오브젝트 중 @Sound 이름인거 찾기
         GameObject root = GameObject.Find("@Sound");

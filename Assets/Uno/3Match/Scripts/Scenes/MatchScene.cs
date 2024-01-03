@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class MatchScene : BaseScene
 {
-    protected override void init()
+    protected override void Init()
     {
-        base.init();
+        base.Init();
 
         ScenType = Define.Scene.Match; // here is Match Scene
 

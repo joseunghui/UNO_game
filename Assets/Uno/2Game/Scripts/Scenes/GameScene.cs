@@ -6,9 +6,9 @@ using UnityEngine;
 public class GameScene : BaseScene
 {
 
-    protected override void init()
+    protected override void Init()
     {
-        base.init();
+        base.Init();
 
         ScenType = Define.Scene.Game; // here is Game Scene
 
@@ -16,7 +16,12 @@ public class GameScene : BaseScene
 
         UI_GameBar gameBar = Managers.UI.MakeSubItemInTop<UI_GameBar>();
         gameBar.transform.localScale = Vector3.one;
-        gameBar.transform.localPosition = new Vector3(0, 0, 0);
+        gameBar.transform.localPosition = Vector3.zero;
+
+        // UI_GameBar_Timer gameBarTimer = Managers.UI.MakeSubItem<UI_GameBar_Timer>();
+        UI_GameBar_Timer gameBarTimer = Managers.UI.MakeSubItemInTop<UI_GameBar_Timer>();
+        gameBarTimer.transform.localScale = Vector3.one;
+        gameBarTimer.transform.localPosition = Vector3.zero;
 
         // BGM
         Managers.Sound.Play("GameBGM", Define.Sound.BGM);

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UI_SubItem : UI_Base
 {
-    public override void init()
+    public override void Init()
     {
         // 이미 있는 캔버스 가져오기
         // UI 가 씬에 노출 되려면 캔버스 컴포넌트를 가진 오브젝트 안에 있어야 함

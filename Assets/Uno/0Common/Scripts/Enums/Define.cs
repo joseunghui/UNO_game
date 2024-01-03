@@ -61,6 +61,11 @@ public class Define
         UI_Ranking,
     }
 
+    public enum UI_SubItems
+    {
+        UI_GameMode,
+    }
+
     public enum Images
     {
         LoadingImage,
@@ -70,6 +75,8 @@ public class Define
 
         DiaIconImage,
         HeartIconImage,
+
+        GoodsIconImage,
     }
 
     public enum Buttons
@@ -110,11 +117,16 @@ public class Define
         NeededDiaText,
         MyDiaText,
 
+        GameModeText,
+        TimerText,
+
+        GoodsText,
     }
 
     public enum Groups
     {
         RankingList,
+        GoodsList,
     }
 
     public enum Videos
@@ -142,6 +154,12 @@ public class Define
         LoadingImage,
         LoadingVideo,
         LoadingBar,
+    }
+
+    public enum Goods
+    {
+        Heart = 0,
+        Dia = 1,
     }
     #endregion
 }

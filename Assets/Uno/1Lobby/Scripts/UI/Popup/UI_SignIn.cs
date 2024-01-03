@@ -11,12 +11,12 @@ public class UI_SignIn : UI_Popup
 
     private void Start()
     {
-        init();
+        Init();
     }
 
-    public override void init()
+    public override void Init()
     {
-        base.init();
+        base.Init();
 
         // Resources > Prefabs > UI > Popup
         Bind<Button>(typeof(Define.Buttons));
@@ -39,12 +39,11 @@ public class UI_SignIn : UI_Popup
     {
         if (pw_text != null && id_text != null)
         {
-            if (Login.Instance.CustomLogin(id_text, pw_text))
+            if (Managers.Data.CustomLogin(id_text, pw_text))
             {
                 Managers.UI.ClosePopup();
 
                 // ·Î±×ÀÎ ÈÄ¿¡´Â ·©Å· ÆË¾÷ open
-                Managers.Data.SelectUserData();
                 Managers.UI.ShowPopup<UI_Ranking>();
             }
         }

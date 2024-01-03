@@ -13,14 +13,14 @@ public class UI_NickChange : UI_Popup
 
     private void Start()
     {
-        init();
+        Init();
     }
 
-    public override void init()
+    public override void Init()
     {
-        base.init();
+        base.Init();
 
-        data = Managers.Data.userInfoData;
+        data = Managers.Data.GetUserInfoData();
 
         Debug.Log($"freeDia >> {data.freeDia}");
         Debug.Log($"payDia >> {data.payDia}");

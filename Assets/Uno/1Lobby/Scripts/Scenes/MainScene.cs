@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class MainScene : BaseScene
 {
-    protected override void init()
+    protected override void Init()
     {
-        base.init();
+        base.Init();
 
         ScenType = Define.Scene.Main;
         // BGM

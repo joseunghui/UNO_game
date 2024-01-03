@@ -3,13 +3,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 public class DataManager : MonoBehaviour
 {
-    public UserInfoData userInfoData { get; private set; } = new UserInfoData();
-    public List<Ranking> rankingDatas { get; private set; } = new List<Ranking>();
+    public UserInfoDB _user = new UserInfoDB();
+    public RankingData _rank = new RankingData();
 
-    public void init()
+    public UserInfoDB User { get { return _user; } }
+    public RankingData Rank { get { return _rank; } }
+
+    private UserInfoData userInfoData;
+    private List<Ranking> rankingDatas;
+
+    public void Init()
     {
         var bro = Backend.Initialize(true); // 뒤끝 초기화
 
@@ -29,33 +36,112 @@ public class DataManager : MonoBehaviour
         Backend.AsyncPoll();
     }
 
+    #region 로그인 & 회원가입
+    public bool CustomSignUp(string id, string pw)
+    {
+        Debug.Log("회원가입을 요청합니다.");
+
+        var bro = Backend.BMember.CustomSignUp(id, pw);
+
+        if (bro.IsSuccess())
+        {
+            // 닉네임 자동 생성
+            string randomNick = GetRandomDigit(6);
+            Backend.BMember.CreateNickname(randomNick, (callback) =>
+            {
+                Debug.Log("회원가입에 성공했습니다. : " + bro);
+            });
+            return true;
+        }
+        else
+        {
+            Debug.LogError("회원가입에 실패했습니다. : " + bro);
+            return false;
+        }
+    }
+
+    // result 를 받아야 함
+    public bool CustomLogin(string id, string pw)
+    {
+        Debug.Log("로그인을 요청합니다.");
+
+        var bro = Backend.BMember.CustomLogin(id, pw);
+
+        if (bro.IsSuccess())
+        {
+            Debug.Log("로그인이 성공했습니다. : " + bro);
+            return true;
+        }
+        else
+        {
+            Debug.LogError("로그인이 실패했습니다. : " + bro);
+            return false;
+        }
+    }
+
+
+    // 난수 사용 최초 닉네임 설정
+    public static string GetRandomDigit(int length)
+    {
+        string s = "user_";
+        Random r = new Random((int)DateTime.Now.Ticks);
+
+        //Random r = new Random(Convert.ToInt32(DateTime.Now.ToString("fffmmss")));
+        int[] Random = new int[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            Random[i] = (int)r.Next(0, 10); //0보다 크거나 같고, 10보다 작은 
+        }
+
+        for (int i = 0; i < length; i++)
+        {
+            s += Random[i].ToString();
+        }
+        return s;
+    }
+    #endregion
+
+    #region Load Data
+    public void Load()
+    {
+        LoadUserInfoData();
+        LoadAllRankingData();
+    }
+    void LoadUserInfoData()
+    {
+        User.GetMyAllData();
+        userInfoData = User.userInfo;
+    }
+    
+    void LoadAllRankingData()
+    {
+        Rank.RankingGet();
+        rankingDatas = Rank.ranks;
+    }
+    #endregion
+    #region CRUD
     public void InsertUserData()
     {
         // Game Data Insert
-        UserDataIns.Instance.InsertUserData();
-        RankingData.Instance.InsertRanking();
+        User.InsertUserData();
+        Rank.InsertRanking();
     }
-
-    public void SelectUserData()
+    public UserInfoData GetUserInfoData()
     {
-        UserDataIns.Instance.GetMyAllData();
-
-        userInfoData.nickname = UserDataIns.userInfo.nickname;
-        userInfoData.nickChange = UserDataIns.userInfo.nickChange;
-        userInfoData.heart = UserDataIns.userInfo.heart;
-        userInfoData.grade = UserDataIns.userInfo.grade;
-        userInfoData.freeDia = UserDataIns.userInfo.freeDia;
-        userInfoData.payDia = UserDataIns.userInfo.payDia;
-        userInfoData.totalCnt = UserDataIns.userInfo.totalCnt;
-        userInfoData.winCnt = UserDataIns.userInfo.winCnt;
-
-        RankingData.Instance.RankingGet();
-        
-        for (int i=0; i < RankingData.ranks.Count; i++)
-        {
-            rankingDatas.Add(RankingData.ranks[i]);
-        }
+        return userInfoData;
     }
+
+    public void SetUserProfileData(UserInfoData pUserProfileData)
+    {
+        userInfoData = pUserProfileData;
+    }
+
+    public List<Ranking> GetAllRankingData()
+    {
+        return rankingDatas;
+    }
+
 
     public void UpdataUserData(Define.UpdateDateSort dateSort = Define.UpdateDateSort.RecodingGameResult, UserInfoData _data = null)
     {
@@ -103,5 +189,5 @@ public class DataManager : MonoBehaviour
     {
         // 랭킹까지 같이 삭제
     }
-
+    #endregion
 }

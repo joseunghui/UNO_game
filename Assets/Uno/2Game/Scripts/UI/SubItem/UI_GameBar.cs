@@ -1,20 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UI_GameBar : UI_SubItem
 {
     private void Start()
     {
-        init();
+        Init();
     }
 
-    public override void init()
+    public override void Init()
     {
-        base.init();
+        base.Init();
 
+        Bind<TextMeshProUGUI>(typeof(Define.Texts));
         Bind<Button>(typeof(Define.Buttons));
 
         GetButton((int)Define.Buttons.OptionBtn).gameObject.BindEvent((PointerEventData) =>
@@ -22,7 +24,6 @@ public class UI_GameBar : UI_SubItem
             Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
             Managers.UI.ShowPopup<UI_Option>();
         });
-
-        
     }
+
 }

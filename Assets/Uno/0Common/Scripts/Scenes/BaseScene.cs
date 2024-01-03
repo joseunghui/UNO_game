@@ -12,10 +12,10 @@ public abstract class BaseScene : MonoBehaviour
 
     void Awake()
     {
-        init();
+        Init();
     }
 
-    protected virtual void init()
+    protected virtual void Init()
     {
         // EventSystem 없으면 생성하는 로직
         Object obj = GameObject.FindObjectOfType(typeof(EventSystem));

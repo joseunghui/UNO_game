@@ -41,10 +41,10 @@ public class Managers : MonoBehaviour
             s_instance = go.GetComponent<Managers>();
 
             // data
-            s_instance._data.init();
+            s_instance._data.Init();
 
             // sound
-            s_instance._sound.init();
+            s_instance._sound.Init();
 
         }
     }

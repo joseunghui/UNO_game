@@ -9,11 +9,11 @@ public class UI_EnterGame : UI_SubItem
 {
     private void Start()
     {
-        init();
+        Init();
     }
-    public override void init()
+    public override void Init()
     {
-        base.init();
+        base.Init();
 
         // 가져와야 할 것 : 버튼, 텍스트
         Bind<Button>(typeof(Define.Buttons));
@@ -30,8 +30,10 @@ public class UI_EnterGame : UI_SubItem
 
             if (autoLogin.IsSuccess())
             {
+                // Data Loading
+                Managers.Data.Load();
+
                 // 로그인 후에는 랭킹 팝업 open
-                Managers.Data.SelectUserData();
                 Managers.UI.ShowPopup<UI_Ranking>();
             }
             else

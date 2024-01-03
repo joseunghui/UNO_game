@@ -10,12 +10,12 @@ public class UI_Option : UI_Popup
 {
     private void Start()
     {
-        init();
+        Init();
     }
 
-    public override void init()
+    public override void Init()
     {
-        base.init();
+        base.Init();
 
         Bind<Button>(typeof(Define.Buttons));
         Bind<Slider>(typeof(Define.Sliders));
@@ -35,16 +35,14 @@ public class UI_Option : UI_Popup
 
         GetButton((int)Define.Buttons.RestartGameBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            PVCGameController controller = Utill.GetOrAddComponent<PVCGameController>(gameObject);
             Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
-            Debug.Log("Restart Button Click");
+            Managers.Scene.LoadScene(Define.Scene.Game);
         });
-
-        
 
         GetButton((int)Define.Buttons.StopGameBtn).gameObject.gameObject.BindEvent((PointerEventData) =>
         {
-            
+            Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
+            Managers.Scene.LoadScene(Define.Scene.Main);
         });
 
 

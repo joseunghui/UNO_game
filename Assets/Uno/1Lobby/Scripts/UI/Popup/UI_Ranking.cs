@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System;
 
 public class UI_Ranking : UI_Popup
 {
@@ -11,16 +12,15 @@ public class UI_Ranking : UI_Popup
     private UserInfoData data;
     private void Start()
     {
-        init();
+        Init();
     }
 
-    public override void init()
+    public override void Init()
     {
-        base.init();
+        base.Init();
 
-        // data setting
-        data = Managers.Data.userInfoData;
-        rankings = Managers.Data.rankingDatas;
+        data = Managers.Data.GetUserInfoData();
+        rankings = Managers.Data.GetAllRankingData();
 
         Bind<Button>(typeof(Define.Buttons));
         Bind<Image>(typeof(Define.Images));
@@ -58,14 +58,26 @@ public class UI_Ranking : UI_Popup
         foreach (Transform child in rankingList.transform)
             Managers.Resource.Destroy(child.gameObject);
 
-        Debug.Log($"rankingList >> {rankingList.gameObject.name}");
-
         for (int i = 0; i < rankings.Count; i++)
         {
             GameObject RankingObject = Managers.UI.MakeSubItem<UI_Ranking_Ranker>(parent: rankingList.transform).gameObject;
 
             UI_Ranking_Ranker rankingObjectItem = RankingObject.GetOrAddComponent<UI_Ranking_Ranker>();
             rankingObjectItem.SetRankingData((i + 1).ToString(), rankings[i].user);
+        }
+
+        // Goods Data (Heart, Dia)
+        GameObject goodsList = Get<GameObject>((int)Define.Groups.GoodsList);
+
+        foreach(Transform child in goodsList.transform)
+            Managers.Resource.Destroy(child.gameObject);
+
+        for (int i = 0; i<2; i++)
+        {
+            GameObject GoodsObject = Managers.UI.MakeSubItem<UI_Ranking_Goods>(parent: goodsList.transform).gameObject;
+
+            UI_Ranking_Goods rankingGoodsItem = GoodsObject.GetOrAddComponent<UI_Ranking_Goods>();
+            rankingGoodsItem._type = (Define.Goods)Enum.Parse(typeof(Define.Goods), Enum.GetName(typeof(Define.Goods), i));
         }
     }
 

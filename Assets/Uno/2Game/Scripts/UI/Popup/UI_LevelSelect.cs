@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,21 +11,28 @@ public class UI_LevelSelect : UI_Popup
 
     private void Start()
     {
-        init();
+        Init();
     }
 
-    public override void init()
+    public override void Init()
     {
-        base.init();
+        base.Init();
 
         controller = Utill.GetOrAddComponent<PVCGameController>(gameObject);
+
+        Bind<UI_GameMode>(typeof(UI_GameMode));
+        UI_GameMode _gameMode = Get<UI_GameMode>((int)Define.UI_SubItems.UI_GameMode);
+        Debug.Log($"UI_GameMode >> {_gameMode.name}"); //TODO 
+
         // game BGM Stop
         Managers.Sound.Clear();
 
+        Bind<TextMeshProUGUI>(typeof(Define.Texts));
         Bind<Button>(typeof(Define.Buttons));
 
         GetButton((int)Define.Buttons.EasyBtn).gameObject.BindEvent((PointerEventData) =>
         {
+            UI_GameMode gameMode = Managers.UI.MakeSubItem<UI_GameMode>();
             StartCoroutine("CoButtonClickSoundPlay", GameMode.PVCMode.EASY);
         });
 
@@ -41,11 +49,11 @@ public class UI_LevelSelect : UI_Popup
 
     IEnumerator CoButtonClickSoundPlay(GameMode.PVCMode mode)
     {
-        yield return controller.GameLevel = mode;
-
         Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
         yield return null;
         Managers.Sound.Play("GameBGM", Define.Sound.BGM);
+        yield return null;
+        controller.SetPVCGameLevel(mode);
 
         Managers.UI.ClosePopup();
     }

@@ -10,7 +10,7 @@ public abstract class UI_Base : MonoBehaviour
 {
     protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
 
-    public abstract void init();
+    public abstract void Init();
 
     protected void Bind<T>(Type type) where T : UnityEngine.Object
     {
@@ -28,8 +28,8 @@ public abstract class UI_Base : MonoBehaviour
                 objects[i] = Utill.FindChild<T>(gameObject, names[i], true);
 
             // TODO DELETE
-            if (objects[i] == null)
-                Debug.Log($"Binding Failed >> {names[i]}");
+            // if (objects[i] == null)
+                // Debug.Log($"Binding Failed >> {names[i]}");
         }
     }
 
