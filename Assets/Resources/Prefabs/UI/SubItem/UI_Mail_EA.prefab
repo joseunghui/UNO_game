@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 1578164560070269321}
   - component: {fileID: 800354536145897238}
   m_Layer: 0
-  m_Name: GoodsIcon
+  m_Name: GoodsIconImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -283,6 +283,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 387489c93172b6b459bc6f5e0df4538d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HeartImage: {fileID: 21300040, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  DiaImage: {fileID: 21300044, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
 --- !u!1 &8789729707086131965
 GameObject:
   m_ObjectHideFlags: 0
