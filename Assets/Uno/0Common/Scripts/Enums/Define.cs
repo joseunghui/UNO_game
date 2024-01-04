@@ -101,6 +101,7 @@ public class Define
         ShopBtn,
         NickChangeBtn,
 
+        ReceiveAllBtn,
     }
 
     public enum Texts
@@ -120,6 +121,7 @@ public class Define
         GameModeText,
         TimerText,
 
+        MailContentText,
         GoodsText,
     }
 
@@ -127,6 +129,7 @@ public class Define
     {
         RankingList,
         GoodsList,
+        MailList,
     }
 
     public enum Videos
