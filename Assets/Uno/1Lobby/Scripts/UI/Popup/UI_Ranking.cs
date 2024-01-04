@@ -31,26 +31,25 @@ public class UI_Ranking : UI_Popup
         Bind<TextMeshProUGUI>(typeof(Define.Texts));
         Bind<GameObject>(typeof(Define.Groups));
 
-
+        #region Button Click -> Popup Open
         // mail button
         GetButton((int)Define.Buttons.MailBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            Debug.Log("mail button click");
+            Managers.UI.ShowPopup<UI_Mail>();
         });
 
         // shop button
         GetButton((int)Define.Buttons.ShopBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            Debug.Log("shop button click");
+            Managers.UI.ShowPopup<UI_Shop>();
         });
-
 
         // nick name change button
         GetButton((int)Define.Buttons.NickChangeBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            // nick name change popup open
             Managers.UI.ShowPopup<UI_NickChange>();
         });
+        #endregion
 
         // pvc game start btn
         // level select -> Move to Game Scene

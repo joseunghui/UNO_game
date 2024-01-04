@@ -52,12 +52,10 @@ public class UI_NickChange : UI_Popup
     #region ChangeNickExcu()
     private void ChangeNickExcu(string _nick)
     {
-        Debug.Log($"1 before >> {data.nickname}");
-        Debug.Log($"1 after >> {_nick}");
-
         if (string.IsNullOrEmpty(_nick))
             return;
 
+        // ranking data set
         Managers.Data.SetUserNicknameInRanking(data.nickname, _nick);
 
         data.nickname = _nick;
@@ -68,6 +66,7 @@ public class UI_NickChange : UI_Popup
             data.freeDia = (data.freeDia - neededDia > 0) ? data.freeDia - neededDia : 0;
         }
 
+        // user data update
         Managers.Data.UpdataUserData(Define.UpdateDateSort.ChangeNick, data);
         Managers.UI.Clear();
     }

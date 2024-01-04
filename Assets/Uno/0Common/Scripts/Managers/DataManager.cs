@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 
-public class DataManager : MonoBehaviour
+public class DataManager
 {
     UserInfoDB _user = new UserInfoDB();
     RankingData _rank = new RankingData();
@@ -144,9 +144,6 @@ public class DataManager : MonoBehaviour
 
     public void SetUserNicknameInRanking(string _before, string _after)
     {
-        Debug.Log($"2 before >> {_before}");
-        Debug.Log($"2 after >> {_after}");
-
         for (int i = 0;i < rankingDatas.Count;i++)
         {
             if (rankingDatas[i].user.Equals(_before))
@@ -159,7 +156,7 @@ public class DataManager : MonoBehaviour
 
     public void UpdataUserData(Define.UpdateDateSort dateSort = Define.UpdateDateSort.RecodingGameResult, UserInfoData _data = null)
     {
-        Debug.Log(_data.ToString());
+        // Debug.Log(_data.ToString());
 
         switch (dateSort)
         {
