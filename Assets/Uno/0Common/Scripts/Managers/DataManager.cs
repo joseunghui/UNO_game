@@ -142,6 +142,20 @@ public class DataManager : MonoBehaviour
         return rankingDatas;
     }
 
+    public void SetUserNicknameInRanking(string _before, string _after)
+    {
+        Debug.Log($"2 before >> {_before}");
+        Debug.Log($"2 after >> {_after}");
+
+        for (int i = 0;i < rankingDatas.Count;i++)
+        {
+            if (rankingDatas[i].user.Equals(_before))
+            {
+                rankingDatas[i].user = _after;
+            }
+        }
+    }
+
 
     public void UpdataUserData(Define.UpdateDateSort dateSort = Define.UpdateDateSort.RecodingGameResult, UserInfoData _data = null)
     {
@@ -198,13 +212,7 @@ public class DataManager : MonoBehaviour
             User.updateUserNickname(afterUserData.nickname, afterUserData.nickChange);
             User.UserDiaDataUpdate(afterUserData.freeDia, afterUserData.payDia);
         }
-        
-        // sync ranking data
-        for (int i = 0; i < rankingDatas.Count; i++)
-        {
-            if (rankingDatas[i].user == userInfoData.nickname)
-                rankingDatas[i].user = afterUserData.nickname;
-        }
+
         userInfoData.nickname = afterUserData.nickname;
     }
 
