@@ -27,6 +27,7 @@ public class Define
         RecodingGameResult,
         ChangeNick,
 
+        PostReward,
     }
     #region Event
     public enum UIEvent

@@ -30,9 +30,9 @@ public class UI_EnterGame : UI_SubItem
 
             if (autoLogin.IsSuccess())
             {
-                // Data Loading
                 Managers.Data.Load();
 
+                Managers.Resource.Destroy(gameObject);
                 // 로그인 후에는 랭킹 팝업 open
                 Managers.UI.ShowPopup<UI_Ranking>();
             }

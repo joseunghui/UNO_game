@@ -9,12 +9,16 @@ public class DataManager
 {
     UserInfoDB _user = new UserInfoDB();
     RankingData _rank = new RankingData();
+    PostDataDB _post = new PostDataDB();
 
     public UserInfoDB User { get { return _user; } }
     public RankingData Rank { get { return _rank; } }
+    public PostDataDB Post { get { return _post; } }
 
-    private UserInfoData userInfoData;
-    private List<Ranking> rankingDatas;
+    UserInfoData userInfoData;
+    List<Ranking> rankingDatas;
+    List<PostData> postDatas;
+    
 
     public void Init()
     {
@@ -23,15 +27,16 @@ public class DataManager
         // 뒤끝 초기화에 대한 응답값
         if (bro.IsSuccess())
         {
-            Debug.Log("초기화 성공 : " + bro); // 성공일 경우 statusCode 204 Success
+            Debug.Log("초기화 성공 : " + bro);
         }
         else
         {
-            Debug.LogError("초기화 실패 : " + bro); // 실패일 경우 statusCode 400대 에러 발생
+            Debug.LogError("초기화 실패 : " + bro);
         }
     }
 
-    private void Update()
+
+    public void BackendDataAsyncPoll()
     {
         Backend.AsyncPoll();
     }
@@ -153,6 +158,18 @@ public class DataManager
         }
     }
 
+    public List<PostData> GetPostDataList()
+    {
+        Debug.Log($"GetPostDataList()");
+
+        Post.PostListGet(PostType.Admin);
+
+        postDatas = Post.postList;
+        Debug.Log($"1 postDatas >> {postDatas.Count}");
+
+        return postDatas;
+    }
+
 
     public void UpdataUserData(Define.UpdateDateSort dateSort = Define.UpdateDateSort.RecodingGameResult, UserInfoData _data = null)
     {
@@ -172,6 +189,9 @@ public class DataManager
             case Define.UpdateDateSort.RecodingGameResult:
                 RecodingGameResult(_data);
                 break;
+            case Define.UpdateDateSort.PostReward:
+                ReceivePost(_data);
+                break;
         }
     }
 
@@ -188,6 +208,11 @@ public class DataManager
         if (afterHeart < 0)
             return;
 
+        if (afterHeart >= 5)
+        {
+            userInfoData.heart = 5;
+            return;
+        }
         userInfoData.heart = afterHeart;
         User.UserHeartDataUpdate(afterHeart);
     }
@@ -213,6 +238,11 @@ public class DataManager
         userInfoData.nickname = afterUserData.nickname;
     }
 
+    void ReceivePost(UserInfoData afterUserData)
+    {
+        User.UserReceivePost(afterUserData.heart, afterUserData.freeDia);
+    }
+
     void RecodingGameResult(UserInfoData afterGame)
     {
         return;
@@ -224,4 +254,5 @@ public class DataManager
         // 랭킹까지 같이 삭제
     }
     #endregion
+
 }

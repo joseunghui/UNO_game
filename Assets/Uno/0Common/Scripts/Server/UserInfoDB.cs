@@ -16,6 +16,7 @@ public class UserInfoData
     public int winrate;
     public int totalCnt;
     public int winCnt;
+    public DateTime heartChargeDt;
 
     // data 디버깅 하기 위한 함수 (Debug.Log(UserData);)
     public override string ToString()
@@ -31,6 +32,7 @@ public class UserInfoData
         result.AppendLine($"winrate : {winrate}");
         result.AppendLine($"totalCnt : {totalCnt}");
         result.AppendLine($"winCnt : {winCnt}");
+        result.AppendLine($"heartChargeDt : {heartChargeDt}");
 
         return result.ToString();
     }
@@ -53,6 +55,7 @@ public class UserInfoDB
         param.Add("winrate", 0);
         param.Add("totalCnt", 0);
         param.Add("winCnt", 0);
+        param.AddNull("heartChargeDt");
 
         // Insert excute
         Debug.Log("유저 DB Insert 실행");
@@ -99,6 +102,9 @@ public class UserInfoDB
         userInfo.winrate = int.Parse(bro.Rows()[0]["winrate"]["N"].ToString());
         userInfo.totalCnt = int.Parse(bro.Rows()[0]["totalCnt"]["N"].ToString());
         userInfo.winCnt = int.Parse(bro.Rows()[0]["winCnt"]["N"].ToString());
+
+        if (!string.IsNullOrEmpty(bro.Rows()[0]["heartChargeDt"]["S"].ToString()))
+            userInfo.heartChargeDt = DateTime.Parse(bro.Rows()[0]["heartChargeDt"]["S"].ToString());
 
         // 랭킹 업데이트
 
@@ -224,6 +230,30 @@ public class UserInfoDB
         Param param = new Param();
 
         param.Add("heart", tempHeart);
+        param.Add("heartChargeDt", DateTime.Now);
+
+        Backend.GameData.Update("user", new Where(), param);
+    }
+    #endregion
+    #region Post Receive 
+    public void UserReceivePost(int tempHeart, int tempDia)
+    {
+        Param param = new Param();
+
+        param.Add("heart", tempHeart);
+        param.Add("freeDia", tempDia);
+
+        Backend.GameData.Update("user", new Where(), param);
+    }
+    #endregion
+
+
+    #region user connect recodeing(auto heart charge)
+    public void UserHeartChargeStartDateUpdate()
+    {
+        Param param = new Param();
+
+        param.Add("heartChargeDt", DateTime.Now);
 
         Backend.GameData.Update("user", new Where(), param);
     }
