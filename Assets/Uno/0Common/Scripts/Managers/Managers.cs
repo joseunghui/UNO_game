@@ -19,7 +19,6 @@ public class Managers : MonoBehaviour
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static UIManager UI { get { return Instance._ui; } }
 
-    // Start is called before the first frame update
     void Start()
     {
         Init();
@@ -47,6 +46,12 @@ public class Managers : MonoBehaviour
             s_instance._sound.Init();
 
         }
+    }
+
+
+    private void Update()
+    {
+        Managers.Data.BackendDataAsyncPoll();
     }
 
     // 씬 이동 시 없애줘야 하는 것들을 한방에 없애기 

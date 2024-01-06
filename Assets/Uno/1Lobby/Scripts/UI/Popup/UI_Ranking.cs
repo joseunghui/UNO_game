@@ -126,6 +126,4 @@ public class UI_Ranking : UI_Popup
         }
     }
 
-
-
 }
