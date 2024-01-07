@@ -11,7 +11,7 @@ public class CardController : MonoBehaviour
 {
     protected bool isLoading; // 게임 끝나면 true로 해서 클릭 방지
     public bool myTurn;
-    protected int startCardCount;
+    protected int startCardCount = 1;
 
     int originOrder;
     [SerializeField] Renderer[] backRenderers;
@@ -40,13 +40,19 @@ public class CardController : MonoBehaviour
     public IEnumerator StartGameCo()
     {
         myTurn = Random.Range(0, 2) == 0;
+
         isLoading = true;
+
+        Debug.Log($"startCardCount >> {startCardCount}");
 
         for (int i = 0; i < startCardCount; i++)
         {
             yield return new WaitForSeconds(0.1f);
+            AddCard(false);
+            Debug.Log($"check");
             OnAddCard?.Invoke(false);   // isMine; 상대카드
             yield return new WaitForSeconds(0.1f);
+            AddCard(true);
             OnAddCard?.Invoke(true);    // 내카드
         }
         yield return new WaitForSeconds(0.1f);
