@@ -64,7 +64,51 @@ public class UIManager
         return null;
     }
 
+    public T ShowSceneInOldCanvas<T>(string name = null, bool IsContent = false) where T : UI_Scene
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+        GameObject go = Managers.Resource.Instantiate($"UI/Scene/{name}");
+
+        GameObject parentCanvas;
+
+        if (IsContent)
+        {
+            parentCanvas = GameObject.FindWithTag("Content");
+        }
+        else
+        {
+            // 기존에 이미 있는 캔버스 안에 SubItem을 만드는 경우
+            parentCanvas = GameObject.FindWithTag("Canvas");
+        }
+
+        T sceneUI = Utill.GetOrAddComponent<T>(go);
+        _sceneUI = sceneUI;
+
+        go.transform.SetParent(parentCanvas.transform);
+
+        return sceneUI;
+    }
+
     // Open
+    public T ShowPopupOld<T>(string name = null) where T : UI_Popup
+        // 보통 오브젝트와 오브젝트에 Add 된 스크립트의 이름이 동일하기 때문에
+        // 그냥 오브젝트의 이름으로 스크립트를 가져오게끔 name을 따로 넘기지 않으면 null 처리
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+        GameObject go = Managers.Resource.Instantiate($"UI/Popup/{name}"); // Scene에 프리팹(GameObject) 생성
+
+        T popup = Utill.GetOrAddComponent<T>(go); // 제너릭 타입의 popup으로 컴포넌트(Component) 생성
+
+        _popupStack.Push(popup); // 큐에 순차적으로 넣기
+
+        go.transform.SetParent(Root.transform);
+
+        return null;
+    }
     public T ShowPopup<T>(string name = null) where T : UI_Popup
         // 보통 오브젝트와 오브젝트에 Add 된 스크립트의 이름이 동일하기 때문에
         // 그냥 오브젝트의 이름으로 스크립트를 가져오게끔 name을 따로 넘기지 않으면 null 처리
@@ -73,6 +117,7 @@ public class UIManager
             name = typeof(T).Name;
 
         GameObject rootObject = Root;  // @UI_Root 생성
+
         Canvas canvas = Utill.GetOrAddComponent<Canvas>(rootObject);
         CanvasScaler canvasScaler = Utill.GetOrAddComponent<CanvasScaler>(rootObject);
         Utill.GetOrAddComponent<GraphicRaycaster>(rootObject);
@@ -159,6 +204,29 @@ public class UIManager
         return Utill.GetOrAddComponent<T>(go);
     }
 
+    public T CreatePostionSpot<T>(string name = null, Define.CardPRS _prs = Define.CardPRS.Left) where T : UI_Base
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+        GameObject go = Managers.Resource.Instantiate($"UI/Transform/{name}");
+        GameObject parentCanvas = GameObject.FindWithTag("Content");
+
+        switch (_prs)
+        {
+            case Define.CardPRS.Left:
+                go.transform.localRotation = new Quaternion(0f, 0f, 15f, 0f);
+                break;
+            case Define.CardPRS.Right:
+                go.transform.localRotation = new Quaternion(0f, 0f, -15f, 0f);
+                break;
+        }
+        go.transform.localScale = parentCanvas.transform.localScale;
+        go.transform.SetParent(parentCanvas.transform);
+
+        return go as T;
+    }
+
 
     // 특정 팝업 삭제
     public void ClosePopup(UI_Popup popup)
@@ -211,7 +279,7 @@ public class UIManager
 
     public void CanvasOptionSetting(Canvas canvas)
     {
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
         canvas.overrideSorting = true;
     }
 
