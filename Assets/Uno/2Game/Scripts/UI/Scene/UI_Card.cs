@@ -41,6 +41,7 @@ public class UI_Card : UI_Scene
         entityItems = entity._items;
         entity.transform.position = new Vector3 (0, 0, 0);
         entity.SpawnEntity(true, PopItem(), Vector3.zero);
+
     }
 
 

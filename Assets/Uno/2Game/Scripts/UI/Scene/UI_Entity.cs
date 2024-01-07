@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class UI_Entity : UI_Scene
 {
     CardController cardController;
-    public List<UI_Entity> entities;
+    public List<UI_Entity> entities = new List<UI_Entity>();
     public List<GameObject> entitiesObj;
     public Stack<Item> _items = new Stack<Item>();
 
@@ -38,20 +38,22 @@ public class UI_Entity : UI_Scene
 
     public bool SpawnEntity(bool isMine, Item item, Vector3 spawnPos)
     {
-        var entityObject = Instantiate(this.gameObject, spawnPos, Utils.QI);
+        var entityObject = Instantiate(gameObject, spawnPos, Utils.QI);
         var entity = entityObject.GetOrAddComponent<UI_Entity>();
 
-        Debug.Log("check");
-
         entity.Setup(item);
+
         entities.Add(entity);
         _items.Push(item);
         // entitiesObj.Add(entityObject);
 
+        cardController = Utill.GetOrAddComponent<CardController>(gameObject);
+
         if (cardController.myTurn == false)
-            this.MoveTransform(Vector3.zero, true, 1f);
+            MoveTransform(Vector3.zero, true, 1f);
         else
-            this.MoveTransform(Vector3.zero, true, 0.5f);
+            MoveTransform(Vector3.zero, true, 0.5f);
+
         EntityAlignment();
 
         return true;
@@ -59,18 +61,14 @@ public class UI_Entity : UI_Scene
 
     public void Setup(Item tempItem)
     {
-        Debug.Log($"SetUp >> {tempItem.num}");
-
-
         num = tempItem.num;
         color = tempItem.color;
-
         item = tempItem;
 
-        Bind<Image>(typeof(Define.Images));
-        Image putCardImage = Get<Image>((int)Define.Images.PutCardImage);
-
-        putCardImage.sprite = item.sprite;
+        Bind<GameObject>(typeof(Define.Images));
+        GameObject putCardImage = Get<GameObject>((int)Define.Images.PutCardImage);
+        putCardImage.GetComponent<SpriteRenderer>().sprite = tempItem.sprite;
+        
     }
 
     public void MoveTransform(Vector3 pos, bool useDotween, float dotweenTime)
@@ -84,11 +82,13 @@ public class UI_Entity : UI_Scene
     public void EntityAlignment()
     {
         var targetEntities = entities;
+
         for (int i = 0; i < targetEntities.Count; i++)
         {
             var targetEntity = targetEntities[i];
+            
             targetEntity.originPos = new Vector3(0, 0, 0);
-            cardController.SetOriginOrder(i);
+            targetEntity.gameObject.GetComponent<CardController>()?.SetOriginOrder(i);
         }
     }
 }
