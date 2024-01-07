@@ -28,14 +28,21 @@ public class UI_Mail : UI_Popup
             Managers.UI.ClosePopup();
         });
 
-        GetData();
+        StartCoroutine(test());
     }
 
-    async void GetData()
+    IEnumerator test()
     {
-        await Task.Run(() => { _post = Managers.Data.GetPostDataList(); });
+        _post = Managers.Data.GetPostDataList();
+
+        yield return new WaitUntil(() => _post.Count > 0);
 
         SetMailData();
+    }
+
+    void GetData()
+    {
+        _post = Managers.Data.GetPostDataList();
     }
 
     void SetMailData()

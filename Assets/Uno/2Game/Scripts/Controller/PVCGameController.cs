@@ -23,8 +23,6 @@ public class PVCGameController : MonoBehaviour
     public void SetPVCGameLevel(GameMode.PVCMode _mode)
     {
         GameLevel = _mode;
-        
-
     }
 
     public void Clear()

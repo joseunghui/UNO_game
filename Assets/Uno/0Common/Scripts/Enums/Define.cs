@@ -19,6 +19,12 @@ public class Define
         MaxCount,
     }
 
+    // SO
+    public enum SO
+    {
+        ItemSO,
+    }
+
     // Data
     public enum UpdateDateSort
     {
@@ -28,6 +34,15 @@ public class Define
         ChangeNick,
 
         PostReward,
+    }
+
+    // right - left
+    public enum CardPRS
+    {
+        Right,
+        Left,
+        Bottom,
+        Top,
     }
     #region Event
     public enum UIEvent
@@ -60,11 +75,20 @@ public class Define
     {
         UI_LoadingVideo,
         UI_Ranking,
+        UI_Card,
     }
+
 
     public enum UI_SubItems
     {
         UI_GameMode,
+        UI_Turn,
+        UI_Entity,
+    }
+
+    public enum UI_Transform
+    {
+        PostionSpot,
     }
 
     public enum Images
@@ -78,6 +102,9 @@ public class Define
         HeartIconImage,
 
         GoodsIconImage,
+
+        CardImage,
+        PutCardImage,
     }
 
     public enum Buttons
@@ -103,6 +130,7 @@ public class Define
         NickChangeBtn,
 
         ReceiveAllBtn,
+
     }
 
     public enum Texts
@@ -124,6 +152,9 @@ public class Define
 
         MailContentText,
         GoodsText,
+
+        AddCardText,
+        EndTurnText,
     }
 
     public enum Groups
