@@ -162,6 +162,7 @@ public class Define
         RankingList,
         GoodsList,
         MailList,
+        HeartIconList,
     }
 
     public enum Videos

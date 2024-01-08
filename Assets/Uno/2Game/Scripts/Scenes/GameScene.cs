@@ -22,6 +22,8 @@ public class GameScene : BaseScene
     {
         base.Init();
 
+        UserInfoData data = Managers.Data.GetUserInfoData();
+
         ScenType = Define.Scene.Game; // here is Game Scene
 
         Managers.UI.ShowPopup<UI_LevelSelect>();
@@ -29,6 +31,8 @@ public class GameScene : BaseScene
         UI_GameBar gameBar = Managers.UI.MakeSubItemInTop<UI_GameBar>();
         gameBar.transform.localScale = Vector3.one;
         gameBar.transform.localPosition = Vector3.zero;
+        gameBar.SetUserData(data.nickname, (data.freeDia + data.payDia).ToString());
+        gameBar.SetUserHeartDate(data.heart);
 
         // BGM
         Managers.Sound.Play("GameBGM", Define.Sound.BGM);
