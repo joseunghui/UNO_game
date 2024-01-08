@@ -7,6 +7,7 @@ using UnityEngine;
 public class UI_GameMode : UI_SubItem
 {
     string _mode;
+    
     private void Start()
     {
         Init();
@@ -18,11 +19,13 @@ public class UI_GameMode : UI_SubItem
 
         Bind<TextMeshProUGUI>(typeof(Define.Texts));
 
-        GetText((int)Define.Texts.GameModeText).GetComponent<TextMeshProUGUI>().text = _mode;
+        // GameModeText
+        GetText((int)Define.Texts.GameModeText).gameObject.GetComponent<TextMeshProUGUI>().text = _mode;
     }
 
-    public void SetGameModesetting(GameMode.PVCMode _type)
+    public void SetGameModeSetting(GameMode.PVCMode _type)
     {
-        _mode = Enum.GetName(typeof(GameMode.PVCMode), _type);
+        Debug.Log($"SetGameModeSetting >> {_type}");
+        _mode = _type.ToString();
     }
 }

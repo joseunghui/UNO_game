@@ -30,22 +30,21 @@ public class UI_Entity : UI_Scene
     public override void Init()
     {
         base.Init();
-
         Debug.Log("Entity Instantiate");
-        cardController = Utill.GetOrAddComponent<CardController>(gameObject);
     }
-
 
     public bool SpawnEntity(bool isMine, Item item, Vector3 spawnPos)
     {
-        var entityObject = Instantiate(gameObject, spawnPos, Utils.QI);
-        var entity = entityObject.GetOrAddComponent<UI_Entity>();
+        Debug.Log("before CardSpawn");
 
-        entity.Setup(item);
+        UI_Entity go = Managers.UI.CardSpawn<UI_Entity>(parent:gameObject.transform.parent, _pos: spawnPos, _quat: Utils.QI);
 
-        entities.Add(entity);
+        Debug.Log("before setUp");
+
+        go.Setup(item);
+
+        entities.Add(go);
         _items.Push(item);
-        // entitiesObj.Add(entityObject);
 
         cardController = Utill.GetOrAddComponent<CardController>(gameObject);
 
@@ -65,10 +64,14 @@ public class UI_Entity : UI_Scene
         color = tempItem.color;
         item = tempItem;
 
+        Debug.Log($"num : {num}");
+        Debug.Log($"color : {color}");
+        Debug.Log($"item : {item}");
+
         Bind<GameObject>(typeof(Define.Images));
+
         GameObject putCardImage = Get<GameObject>((int)Define.Images.PutCardImage);
         putCardImage.GetComponent<SpriteRenderer>().sprite = tempItem.sprite;
-        
     }
 
     public void MoveTransform(Vector3 pos, bool useDotween, float dotweenTime)

@@ -16,6 +16,8 @@ public class UI_GameBar : UI_SubItem
     {
         base.Init();
 
+        
+
         Bind<TextMeshProUGUI>(typeof(Define.Texts));
         Bind<Button>(typeof(Define.Buttons));
 

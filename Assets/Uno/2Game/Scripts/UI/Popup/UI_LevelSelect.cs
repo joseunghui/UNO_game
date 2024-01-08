@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class UI_LevelSelect : UI_Popup
 {
-    PVCGameController controller;
-
     private void Start()
     {
         Init();
@@ -18,12 +16,6 @@ public class UI_LevelSelect : UI_Popup
     {
         base.Init();
 
-        // controller = Utill.GetOrAddComponent<PVCGameController>(gameObject);
-
-        //Bind<UI_GameMode>(typeof(UI_GameMode));
-        //UI_GameMode _gameMode = Get<UI_GameMode>((int)Define.UI_SubItems.UI_GameMode);
-        //Debug.Log($"UI_GameMode >> {_gameMode.name}"); //TODO 
-
         // game BGM Stop
         Managers.Sound.Clear();
 
@@ -32,36 +24,65 @@ public class UI_LevelSelect : UI_Popup
 
         GetButton((int)Define.Buttons.EasyBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            UI_GameMode gameMode = Managers.UI.MakeSubItem<UI_GameMode>();
-            StartCoroutine("CoButtonClickSoundPlay", GameMode.PVCMode.EASY);
+            StartCoroutine(CoButtonClickSoundPlay());
+            SetPVCGameMode(GameMode.PVCMode.EASY);
         });
 
         GetButton((int)Define.Buttons.NormalBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            StartCoroutine("CoButtonClickSoundPlay", GameMode.PVCMode.NORMAL);
+            StartCoroutine(CoButtonClickSoundPlay());
+            SetPVCGameMode(GameMode.PVCMode.NORMAL);
         });
 
         GetButton((int)Define.Buttons.HardBtn).gameObject.BindEvent((PointerEventData) =>
         {
-            StartCoroutine("CoButtonClickSoundPlay", GameMode.PVCMode.HARD);
+            StartCoroutine(CoButtonClickSoundPlay());
+            SetPVCGameMode(GameMode.PVCMode.HARD);
         });
+
     }
 
-    IEnumerator CoButtonClickSoundPlay(GameMode.PVCMode mode)
+    IEnumerator CoButtonClickSoundPlay()
     {
         Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
         yield return null;
         Managers.Sound.Play("GameBGM", Define.Sound.BGM);
         yield return null;
+    }
 
-        // controller.SetPVCGameLevel(mode);
+    void SetPVCGameMode(GameMode.PVCMode mode)
+    {
+        GameScene gameScene = GameObject.FindWithTag("Scene").GetComponent<GameScene>();
 
-        UI_Card cardObject = Managers.UI.ShowSceneInOldCanvas<UI_Card>(IsContent: true);
-        //UI_Card cardObject = Managers.UI.MakeSubItemInContent<UI_Card>();
-        cardObject.gameObject.transform.localScale = Vector3.one;
+        switch(mode)
+        {
+            case GameMode.PVCMode.EASY:
+                gameScene.gameMode = GameMode.PVCMode.EASY;
+                break;
+            case GameMode.PVCMode.NORMAL:
+                gameScene.gameMode= GameMode.PVCMode.NORMAL;
+                break;
+            case GameMode.PVCMode.HARD:
+                gameScene.gameMode = GameMode.PVCMode.HARD;
+                break;
+        }
+
+        UI_GameMode gameMode = Managers.UI.MakeSubItemInTop<UI_GameMode>();
+        gameMode.transform.localScale = Vector3.one;
+        gameMode.transform.localPosition = new Vector3(-550f, -90f, 0);
+        gameMode.SetGameModeSetting(mode);
+
+        UI_GameBar_Timer gameBarTimer = Managers.UI.MakeSubItemInTop<UI_GameBar_Timer>();
+        gameBarTimer.transform.localScale = Vector3.one;
+        gameBarTimer.transform.localPosition = new Vector3(-200f, -90f, 0);
+        gameBarTimer.SetTimer("10");
+
 
         UI_Turn turnButtons = Managers.UI.MakeSubItemInContent<UI_Turn>();
         turnButtons.transform.localScale = Vector3.one;
+
+        UI_Card cardObject = Managers.UI.ShowSceneInOldCanvas<UI_Card>(parent: GameObject.FindWithTag("Content").transform);
+        cardObject.gameObject.transform.localScale = Vector3.one;
 
         Managers.UI.ClosePopup();
     }

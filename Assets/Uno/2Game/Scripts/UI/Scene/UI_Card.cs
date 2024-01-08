@@ -6,15 +6,11 @@ using System;
 using Random = UnityEngine.Random;
 using System.Linq;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class UI_Card : UI_Scene
 {
-    [SerializeField] Sprite cardBackImage;
-    [SerializeField] ItemSO itemSO;
-    public List<Item> itemBuffer;
-
     CardController cardController;
-    Stack<Item> entityItems;
 
     Item item;
     PRS originPRS;
@@ -28,24 +24,30 @@ public class UI_Card : UI_Scene
     public override void Init()
     {
         base.Init();
-
-        // 전체 카드 생성 후 섞기
+    }
+    
+    // 시작 위치에 생성 되는 카드 더미
+    public void FirstInitiation()
+    {
+        /*// 전체 카드 생성 후 섞기
         SetUpItemBuffer();
 
         // 랜덤으로 턴 지정
         cardController = Utill.GetOrAddComponent<CardController>(gameObject);
         StartCoroutine(cardController.StartGameCo());
 
-        // 시작 카드 한장 뒤집기
-        UI_Entity entity = Managers.UI.ShowSceneInOldCanvas<UI_Entity>(IsContent:  true);
-        entityItems = entity._items;
-        entity.transform.position = new Vector3 (0, 0, 0);
-        entity.SpawnEntity(true, PopItem(), Vector3.zero);
+        // 낸 카드 쌓는 더미 위치 지정
+        UI_Entity entity = Managers.UI.CardSpawn<UI_Entity>(parent: gameObject.transform.parent,_pos: Vector3.zero, _quat: Utils.QI);
 
+        Debug.Log("시작 카드 한장 뒤집기 전");
+        Debug.Log($"entity >> {entity.name}");
+
+        // 시작 카드 한장 뒤집기
+        entity.SpawnEntity(true, PopItem(), Vector3.zero);*/
     }
 
 
-    void SetUpItemBuffer()
+    /*void SetUpItemBuffer()
     {
         itemBuffer = new List<Item>(150);
         for (int i = 0; i < itemSO.items.Length; i++)
@@ -84,13 +86,16 @@ public class UI_Card : UI_Scene
             MixCard();
         }
         Item item = itemBuffer[0];
+        Debug.Log(item.num + ", " + item.color);
         itemBuffer.RemoveAt(0);
         return item;
-    }
+    }*/
 
     public void Setup(bool isFront)
     {
-        Item item = PopItem();
+        GameScene gameScene = GameObject.FindWithTag("Scene").GetComponent<GameScene>();
+
+        Item item = gameScene.PopItem();
 
         this.item = item;
         this.isFront = isFront;
@@ -104,7 +109,7 @@ public class UI_Card : UI_Scene
             cardImage.sprite = this.item.sprite;
         }
         else
-            cardImage.sprite = cardBackImage;
+            cardImage.sprite = gameScene.cardBackImage;
     }
 
     void OnMouseOver()

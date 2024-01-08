@@ -11,15 +11,14 @@ public class CardController : MonoBehaviour
 {
     protected bool isLoading; // 게임 끝나면 true로 해서 클릭 방지
     public bool myTurn;
-    protected int startCardCount = 1;
+    public int startCardCount = 5;
 
     int originOrder;
-    [SerializeField] Renderer[] backRenderers;
+    Renderer[] backRenderers;
+    string sortingLayerName;
 
-    [SerializeField] string sortingLayerName;
-
-    public List<UI_Card> otherCards;
-    public List<UI_Card> myCards;
+    public List<UI_Card> otherCards = new List<UI_Card>();
+    public List<UI_Card> myCards = new List<UI_Card>();
     public static Action<bool> OnAddCard;
     public static Action<bool> onStartCard;
     public static event Action<bool> OnTurnStarted;
@@ -50,10 +49,8 @@ public class CardController : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             AddCard(false);
             Debug.Log($"check");
-            OnAddCard?.Invoke(false);   // isMine; 상대카드
             yield return new WaitForSeconds(0.1f);
             AddCard(true);
-            OnAddCard?.Invoke(true);    // 내카드
         }
         yield return new WaitForSeconds(0.1f);
         onStartCard?.Invoke(true);
@@ -76,16 +73,19 @@ public class CardController : MonoBehaviour
 
     public void AddCard(bool isMine)
     {
-        var cardObject = Instantiate(this, gameObject.transform.position, Utils.QI);
-        var card = cardObject.GetOrAddComponent<UI_Card>();
+        Debug.Log($"AddCard");
+
+        UI_Card card = Managers.UI.CardSpawn<UI_Card>(parent:null, _pos: myCardLeft.position, _quat: Utils.QI);
+        // var cardObject = Instantiate(this, gameObject.transform.position, Utils.QI);
+        // var card = cardObject.GetOrAddComponent<UI_Card>();
 
         card.Setup(isMine);
         (isMine ? myCards : otherCards).Add(card);
 
-
         SetOriginOrder(isMine);
         CardAlignment(isMine);
     }
+
     void SetOriginOrder(bool isMine)
     {
         int count = isMine ? myCards.Count : otherCards.Count;

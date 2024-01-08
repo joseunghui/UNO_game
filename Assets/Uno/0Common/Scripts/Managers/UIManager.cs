@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 // UI sorting + Load 를 담당하는 매니저
 public class UIManager
@@ -64,29 +65,17 @@ public class UIManager
         return null;
     }
 
-    public T ShowSceneInOldCanvas<T>(string name = null, bool IsContent = false) where T : UI_Scene
+    public T ShowSceneInOldCanvas<T>(Transform parent = null, string name = null) where T : UI_Scene
     {
         if (string.IsNullOrEmpty(name))
             name = typeof(T).Name;
 
         GameObject go = Managers.Resource.Instantiate($"UI/Scene/{name}");
 
-        GameObject parentCanvas;
-
-        if (IsContent)
-        {
-            parentCanvas = GameObject.FindWithTag("Content");
-        }
-        else
-        {
-            // 기존에 이미 있는 캔버스 안에 SubItem을 만드는 경우
-            parentCanvas = GameObject.FindWithTag("Canvas");
-        }
-
         T sceneUI = Utill.GetOrAddComponent<T>(go);
         _sceneUI = sceneUI;
 
-        go.transform.SetParent(parentCanvas.transform);
+        go.transform.SetParent(parent.transform);
 
         return sceneUI;
     }
@@ -202,6 +191,24 @@ public class UIManager
         go.transform.SetParent(parentCanvas.transform);
 
         return Utill.GetOrAddComponent<T>(go);
+    }
+
+
+    public T CardSpawn<T>(Transform parent, Vector3 _pos, Quaternion _quat, string name = null) where T : UI_Base
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+        if (parent == null) // 혹시나 스폰 위치 지정안한 경우는 그냥 Content안에 생성
+            parent = GameObject.FindWithTag("Content").transform;
+
+        GameObject go = Managers.Resource.Instantiate($"UI/Card/{name}", parent);
+        
+        go.transform.localScale = Vector3.one;
+        go.transform.position = _pos;
+        go.transform.rotation = _quat;
+
+        return go as T;
     }
 
     public T CreatePostionSpot<T>(string name = null, Define.CardPRS _prs = Define.CardPRS.Left) where T : UI_Base
