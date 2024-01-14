@@ -9,13 +9,7 @@ public class PVCGameController : MonoBehaviour
     GameMode.PVCMode GameLevel = GameMode.PVCMode.None;
     public Action<GameMode.PVCMode> GamePlayAction = null;
 
-
     private void Start()
-    {
-
-    }
-
-    private void Update()
     {
 
     }
