@@ -26,7 +26,7 @@ public class TurnController : MonoBehaviour
         myTurn = Random.Range(0, 2) == 0;
         isLoading = true;
 
-        // ������� 
+        // 여기까지
         Debug.Log($"myTurn >> {myTurn}");
 
         yield break;
