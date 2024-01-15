@@ -2,25 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using static UnityEngine.EventSystems.EventTrigger;
-using System.Linq;
-using static UnityEditor.Progress;
-using System.Drawing;
-using UnityEngine.UI;
 
 public class UI_Entity : UI_Scene
 {
-    CardController cardController;
-    public List<UI_Entity> entities = new List<UI_Entity>();
-    public List<GameObject> entitiesObj;
-    public Stack<Item> _items = new Stack<Item>();
+    public List<Item> items;
+    public Item item;
+    public SpriteRenderer entity;
+    public SpriteRenderer image;
 
-    Item item;
-    public int num;
-    public string color;
-    public Sprite sprite;
-    public Vector3 originPos;
-
+    public int _num;
+    public string _color;
+    public Sprite _sprite;
+    public Vector3 _originPos;
 
     private void Start()
     {
@@ -30,50 +23,16 @@ public class UI_Entity : UI_Scene
     public override void Init()
     {
         base.Init();
-        Debug.Log("Entity Instantiate");
     }
 
-    public bool SpawnEntity(bool isMine, Item item, Vector3 spawnPos)
+    public void Setup(Item _item)
     {
-        Debug.Log("before CardSpawn");
+        _num = _item.num;
+        _color = _item.color;
 
-        UI_Entity go = Managers.UI.CardSpawn<UI_Entity>(parent:gameObject.transform.parent, _pos: spawnPos, _quat: Utils.QI);
-
-        Debug.Log("before setUp");
-
-        go.Setup(item);
-
-        entities.Add(go);
-        _items.Push(item);
-
-        cardController = Utill.GetOrAddComponent<CardController>(gameObject);
-
-        if (cardController.myTurn == false)
-            MoveTransform(Vector3.zero, true, 1f);
-        else
-            MoveTransform(Vector3.zero, true, 0.5f);
-
-        EntityAlignment();
-
-        return true;
+        item = _item;
+        image.sprite = item.sprite;
     }
-
-    public void Setup(Item tempItem)
-    {
-        num = tempItem.num;
-        color = tempItem.color;
-        item = tempItem;
-
-        Debug.Log($"num : {num}");
-        Debug.Log($"color : {color}");
-        Debug.Log($"item : {item}");
-
-        Bind<GameObject>(typeof(Define.Images));
-
-        GameObject putCardImage = Get<GameObject>((int)Define.Images.PutCardImage);
-        putCardImage.GetComponent<SpriteRenderer>().sprite = tempItem.sprite;
-    }
-
     public void MoveTransform(Vector3 pos, bool useDotween, float dotweenTime)
     {
         if (useDotween)
@@ -82,16 +41,5 @@ public class UI_Entity : UI_Scene
             transform.position = pos;
     }
 
-    public void EntityAlignment()
-    {
-        var targetEntities = entities;
 
-        for (int i = 0; i < targetEntities.Count; i++)
-        {
-            var targetEntity = targetEntities[i];
-            
-            targetEntity.originPos = new Vector3(0, 0, 0);
-            targetEntity.gameObject.GetComponent<CardController>()?.SetOriginOrder(i);
-        }
-    }
 }

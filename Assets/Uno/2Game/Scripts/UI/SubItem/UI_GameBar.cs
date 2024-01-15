@@ -34,12 +34,18 @@ public class UI_GameBar : UI_SubItem
 
     public void SetUserData(string _tempNick, string _tempDia)
     {
+        if (string.IsNullOrEmpty(_tempNick) && string.IsNullOrEmpty(_tempDia))
+            return;
+
         _nick = _tempNick;
         _dia = _tempDia;
     }
 
     public void SetUserHeartDate(int _tempHeart)
     {
+        if (_tempHeart < 0)
+            return;
+
         Bind<GameObject>(typeof(Define.Groups));
         GameObject HeartIconList = Get<GameObject>((int)Define.Groups.HeartIconList).gameObject;
 

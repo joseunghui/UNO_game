@@ -558,6 +558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e6b2760b84c2a43b2749a4fec12e19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameMode: 0
   cardBackImage: {fileID: 21300000, guid: abff186cfee2ae043bbf273a8a50f01d, type: 3}
   itemSO: {fileID: 11400000, guid: 2f80e87c80df63d48b9a34e18abd6dcd, type: 2}
   itemBuffer: []

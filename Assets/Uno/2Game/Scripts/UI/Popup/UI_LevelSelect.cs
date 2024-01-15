@@ -77,12 +77,8 @@ public class UI_LevelSelect : UI_Popup
         gameBarTimer.transform.localPosition = new Vector3(-200f, -90f, 0);
         gameBarTimer.SetTimer("10");
 
-
-        UI_Turn turnButtons = Managers.UI.MakeSubItemInContent<UI_Turn>();
-        turnButtons.transform.localScale = Vector3.one;
-
-        UI_Card cardObject = Managers.UI.ShowSceneInOldCanvas<UI_Card>(parent: GameObject.FindWithTag("Content").transform);
-        cardObject.gameObject.transform.localScale = Vector3.one;
+        // StartCardCount 설정
+        gameScene.GetComponent<CardController>().SetStartCardCountbyGameMode();
 
         Managers.UI.ClosePopup();
     }

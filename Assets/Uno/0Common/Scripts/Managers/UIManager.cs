@@ -205,8 +205,8 @@ public class UIManager
         GameObject go = Managers.Resource.Instantiate($"UI/Card/{name}", parent);
         
         go.transform.localScale = Vector3.one;
-        go.transform.position = _pos;
-        go.transform.rotation = _quat;
+        go.transform.localPosition= _pos;
+        go.transform.localRotation = _quat;
 
         return go as T;
     }
@@ -217,7 +217,7 @@ public class UIManager
             name = typeof(T).Name;
 
         GameObject go = Managers.Resource.Instantiate($"UI/Transform/{name}");
-        GameObject parentCanvas = GameObject.FindWithTag("Content");
+        GameObject parentCanvas = GameObject.FindWithTag("Canvas");
 
         switch (_prs)
         {
@@ -228,9 +228,9 @@ public class UIManager
                 go.transform.localRotation = new Quaternion(0f, 0f, -15f, 0f);
                 break;
         }
-        go.transform.localScale = parentCanvas.transform.localScale;
         go.transform.SetParent(parentCanvas.transform);
-
+        go.transform.localScale = parentCanvas.transform.localScale;
+        
         return go as T;
     }
 
