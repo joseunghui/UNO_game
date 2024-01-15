@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class TurnController : MonoBehaviour
 {
     public int startCardCount;
-    public bool isLoading; // °ÔÀÓ ³¡³ª¸é true·Î ÇØ¼­ Å¬¸¯ ¹æÁö
+    public bool isLoading; // ê²Œì„ ëë‚˜ë©´ trueë¡œ í•´ì„œ í´ë¦­ ë°©ì§€
     public bool myTurn;
     public static Action<bool> OnAddCard;
     public static Action<bool> onStartCard;
@@ -26,7 +26,7 @@ public class TurnController : MonoBehaviour
         myTurn = Random.Range(0, 2) == 0;
         isLoading = true;
 
-        // ¿©±â±îÁö 
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
         Debug.Log($"myTurn >> {myTurn}");
 
         yield break;
@@ -34,9 +34,9 @@ public class TurnController : MonoBehaviour
         for (int i = 0; i < startCardCount; i++)
         {
             yield return new WaitForSeconds(0.1f);
-            OnAddCard?.Invoke(false);   // isMine; »ó´ëÄ«µå
+            OnAddCard?.Invoke(false);   // isMine; ï¿½ï¿½ï¿½Ä«ï¿½ï¿½
             yield return new WaitForSeconds(0.1f);
-            OnAddCard?.Invoke(true);    // ³»Ä«µå
+            OnAddCard?.Invoke(true);    // ï¿½ï¿½Ä«ï¿½ï¿½
         }
         yield return new WaitForSeconds(0.1f);
         onStartCard?.Invoke(true);
