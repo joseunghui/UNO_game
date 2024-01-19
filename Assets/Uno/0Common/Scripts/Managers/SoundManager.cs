@@ -10,33 +10,33 @@ public class SoundManager
 
     AudioSource[] _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
 
-    // Ä³½ÌÀ» À§ÇÑ Dic
+    // ìºì‹±ì„ ìœ„í•œ Dic
     Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
 
     public void Init()
     {
-        // °ÔÀÓ ¿ÀºêÁ§Æ® Áß @Sound ÀÌ¸§ÀÎ°Å Ã£±â
+        // ê²Œì„ ì˜¤ë¸Œì íŠ¸ ì¤‘ @Sound ì´ë¦„ì¸ê±° ì°¾ê¸°
         GameObject root = GameObject.Find("@Sound");
 
-        // ¾øÀ¸¸é »ı¼º
+        // ì—†ìœ¼ë©´ ìƒì„±
         if (root == null)
         {
             root = new GameObject { name = "@Sound" };
-            Object.DontDestroyOnLoad(root); // Àß¸ø»ç¿ëÇÏ¸é ¸Ş¸ğ¸®°¡ ºÒÇÊ¿äÇÏ°Ô »ç¿ëµÊ
+            Object.DontDestroyOnLoad(root); // ì˜ëª»ì‚¬ìš©í•˜ë©´ ë©”ëª¨ë¦¬ê°€ ë¶ˆí•„ìš”í•˜ê²Œ ì‚¬ìš©ë¨
 
             string[] soundNames = System.Enum.GetNames(typeof(Define.Sound));
 
             for (int i = 0; i < soundNames.Length - 1; i++)
             {
-                // GameObject·Î »ç¿îµå ¸¸µé±â
+                // GameObjectë¡œ ì‚¬ìš´ë“œ ë§Œë“¤ê¸°
                 GameObject go = new GameObject { name = soundNames[i] };
 
-                // _audioSources ¹è¿­¿¡ ³Ö¾îÁÖ±â
+                // _audioSources ë°°ì—´ì— ë„£ì–´ì£¼ê¸°
                 _audioSources[i] = go.AddComponent<AudioSource>();
-                go.transform.parent = root.transform; // root ¾Æ·¡¿¡ »ı¼º
+                go.transform.parent = root.transform; // root ì•„ë˜ì— ìƒì„±
             }
 
-            // BGMÀÎ °æ¿ì ·çÇÁ(¹İº¹Àç»ı) µ¹°ÔÇÏ±â
+            // BGMì¸ ê²½ìš° ë£¨í”„(ë°˜ë³µì¬ìƒ) ëŒê²Œí•˜ê¸°
             _audioSources[(int)Define.Sound.BGM].loop = true;
 
             // volume
@@ -62,15 +62,15 @@ public class SoundManager
         _audioClips.Clear();
     }
 
-    // path¸¦ »ç¿ëÇÑ Play() ¹öÀü
-    public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f) // ±âº»Àº Effect
+    // pathë¥¼ ì‚¬ìš©í•œ Play() ë²„ì „
+    public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f) // ê¸°ë³¸ì€ Effect
     {
         AudioClip audioClip = GetOrAddAudioClip(path, type);
         Play(audioClip, type, pitch);
     }
 
-    // ¿Àµğ¿À Å¬¸³À» Á÷Á¢ ¹Ş´Â Play() ¹öÀü
-    public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f) // ±âº»Àº Effect
+    // ì˜¤ë””ì˜¤ í´ë¦½ì„ ì§ì ‘ ë°›ëŠ” Play() ë²„ì „
+    public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f) // ê¸°ë³¸ì€ Effect
     {
         if (audioClip == null)
             return;
@@ -79,17 +79,17 @@ public class SoundManager
         {
             AudioSource audioSource = _audioSources[(int)Define.Sound.BGM];
 
-            if (audioSource.isPlaying == true) // ÀÌ¹Ì µı°îÀ» ºê±İÀ¸·Î Àç»ıÁßÀÌ¶ó¸é
+            if (audioSource.isPlaying == true) // ì´ë¯¸ ë”´ê³¡ì„ ë¸Œê¸ˆìœ¼ë¡œ ì¬ìƒì¤‘ì´ë¼ë©´
             {
-                audioSource.Stop(); // ÀÌÀü °î ÁßÁö
+                audioSource.Stop(); // ì´ì „ ê³¡ ì¤‘ì§€
             }
             audioSource.pitch = pitch;
             audioSource.clip = audioClip;
             audioSource.Play();
         }
-        else // ´Ü¹ß¼º »ç¿îµå
+        else // ë‹¨ë°œì„± ì‚¬ìš´ë“œ
         {
-            // PlayÇØÁÖ·Á¸é Audio Source ÄÄÆ÷³ÍÆ®°¡ ÀÖ¾î¾ß ÇÔ
+            // Playí•´ì£¼ë ¤ë©´ Audio Source ì»´í¬ë„ŒíŠ¸ê°€ ìˆì–´ì•¼ í•¨
             AudioSource audioSource = _audioSources[(int)Define.Sound.Effect];
             audioSource.pitch = pitch;
             audioSource.PlayOneShot(audioClip);
@@ -97,21 +97,21 @@ public class SoundManager
     }
 
 
-    // Ä³½ÌÃ³¸®
+    // ìºì‹±ì²˜ë¦¬
     AudioClip GetOrAddAudioClip(string path, Define.Sound type = Define.Sound.Effect)
     {
-        // È¤½Ã ¸ğ¸£´Ï path ¿¡ Sounds¸¦ °¡Áö°í ÀÖÁö ¾ÊÀ¸¸é ³Ö¾îÁÖ±â
+        // í˜¹ì‹œ ëª¨ë¥´ë‹ˆ path ì— Soundsë¥¼ ê°€ì§€ê³  ìˆì§€ ì•Šìœ¼ë©´ ë„£ì–´ì£¼ê¸°
         if (path.Contains("Sounds/") == false)
             path = $"Sounds/{path}";
 
         AudioClip audioClip = null;
 
-        // BGM ÀÎÁö ¾Æ´ÑÁö¸¸ ±¸ºĞ
-        if (type == Define.Sound.BGM) // ¹İº¹ loop
+        // BGM ì¸ì§€ ì•„ë‹Œì§€ë§Œ êµ¬ë¶„
+        if (type == Define.Sound.BGM) // ë°˜ë³µ loop
         {
             audioClip = Managers.Resource.Load<AudioClip>(path);
         }
-        else // ´Ü¹ß¼º »ç¿îµå
+        else // ë‹¨ë°œì„± ì‚¬ìš´ë“œ
         {
             if (_audioClips.TryGetValue(path, out audioClip) == false)
             {
@@ -120,7 +120,7 @@ public class SoundManager
             }
         }
 
-        // ¾øÀ¸¸é ¸®ÅÏ
+        // ì—†ìœ¼ë©´ ë¦¬í„´
         if (audioClip == null)
             Debug.Log($"Audio Clip Missing! >> {path}");
 

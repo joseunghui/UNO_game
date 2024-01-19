@@ -52,7 +52,7 @@ public class UI_Mail : UI_Popup
         // mail data 
         GameObject mailList = Get<GameObject>((int)Define.Groups.MailList);
 
-        // È¤½Ã ¸ğ¸£´Ï ±âÁ¸ µ¥ÀÌÅÍ ³¯¸®±â
+        // í˜¹ì‹œ ëª¨ë¥´ë‹ˆ ê¸°ì¡´ ë°ì´í„° ë‚ ë¦¬ê¸°
         foreach (Transform child in mailList.transform)
             Managers.Resource.Destroy(child.gameObject);
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameMode
 {
-    // PVC ¸ğµå¿¡¼­ ·¹º§(³­ÀÌµµ)¿¡ µû¸¥ ¸ğµå
+    // PVC ëª¨ë“œì—ì„œ ë ˆë²¨(ë‚œì´ë„)ì— ë”°ë¥¸ ëª¨ë“œ
     public enum PVCMode
     {
         None,

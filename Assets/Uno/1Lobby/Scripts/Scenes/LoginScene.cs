@@ -11,7 +11,7 @@ public class LoginScene : BaseScene
 
         ScenType = Define.Scene.Login; // here is Login Scene
 
-        // цЁю╫©║╢б х╦©Ь╟║ют
+        // Л╡≤Л²▄Л≈░К┼■ М ▄Л⌡░Й╟─Л·┘
         Managers.UI.ShowPopup<UI_SignUp>();
 
         

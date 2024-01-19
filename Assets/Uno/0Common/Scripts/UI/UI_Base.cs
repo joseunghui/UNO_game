@@ -43,7 +43,7 @@ public abstract class UI_Base : MonoBehaviour
         return objects[idx] as T;
     }
 
-    // ÀÚÁÖ »ç¿ëÇÏ´Â ÄÄÆ÷³ÍÆ®(Text, Button, Image)ÀÇ value¿¡ ¹Ù·Î Á¢±ÙÇÏ°Ô ÇÔ¼ö »ı¼º
+    // ìì£¼ ì‚¬ìš©í•˜ëŠ” ì»´í¬ë„ŒíŠ¸(Text, Button, Image)ì˜ valueì— ë°”ë¡œ ì ‘ê·¼í•˜ê²Œ í•¨ìˆ˜ ìƒì„±
     // GameObject
     protected GameObject GetGameObject(int idx) { return Get<GameObject>(idx); }
     // Text
@@ -54,7 +54,7 @@ public abstract class UI_Base : MonoBehaviour
     protected Image GetImage(int idx) { return Get<Image>(idx); }
 
 
-    // ÀÌº¥Æ® ¹ÙÀÎµù ÇÏ´Â °Í
+    // ì´ë²¤íŠ¸ ë°”ì¸ë”© í•˜ëŠ” ê²ƒ
     public static void BindEvent(GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
     {
         UI_EventHandler evt = Utill.GetOrAddComponent<UI_EventHandler>(go);

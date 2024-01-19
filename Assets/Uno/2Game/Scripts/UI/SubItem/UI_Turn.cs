@@ -16,7 +16,7 @@ public class UI_Turn : UI_SubItem
 
         Bind<TextMeshProUGUI>(typeof(Define.Texts));
 
-        Get<TextMeshProUGUI>((int)Define.Texts.AddCardText).GetComponent<TextMeshProUGUI>().text = "Ä«µå °¡Á®¿À±â";
-        Get<TextMeshProUGUI>((int)Define.Texts.EndTurnText).GetComponent<TextMeshProUGUI>().text = "ÅÏ ³Ñ±â±â";
+        Get<TextMeshProUGUI>((int)Define.Texts.AddCardText).GetComponent<TextMeshProUGUI>().text = "ì¹´ë“œ ê°€ì ¸ì˜¤ê¸°";
+        Get<TextMeshProUGUI>((int)Define.Texts.EndTurnText).GetComponent<TextMeshProUGUI>().text = "í„´ ë„˜ê¸°ê¸°";
     }
 }

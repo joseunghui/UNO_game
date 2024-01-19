@@ -10,11 +10,11 @@ public class PostData
     public string title;
     public string content;
     public string inDate;
-    public string expirationDate;   // ¿ìÆí ¸¸·á ³¯Â¥
-    public bool isCanReceive;     // ¿ìÆí¿¡ ¹ÞÀ» ¼ö ÀÖ´Â ¾ÆÀÌÅÛÀÌ ÀÖ´ÂÁö ¿©ºÎ
-    // ¾ÆÀÌÅÛ ÀÌ¸§(string), °³¼ö(int)
+    public string expirationDate;   // ?? ?? ??
+    public bool isCanReceive;     // ??? ?? ? ?? ???? ??? ??
+    // ??? ??(string), ??(int)
     public Dictionary<string, int> postReward = new Dictionary<string, int>();
-    // ¿ìÆí Á¤º¸¸¦ Debug.log·Î Ãâ·ÂÇÏ±â À§ÇÑ ¸Þ¼Òµå
+    // ?? ??? Debug.log? ???? ?? ???
     public override string ToString()
     {
         string result = string.Empty;
@@ -24,15 +24,15 @@ public class PostData
 
         if (isCanReceive)
         {
-            result += "¿ìÆí ¾ÆÀÌÅÛ\n";
+            result += "?? ???\n";
             foreach (string itemKey in postReward.Keys)
             {
-                result += $"|{itemKey} : {postReward[itemKey]}°³\n";
+                result += $"|{itemKey} : {postReward[itemKey]}?\n";
             }
         }
         else
         {
-            result += "Áö¿øÇÏÁö ¾Ê´Â ¾ÆÀÌÅÛÀÔ´Ï´Ù.";
+            result += "???? ?? ??????.";
         }
         return result;
     }
@@ -50,25 +50,25 @@ public class PostDataDB
             
             if (!callback.IsSuccess())
             {
-                Debug.LogError($"¿ìÆí ºÒ·¯¿À±â Áß ¿¡·¯°¡ ¹ß»ýÇß½À´Ï´Ù. : {callback}");
+                Debug.LogError($"?? ???? ? ??? ??????. : {callback}");
                 return;
             }
-            Debug.Log($"¿ìÆí ¸®½ºÆ®ºÒ·¯¿À±â ¿äÃ»¿¡ ¼º°øÇß½À´Ï´Ù : {callback}");
-            // json µ¥ÀÌÅÍ ÆÄ½Ì ¼º°ø / ½ÇÆÐ
+            Debug.Log($"?? ??????? ??? ?????? : {callback}");
+            // json ??? ?? ?? / ??
             try
             {
                 LitJson.JsonData jsonData = callback.GetFlattenJSON()["postList"];
 
                 if (jsonData.Count <= 0)
                 {
-                    Debug.LogWarning("¿ìÆíÇÔÀÌ ºñ¾ú½À´Ï´Ù");
+                    Debug.LogWarning("???? ?????");
                     return;
                 }
 
                 postList.Clear();
 
                 for (int i = 0; i < jsonData.Count; i++)
-                {      // ÇöÀç ÀúÀå °¡´ÉÇÑ ¸ðµç ¿ìÆí Á¤º¸ ºÒ·¯¿À±â
+                {      // ?? ?? ??? ?? ?? ?? ????
                     PostData post = new PostData();
 
                     post.title = jsonData[i]["title"].ToString();
@@ -77,26 +77,26 @@ public class PostDataDB
                     post.expirationDate = jsonData[i]["expirationDate"].ToString();
 
                     foreach (LitJson.JsonData itemJson in jsonData[i]["items"])
-                    { // ¿ìÆí¿¡ ÇÔ²² ¹ß¼ÛµÈ ¸ðµç ¾ÆÀÌÅÛ Á¤º¸
-                        if (itemJson["chartName"].ToString() == "ÀçÈ­ Â÷Æ®")
+                    { // ??? ?? ??? ?? ??? ??
+                        if (itemJson["chartName"].ToString() == "?? ??")
                         {
                             string itemName = itemJson["item"]["itemName"].ToString();
                             int itemCount = int.Parse(itemJson["itemCount"].ToString());
 
                             if (post.postReward.ContainsKey(itemName))
-                            {          // ¿ìÆí¿¡ Æ÷ÇÔµÈ ¾ÆÀÌÅÛÀÌ ¿©·¯°³ÀÏ ¶§
-                                post.postReward[itemName] += itemCount;         // ÀÌ¹Ì ÀÖÀ¸¸é °³¼ö Ãß°¡
+                            {          // ??? ??? ???? ???? ?
+                                post.postReward[itemName] += itemCount;         // ?? ??? ?? ??
                             }
                             else
                             {
-                                post.postReward.Add(itemName, itemCount);       // ¾øÀ¸¸é ¿ä¼Ò Ãß°¡
+                                post.postReward.Add(itemName, itemCount);       // ??? ?? ??
                             }
 
                             post.isCanReceive = true;
                         }
                         else
                         {
-                            Debug.LogWarning($"¾ÆÁ÷ Áö¿øÇÏÁö ¾Ê´Â Â÷Æ® Á¤º¸ÀÔ´Ï´Ù. : {itemJson["chartName"].ToString()}");
+                            Debug.LogWarning($"?? ???? ?? ?? ?????. : {itemJson["chartName"].ToString()}");
                             post.isCanReceive = false;
                         }
                     }
@@ -104,8 +104,8 @@ public class PostDataDB
                 }
 
                 for (int i = 0; i < postList.Count; i++)
-                {                         // ºÒ·¯¿Â Á¤º¸ Ãâ·Â
-                    Debug.Log($"{i}¹ø¤Š ¿ìÆí\n{postList[i].ToString()}");
+                {                         // ??? ?? ??
+                    Debug.Log($"{i}?Š ??\n{postList[i].ToString()}");
                 }
             }
             catch (System.Exception e)
@@ -119,29 +119,29 @@ public class PostDataDB
     {
         if (postList.Count <= 0)
         {
-            Debug.LogWarning("¹ÞÀ» ¼ö ÀÖ´Â ¿ìÆíÀÌ ¾ø½À´Ï´Ù. È¤Àº ¿ìÆí ¸®½ºÆ®¸¦ ¸ÕÀú È£ÃâÇØÁÖ¼¼¿ä.");
+            Debug.LogWarning("?? ? ?? ??? ????. ?? ?? ???? ?? ??????.");
             return;
         }
         if (index >= postList.Count)
         {
-            Debug.LogError($"ÇØ´ç ¿ìÆíÀº Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù; ¿äÃ» ¹øÈ£: {index}, ¿ìÆí ÃÖ´ë °¹¼ö: {postList.Count}");
+            Debug.LogError($"?? ??? ???? ????; ?? ??: {index}, ?? ?? ??: {postList.Count}");
             return;
         }
 
         data = Managers.Data.GetUserInfoData();
 
-        Debug.Log($"{postType.ToString()}ÀÇ {postList[index].inDate} ¿ìÆí ¼ö·ÉÀ» ¿äÃ»;");
+        Debug.Log($"{postType.ToString()}? {postList[index].inDate} ?? ??? ??;");
         Backend.UPost.ReceivePostItem(postType, postList[index].inDate, callback => {
             if (!callback.IsSuccess())
             {
-                Debug.LogError($"¼ö·É Áß ¿¡·¯°¡ ¹ß»ýÇß½À´Ï´Ù. {callback}");
+                Debug.LogError($"?? ? ??? ??????. {callback}");
                 return;
             }
-            Debug.Log($"¼º°øÇß½À´Ï´Ù : {callback}");
-            postList.RemoveAt(index); // ¿ìÆíÀº ¼ö·ÉÇÏ¸é »èÁ¦µÊ
+            Debug.Log($"?????? : {callback}");
+            postList.RemoveAt(index); // ??? ???? ???
 
             if (callback.GetFlattenJSON()["postItems"].Count > 0)
-            {  // ¼ö·ÉÇÒ ¾ÆÀÌÅÛÀÌ ÀÖÀ» ¶§
+            {  // ??? ???? ?? ?
                 // SavePostToLocal(callback.GetFlattenJSON()["postItems"]);
 
                 if (postList[index].postReward.ContainsKey("heart"))
@@ -155,7 +155,7 @@ public class PostDataDB
                 Managers.Data.UpdataUserData(Define.UpdateDateSort.PostReward, data);
             }
             else
-                Debug.Log("¼ö·ÉÇÒ ¾ÆÀÌÅÛÀÌ ¾ø½À´Ï´Ù.");
+                Debug.Log("??? ???? ????.");
         });
     }
 
@@ -163,18 +163,18 @@ public class PostDataDB
     {
         if (postList.Count <= 0)
         {
-            Debug.LogWarning("¹ÞÀ» ¼ö ÀÖ´Â ¿ìÆíÀÌ ¾ø½À´Ï´Ù. È¤Àº ¿ìÆí ¸®½ºÆ®¸¦ ¸ÕÀú È£ÃâÇØÁÖ¼¼¿ä.");
+            Debug.LogWarning("?? ? ?? ??? ????. ?? ?? ???? ?? ??????.");
             return;
         }
-        Debug.Log($"{postType.ToString()} ¿ìÆí ÀüÃ¼¼ö·ÉÀ» ¿äÃ»;");
+        Debug.Log($"{postType.ToString()} ?? ????? ??;");
 
         Backend.UPost.ReceivePostItemAll(postType, callback => {
             if (!callback.IsSuccess())
             {
-                Debug.LogError($"¿ìÆí ÀüÃ¼¼ö·É Áß ¿¡·¯ ¹ß»ý {callback}");
+                Debug.LogError($"?? ???? ? ?? ?? {callback}");
                 return;
             }
-            Debug.Log($"{postType.ToString()} ¿ìÆíÀ» ÀüÃ¼ ¼ö·ÉÇß½À´Ï´Ù.");
+            Debug.Log($"{postType.ToString()} ??? ?? ??????.");
             postList.Clear();
 
             foreach (LitJson.JsonData postItemsJson in callback.GetFlattenJSON()["postItems"])
@@ -195,5 +195,3 @@ public class PostDataDB
         });
     }
 }
-
-

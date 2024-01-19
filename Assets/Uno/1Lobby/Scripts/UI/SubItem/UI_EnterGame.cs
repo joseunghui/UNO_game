@@ -15,17 +15,17 @@ public class UI_EnterGame : UI_SubItem
     {
         base.Init();
 
-        // °¡Á®¿Í¾ß ÇÒ °Í : ¹öÆ°, ÅØ½ºÆ®
+        // ê°€ì ¸ì™€ì•¼ í•  ê²ƒ : ë²„íŠ¼, í…ìŠ¤íŠ¸
         Bind<Button>(typeof(Define.Buttons));
         Bind<TextMeshProUGUI>(typeof(Define.Texts));
 
-        GetText((int)Define.Texts.EnterGameText).GetComponent<TextMeshProUGUI>().text = "°ÔÀÓ½ÃÀÛ";
+        GetText((int)Define.Texts.EnterGameText).GetComponent<TextMeshProUGUI>().text = "ê²Œì„ì‹œì‘";
         GetButton((int)Define.Buttons.EnterGameButton).gameObject.BindEvent( (PointerEventData) =>
         {
             Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
 
-            // ·Î±×ÀÎ ÇßÀ¸¸é Game, ¾Æ´Ï¸é Login
-            // ±âµî·ÏµÈ ·ÎÄÃ ±â±â ÀÚµ¿ ·Î±×ÀÎ
+            // ë¡œê·¸ì¸ í–ˆìœ¼ë©´ Game, ì•„ë‹ˆë©´ Login
+            // ê¸°ë“±ë¡ëœ ë¡œì»¬ ê¸°ê¸° ìë™ ë¡œê·¸ì¸
             BackendReturnObject autoLogin = Backend.BMember.LoginWithTheBackendToken();
 
             if (autoLogin.IsSuccess())
@@ -33,7 +33,7 @@ public class UI_EnterGame : UI_SubItem
                 Managers.Data.Load();
 
                 Managers.Resource.Destroy(gameObject);
-                // ·Î±×ÀÎ ÈÄ¿¡´Â ·©Å· ÆË¾÷ open
+                // ë¡œê·¸ì¸ í›„ì—ëŠ” ë­í‚¹ íŒì—… open
                 Managers.UI.ShowPopup<UI_Ranking>();
             }
             else

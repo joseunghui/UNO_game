@@ -4,7 +4,7 @@ using UnityEngine;
 
 [System.Serializable]
 public class PRS
-{   // Ä«µå¿øº»À§Ä¡
+{   // ì¹´ë“œì›ë³¸ìœ„ì¹˜
     public Vector3 pos;
     public Quaternion rot;
     public Vector3 scale;

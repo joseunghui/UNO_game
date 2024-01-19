@@ -22,16 +22,16 @@ public class DataManager
 
     public void Init()
     {
-        var bro = Backend.Initialize(true); // µÚ³¡ ÃÊ±âÈ­
+        var bro = Backend.Initialize(true); // ë’¤ë ì´ˆê¸°í™”
 
-        // µÚ³¡ ÃÊ±âÈ­¿¡ ´ëÇÑ ÀÀ´ä°ª
+        // ë’¤ë ì´ˆê¸°í™”ì— ëŒ€í•œ ì‘ë‹µê°’
         if (bro.IsSuccess())
         {
-            Debug.Log("ÃÊ±âÈ­ ¼º°ø : " + bro);
+            Debug.Log("ì´ˆê¸°í™” ì„±ê³µ : " + bro);
         }
         else
         {
-            Debug.LogError("ÃÊ±âÈ­ ½ÇÆĞ : " + bro);
+            Debug.LogError("ì´ˆê¸°í™” ì‹¤íŒ¨ : " + bro);
         }
     }
 
@@ -41,51 +41,51 @@ public class DataManager
         Backend.AsyncPoll();
     }
 
-    #region ·Î±×ÀÎ & È¸¿ø°¡ÀÔ
+    #region ë¡œê·¸ì¸ & íšŒì›ê°€ì…
     public bool CustomSignUp(string id, string pw)
     {
-        Debug.Log("È¸¿ø°¡ÀÔÀ» ¿äÃ»ÇÕ´Ï´Ù.");
+        Debug.Log("íšŒì›ê°€ì…ì„ ìš”ì²­í•©ë‹ˆë‹¤.");
 
         var bro = Backend.BMember.CustomSignUp(id, pw);
 
         if (bro.IsSuccess())
         {
-            // ´Ğ³×ÀÓ ÀÚµ¿ »ı¼º
+            // ë‹‰ë„¤ì„ ìë™ ìƒì„±
             string randomNick = GetRandomDigit(6);
             Backend.BMember.CreateNickname(randomNick, (callback) =>
             {
-                Debug.Log("È¸¿ø°¡ÀÔ¿¡ ¼º°øÇß½À´Ï´Ù. : " + bro);
+                Debug.Log("íšŒì›ê°€ì…ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤. : " + bro);
             });
             return true;
         }
         else
         {
-            Debug.LogError("È¸¿ø°¡ÀÔ¿¡ ½ÇÆĞÇß½À´Ï´Ù. : " + bro);
+            Debug.LogError("íšŒì›ê°€ì…ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤. : " + bro);
             return false;
         }
     }
 
-    // result ¸¦ ¹Ş¾Æ¾ß ÇÔ
+    // result ë¥¼ ë°›ì•„ì•¼ í•¨
     public bool CustomLogin(string id, string pw)
     {
-        Debug.Log("·Î±×ÀÎÀ» ¿äÃ»ÇÕ´Ï´Ù.");
+        Debug.Log("ë¡œê·¸ì¸ì„ ìš”ì²­í•©ë‹ˆë‹¤.");
 
         var bro = Backend.BMember.CustomLogin(id, pw);
 
         if (bro.IsSuccess())
         {
-            Debug.Log("·Î±×ÀÎÀÌ ¼º°øÇß½À´Ï´Ù. : " + bro);
+            Debug.Log("ë¡œê·¸ì¸ì´ ì„±ê³µí–ˆìŠµë‹ˆë‹¤. : " + bro);
             return true;
         }
         else
         {
-            Debug.LogError("·Î±×ÀÎÀÌ ½ÇÆĞÇß½À´Ï´Ù. : " + bro);
+            Debug.LogError("ë¡œê·¸ì¸ì´ ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤. : " + bro);
             return false;
         }
     }
 
 
-    // ³­¼ö »ç¿ë ÃÖÃÊ ´Ğ³×ÀÓ ¼³Á¤
+    // ë‚œìˆ˜ ì‚¬ìš© ìµœì´ˆ ë‹‰ë„¤ì„ ì„¤ì •
     public static string GetRandomDigit(int length)
     {
         string s = "user_";
@@ -96,7 +96,7 @@ public class DataManager
 
         for (int i = 0; i < length; i++)
         {
-            Random[i] = (int)r.Next(0, 10); //0º¸´Ù Å©°Å³ª °°°í, 10º¸´Ù ÀÛÀº 
+            Random[i] = (int)r.Next(0, 10); //0ë³´ë‹¤ í¬ê±°ë‚˜ ê°™ê³ , 10ë³´ë‹¤ ì‘ì€ 
         }
 
         for (int i = 0; i < length; i++)
@@ -248,10 +248,10 @@ public class DataManager
         return;
     }
 
-    // Å»Åğ
+    // íƒˆí‡´
     public void DeleteUserData()
     {
-        // ·©Å·±îÁö °°ÀÌ »èÁ¦
+        // ë­í‚¹ê¹Œì§€ ê°™ì´ ì‚­ì œ
     }
     #endregion
 
