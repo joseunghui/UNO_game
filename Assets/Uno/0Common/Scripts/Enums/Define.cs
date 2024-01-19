@@ -1,6 +1,6 @@
 public class Define
 {
-    // Scene Å¸ÀÔ °ü¸®
+    // Scene íƒ€ìž… ê´€ë¦¬
     public enum Scene
     {
         UnKnown,

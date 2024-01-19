@@ -19,7 +19,7 @@ public class ResourceManager
             return null;
         }
 
-        // »ı¼ºµÇ´Â GameObject¿¡ (Clone) ºÙ´Â °Å ¾ø¾ÖÁÖ±â
+        // ìƒì„±ë˜ëŠ” GameObjectì— (Clone) ë¶™ëŠ” ê±° ì—†ì• ì£¼ê¸°
         GameObject go = Object.Instantiate(prefab, parent);
         int index = go.name.IndexOf("(Clone)");
 

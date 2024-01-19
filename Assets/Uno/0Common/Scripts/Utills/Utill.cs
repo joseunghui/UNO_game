@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Utill
 {
-    // ÇØ´ç ¾À¿¡ ÀÌ¹Ì ÀÖ´Â Äµ¹ö½º ÄÄÆ÷³ÍÆ® »Ì¾Æ¿À±â -> subItem 
+    // í•´ë‹¹ ì”¬ì— ì´ë¯¸ ìˆëŠ” ìº”ë²„ìŠ¤ ì»´í¬ë„ŒíŠ¸ ë½‘ì•„ì˜¤ê¸° -> subItem 
     public static Canvas GetParentCanvasComponent(GameObject go)
     {
         return null;
@@ -12,7 +12,7 @@ public class Utill
 
 
 
-    // ÇØ´ç °ÔÀÓ ¿ÀºêÁ§Æ®ÀÇ ÄÄÆ÷³ÍÆ®¸¦ »Ì¾Æ¿À°Å³ª »ı¼ºÇÏ±â
+    // í•´ë‹¹ ê²Œì„ ì˜¤ë¸Œì íŠ¸ì˜ ì»´í¬ë„ŒíŠ¸ë¥¼ ë½‘ì•„ì˜¤ê±°ë‚˜ ìƒì„±í•˜ê¸°
     public static T GetOrAddComponent<T>(GameObject go) where T : Component
     {
         T component = go.GetComponent<T>();
@@ -24,7 +24,7 @@ public class Utill
         return component;
     }
 
-    // ÇØ´ç ¿ÀºêÁ§Æ®ÀÇ ÀÚ½ÄÀÎ °ÔÀÓ ¿ÀºêÁ§Æ®¸¸ °¡Á®¿À±â(ÄÄÆ÷³ÍÆ® ¾Æ´Ô)
+    // í•´ë‹¹ ì˜¤ë¸Œì íŠ¸ì˜ ìì‹ì¸ ê²Œì„ ì˜¤ë¸Œì íŠ¸ë§Œ ê°€ì ¸ì˜¤ê¸°(ì»´í¬ë„ŒíŠ¸ ì•„ë‹˜)
     public static GameObject FindChild(GameObject go, string name = null, bool recursive = false)
     {
         Transform transform = FindChild<Transform>(go, name, recursive);
@@ -34,13 +34,13 @@ public class Utill
         return transform.gameObject;
     }
 
-    // ÇØ´ç ¿ÀºêÁ§Æ®ÀÇ ÇÏÀ§¸¦ °¡Á®¿À±â(Á¦³Ê·² Å¸ÀÔÀÌ¶ó ¾Æ¹«°Å³ª °¡´É)
+    // í•´ë‹¹ ì˜¤ë¸Œì íŠ¸ì˜ í•˜ìœ„ë¥¼ ê°€ì ¸ì˜¤ê¸°(ì œë„ˆëŸ´ íƒ€ì…ì´ë¼ ì•„ë¬´ê±°ë‚˜ ê°€ëŠ¥)
     public static T FindChild<T>(GameObject go, string name = null, bool recursive = false) where T : Object
     {
         if (go == null)
             return null;
 
-        if (recursive == false) // recursive = false : ÀÚ½ÄÀÇ ÀÚ½Ä ¿ÀºêÁ§Æ®´Â Ã£Áö ¾ÊÀ½(Àç±ÍX)
+        if (recursive == false) // recursive = false : ìì‹ì˜ ìì‹ ì˜¤ë¸Œì íŠ¸ëŠ” ì°¾ì§€ ì•ŠìŒ(ì¬ê·€X)
         {
             for (int i = 0; i<go.transform.childCount; i++)
             {
@@ -54,7 +54,7 @@ public class Utill
                 }
             }
         }
-        else // recursive = true : ÀÚ½ÄÀÇ ÀÚ½Ä ¿ÀºêÁ§Æ® Ã£À½(Àç±Í)
+        else // recursive = true : ìì‹ì˜ ìì‹ ì˜¤ë¸Œì íŠ¸ ì°¾ìŒ(ì¬ê·€)
         {
             foreach(T component in go.GetComponentsInChildren<T>())
             {

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Managers : MonoBehaviour
 {
-    static Managers s_instance; // À¯ÀÏ¼ºÀÌ º¸ÀåµÈ´Ù
-    static Managers Instance { get { Init(); return s_instance; } } // À¯ÀÏÇÑ ¸Å´ÏÀú¸¦ °®°í¿Â´Ù
+    static Managers s_instance; // ìœ ì¼ì„±ì´ ë³´ì¥ëœë‹¤
+    static Managers Instance { get { Init(); return s_instance; } } // ìœ ì¼í•œ ë§¤ë‹ˆì €ë¥¼ ê°–ê³ ì˜¨ë‹¤
 
     DataManager _data = new DataManager();
     ResourceManager _resource = new ResourceManager();
@@ -54,8 +54,8 @@ public class Managers : MonoBehaviour
         Managers.Data.BackendDataAsyncPoll();
     }
 
-    // ¾À ÀÌµ¿ ½Ã ¾ø¾ÖÁà¾ß ÇÏ´Â °ÍµéÀ» ÇÑ¹æ¿¡ ¾ø¾Ö±â 
-    // È£ÃâÀº SceneManagerEx.cs ¿¡¼­
+    // ì”¬ ì´ë™ ì‹œ ì—†ì• ì¤˜ì•¼ í•˜ëŠ” ê²ƒë“¤ì„ í•œë°©ì— ì—†ì• ê¸° 
+    // í˜¸ì¶œì€ SceneManagerEx.cs ì—ì„œ
     public static void Clear()
     {
         Sound.Clear();

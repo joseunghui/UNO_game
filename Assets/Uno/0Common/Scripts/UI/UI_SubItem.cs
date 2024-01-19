@@ -4,14 +4,14 @@ public class UI_SubItem : UI_Base
 {
     public override void Init()
     {
-        // ÀÌ¹Ì ÀÖ´Â Äµ¹ö½º °¡Á®¿À±â
-        // UI °¡ ¾À¿¡ ³ëÃâ µÇ·Á¸é Äµ¹ö½º ÄÄÆ÷³ÍÆ®¸¦ °¡Áø ¿ÀºêÁ§Æ® ¾È¿¡ ÀÖ¾î¾ß ÇÔ
+        // ì´ë¯¸ ìžˆëŠ” ìº”ë²„ìŠ¤ ê°€ì ¸ì˜¤ê¸°
+        // UI ê°€ ì”¬ì— ë…¸ì¶œ ë˜ë ¤ë©´ ìº”ë²„ìŠ¤ ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ ì•ˆì— ìžˆì–´ì•¼ í•¨
 
 
         /**
-         * [»ç¿ë ±ÔÄ¢]
-         * 1. ±âÁ¸ Äµ¹ö½ºÀÇ ÅÂ±×¸¦ 
-         * 2. ÇØ´ç SubItemÀÇ ½ºÅ©¸³Æ®¿¡¼­ UI_SubItemÀ» »ó¼Ó ¹Þ´Â´Ù (UI_Popup, UI_SceneÀº SetCanvas() ÇØÁÖ±â ¶§¹®¿¡ ¾ÈµÊ)
+         * [ì‚¬ìš© ê·œì¹™]
+         * 1. ê¸°ì¡´ ìº”ë²„ìŠ¤ì˜ íƒœê·¸ë¥¼ 
+         * 2. í•´ë‹¹ SubItemì˜ ìŠ¤í¬ë¦½íŠ¸ì—ì„œ UI_SubItemì„ ìƒì† ë°›ëŠ”ë‹¤ (UI_Popup, UI_Sceneì€ SetCanvas() í•´ì£¼ê¸° ë•Œë¬¸ì— ì•ˆë¨)
          */
     }
 }

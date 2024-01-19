@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-// UI sorting + Load ¸¦ ´ã´çÇÏ´Â ¸Å´ÏÀú
+// UI sorting + Load ë¥¼ ë‹´ë‹¹í•˜ëŠ” ë§¤ë‹ˆì €
 public class UIManager
 {
     int _order = 10;
@@ -12,7 +12,7 @@ public class UIManager
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
     UI_Scene _sceneUI = null;
 
-    // @UI_Root ¿ÀºêÁ§Æ®¸¦ Æú´õÃ³·³ ½á¼­ ´ã¾ÆµÎ±â
+    // @UI_Root ì˜¤ë¸Œì íŠ¸ë¥¼ í´ë”ì²˜ëŸ¼ ì¨ì„œ ë‹´ì•„ë‘ê¸°
     public GameObject Root
     {
         get
@@ -82,30 +82,30 @@ public class UIManager
 
     // Open
     public T ShowPopupOld<T>(string name = null) where T : UI_Popup
-        // º¸Åë ¿ÀºêÁ§Æ®¿Í ¿ÀºêÁ§Æ®¿¡ Add µÈ ½ºÅ©¸³Æ®ÀÇ ÀÌ¸§ÀÌ µ¿ÀÏÇÏ±â ¶§¹®¿¡
-        // ±×³É ¿ÀºêÁ§Æ®ÀÇ ÀÌ¸§À¸·Î ½ºÅ©¸³Æ®¸¦ °¡Á®¿À°Ô²û nameÀ» µû·Î ³Ñ±âÁö ¾ÊÀ¸¸é null Ã³¸®
+        // ë³´í†µ ì˜¤ë¸Œì íŠ¸ì™€ ì˜¤ë¸Œì íŠ¸ì— Add ëœ ìŠ¤í¬ë¦½íŠ¸ì˜ ì´ë¦„ì´ ë™ì¼í•˜ê¸° ë•Œë¬¸ì—
+        // ê·¸ëƒ¥ ì˜¤ë¸Œì íŠ¸ì˜ ì´ë¦„ìœ¼ë¡œ ìŠ¤í¬ë¦½íŠ¸ë¥¼ ê°€ì ¸ì˜¤ê²Œë” nameì„ ë”°ë¡œ ë„˜ê¸°ì§€ ì•Šìœ¼ë©´ null ì²˜ë¦¬
     {
         if (string.IsNullOrEmpty(name))
             name = typeof(T).Name;
 
-        GameObject go = Managers.Resource.Instantiate($"UI/Popup/{name}"); // Scene¿¡ ÇÁ¸®ÆÕ(GameObject) »ı¼º
+        GameObject go = Managers.Resource.Instantiate($"UI/Popup/{name}"); // Sceneì— í”„ë¦¬íŒ¹(GameObject) ìƒì„±
 
-        T popup = Utill.GetOrAddComponent<T>(go); // Á¦³Ê¸¯ Å¸ÀÔÀÇ popupÀ¸·Î ÄÄÆ÷³ÍÆ®(Component) »ı¼º
+        T popup = Utill.GetOrAddComponent<T>(go); // ì œë„ˆë¦­ íƒ€ì…ì˜ popupìœ¼ë¡œ ì»´í¬ë„ŒíŠ¸(Component) ìƒì„±
 
-        _popupStack.Push(popup); // Å¥¿¡ ¼øÂ÷ÀûÀ¸·Î ³Ö±â
+        _popupStack.Push(popup); // íì— ìˆœì°¨ì ìœ¼ë¡œ ë„£ê¸°
 
         go.transform.SetParent(Root.transform);
 
         return null;
     }
     public T ShowPopup<T>(string name = null) where T : UI_Popup
-        // º¸Åë ¿ÀºêÁ§Æ®¿Í ¿ÀºêÁ§Æ®¿¡ Add µÈ ½ºÅ©¸³Æ®ÀÇ ÀÌ¸§ÀÌ µ¿ÀÏÇÏ±â ¶§¹®¿¡
-        // ±×³É ¿ÀºêÁ§Æ®ÀÇ ÀÌ¸§À¸·Î ½ºÅ©¸³Æ®¸¦ °¡Á®¿À°Ô²û nameÀ» µû·Î ³Ñ±âÁö ¾ÊÀ¸¸é null Ã³¸®
+        // ë³´í†µ ì˜¤ë¸Œì íŠ¸ì™€ ì˜¤ë¸Œì íŠ¸ì— Add ëœ ìŠ¤í¬ë¦½íŠ¸ì˜ ì´ë¦„ì´ ë™ì¼í•˜ê¸° ë•Œë¬¸ì—
+        // ê·¸ëƒ¥ ì˜¤ë¸Œì íŠ¸ì˜ ì´ë¦„ìœ¼ë¡œ ìŠ¤í¬ë¦½íŠ¸ë¥¼ ê°€ì ¸ì˜¤ê²Œë” nameì„ ë”°ë¡œ ë„˜ê¸°ì§€ ì•Šìœ¼ë©´ null ì²˜ë¦¬
     {
         if (string.IsNullOrEmpty(name))
             name = typeof(T).Name;
 
-        GameObject rootObject = Root;  // @UI_Root »ı¼º
+        GameObject rootObject = Root;  // @UI_Root ìƒì„±
 
         Canvas canvas = Utill.GetOrAddComponent<Canvas>(rootObject);
         CanvasScaler canvasScaler = Utill.GetOrAddComponent<CanvasScaler>(rootObject);
@@ -114,18 +114,18 @@ public class UIManager
         CanvasOptionSetting(canvas);
         CanvasScalerOptionSetting(canvasScaler);
 
-        GameObject go = Managers.Resource.Instantiate($"UI/Popup/{name}", rootObject.transform); // Scene¿¡ ÇÁ¸®ÆÕ(GameObject) »ı¼º
+        GameObject go = Managers.Resource.Instantiate($"UI/Popup/{name}", rootObject.transform); // Sceneì— í”„ë¦¬íŒ¹(GameObject) ìƒì„±
 
-        T popup = Utill.GetOrAddComponent<T>(go); // Á¦³Ê¸¯ Å¸ÀÔÀÇ popupÀ¸·Î ÄÄÆ÷³ÍÆ®(Component) »ı¼º
+        T popup = Utill.GetOrAddComponent<T>(go); // ì œë„ˆë¦­ íƒ€ì…ì˜ popupìœ¼ë¡œ ì»´í¬ë„ŒíŠ¸(Component) ìƒì„±
 
-        _popupStack.Push(popup); // Å¥¿¡ ¼øÂ÷ÀûÀ¸·Î ³Ö±â
+        _popupStack.Push(popup); // íì— ìˆœì°¨ì ìœ¼ë¡œ ë„£ê¸°
 
         go.transform.SetParent(rootObject.transform);
 
         return null;
     }
 
-    // SubItem Àü¿ë Instantiate()
+    // SubItem ì „ìš© Instantiate()
     public T MakeSubItem<T>(Transform parent = null, string name = null) where T : UI_Base
     {
         if (string.IsNullOrEmpty(name))
@@ -133,7 +133,7 @@ public class UIManager
 
         GameObject go = Managers.Resource.Instantiate($"UI/SubItem/{name}");
 
-        // parent ÀÖÀ¸¸é ¿©±â¼­ ¾Æ¿¹ SetParent() ±îÁö ÇØÁÖ±â
+        // parent ìˆìœ¼ë©´ ì—¬ê¸°ì„œ ì•„ì˜ˆ SetParent() ê¹Œì§€ í•´ì£¼ê¸°
         if (parent != null)
         {
             go.transform.SetParent(parent);
@@ -142,7 +142,7 @@ public class UIManager
         return Utill.GetOrAddComponent<T>(go);
     }
 
-    // SubItem Àü¿ë Instantiate() v2
+    // SubItem ì „ìš© Instantiate() v2
     public T MakeSubItemInOldCanvas<T>(string name = null) where T : UI_Base
     {
         if (string.IsNullOrEmpty(name))
@@ -151,7 +151,7 @@ public class UIManager
         
         GameObject go = Managers.Resource.Instantiate($"UI/SubItem/{name}");
 
-        // ±âÁ¸¿¡ ÀÌ¹Ì ÀÖ´Â Äµ¹ö½º ¾È¿¡ SubItemÀ» ¸¸µå´Â °æ¿ì
+        // ê¸°ì¡´ì— ì´ë¯¸ ìˆëŠ” ìº”ë²„ìŠ¤ ì•ˆì— SubItemì„ ë§Œë“œëŠ” ê²½ìš°
         GameObject parentCanvas = GameObject.FindWithTag("Canvas");
 
         go.transform.SetParent(parentCanvas.transform);
@@ -159,7 +159,7 @@ public class UIManager
         return Utill.GetOrAddComponent<T>(go);
     }
 
-    // SubItem Àü¿ë Instantiate() v3
+    // SubItem ì „ìš© Instantiate() v3
     public T MakeSubItemInTop<T>(string name = null) where T : UI_Base
     {
         if (string.IsNullOrEmpty(name))
@@ -168,7 +168,7 @@ public class UIManager
 
         GameObject go = Managers.Resource.Instantiate($"UI/SubItem/{name}");
 
-        // ±âÁ¸¿¡ ÀÌ¹Ì ÀÖ´Â Äµ¹ö½º ¾È¿¡ SubItemÀ» ¸¸µå´Â °æ¿ì
+        // ê¸°ì¡´ì— ì´ë¯¸ ìˆëŠ” ìº”ë²„ìŠ¤ ì•ˆì— SubItemì„ ë§Œë“œëŠ” ê²½ìš°
         GameObject parentCanvas = GameObject.FindWithTag("Top");
 
         go.transform.SetParent(parentCanvas.transform);
@@ -176,7 +176,7 @@ public class UIManager
         return Utill.GetOrAddComponent<T>(go);
     }
 
-    // SubItem Àü¿ë Instantiate() v4
+    // SubItem ì „ìš© Instantiate() v4
     public T MakeSubItemInContent<T>(string name = null) where T : UI_Base
     {
         if (string.IsNullOrEmpty(name))
@@ -185,7 +185,7 @@ public class UIManager
 
         GameObject go = Managers.Resource.Instantiate($"UI/SubItem/{name}");
 
-        // ±âÁ¸¿¡ ÀÌ¹Ì ÀÖ´Â Äµ¹ö½º ¾È¿¡ SubItemÀ» ¸¸µå´Â °æ¿ì
+        // ê¸°ì¡´ì— ì´ë¯¸ ìˆëŠ” ìº”ë²„ìŠ¤ ì•ˆì— SubItemì„ ë§Œë“œëŠ” ê²½ìš°
         GameObject parentCanvas = GameObject.FindWithTag("Content");
 
         go.transform.SetParent(parentCanvas.transform);
@@ -199,7 +199,7 @@ public class UIManager
         if (string.IsNullOrEmpty(name))
             name = typeof(T).Name;
 
-        if (parent == null) // È¤½Ã³ª ½ºÆù À§Ä¡ ÁöÁ¤¾ÈÇÑ °æ¿ì´Â ±×³É Content¾È¿¡ »ı¼º
+        if (parent == null) // í˜¹ì‹œë‚˜ ìŠ¤í° ìœ„ì¹˜ ì§€ì •ì•ˆí•œ ê²½ìš°ëŠ” ê·¸ëƒ¥ Contentì•ˆì— ìƒì„±
             parent = GameObject.FindWithTag("Content").transform;
 
         GameObject go = Managers.Resource.Instantiate($"UI/Card/{name}", parent);
@@ -235,10 +235,10 @@ public class UIManager
     }
 
 
-    // Æ¯Á¤ ÆË¾÷ »èÁ¦
+    // íŠ¹ì • íŒì—… ì‚­ì œ
     public void ClosePopup(UI_Popup popup)
     {
-        // ¿­·Á ÀÖ´Â ÆË¾÷ ¾øÀ¸¸é return
+        // ì—´ë ¤ ìˆëŠ” íŒì—… ì—†ìœ¼ë©´ return
         if (_popupStack.Count == 0)
             return;
 
@@ -253,14 +253,14 @@ public class UIManager
     // Close
     public void ClosePopup()
     {
-        // ¿­·Á ÀÖ´Â ÆË¾÷ ¾øÀ¸¸é return
+        // ì—´ë ¤ ìˆëŠ” íŒì—… ì—†ìœ¼ë©´ return
         if (_popupStack.Count == 0)
             return;
 
-        UI_Popup popup = _popupStack.Pop(); // °¡Àå ¸ÕÀú À§¿¡ ÀÖ´Â ÆË¾÷ »Ì¾Æ¿À±â(stack)
+        UI_Popup popup = _popupStack.Pop(); // ê°€ì¥ ë¨¼ì € ìœ„ì— ìˆëŠ” íŒì—… ë½‘ì•„ì˜¤ê¸°(stack)
 
-        Managers.Resource.Destroy(popup.gameObject); // ¾À¿¡¼­ »èÁ¦
-        popup = null; // È¤½Ã ¸ğ¸£´Ï null·Î º¯°æ±îÁö ÇØÁÖ±â
+        Managers.Resource.Destroy(popup.gameObject); // ì”¬ì—ì„œ ì‚­ì œ
+        popup = null; // í˜¹ì‹œ ëª¨ë¥´ë‹ˆ nullë¡œ ë³€ê²½ê¹Œì§€ í•´ì£¼ê¸°
 
         _order--;
     }
@@ -268,7 +268,7 @@ public class UIManager
     // Close All
     public void CloseAllPopup()
     {
-        // ¿­·Á ÀÖ´Â ÆË¾÷ ¾øÀ¸¸é return
+        // ì—´ë ¤ ìˆëŠ” íŒì—… ì—†ìœ¼ë©´ return
         if (_popupStack.Count == 0)
             return;
 

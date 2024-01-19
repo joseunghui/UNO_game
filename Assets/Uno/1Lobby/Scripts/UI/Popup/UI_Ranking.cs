@@ -110,7 +110,7 @@ public class UI_Ranking : UI_Popup
         // ranking data 
         GameObject rankingList = Get<GameObject>((int)Define.Groups.RankingList);
 
-        // È¤½Ã ¸ğ¸£´Ï ±âÁ¸ µ¥ÀÌÅÍ ³¯¸®±â
+        // í˜¹ì‹œ ëª¨ë¥´ë‹ˆ ê¸°ì¡´ ë°ì´í„° ë‚ ë¦¬ê¸°
         foreach (Transform child in rankingList.transform)
             Managers.Resource.Destroy(child.gameObject);
 

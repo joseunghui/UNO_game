@@ -13,9 +13,9 @@ public abstract class BaseScene : MonoBehaviour
     int HeartRechargeInterval = 30;
     int remainTime;
 
-    // ÇöÀç ¾À Å¸ÀÔÀ» ¾Ë¾Æ¾ß ÇÏ´Â ÀÏÀÌ »ı±â´Ï±î 
-    // °´Ã¼ ÀÚÃ¼´Â public À¸·Î, SetÀº protected·Î ¼±¾ğÇØÁÖ±â(ÀÚ½Ä ½ºÅ©¸³Æ®¿¡¼­ Á¢±Ù °¡´É)
-    public Define.Scene ScenType { get; protected set; } = Define.Scene.UnKnown; // ÃÊ±â ¼³Á¤ UnKnown
+    // í˜„ì¬ ì”¬ íƒ€ì…ì„ ì•Œì•„ì•¼ í•˜ëŠ” ì¼ì´ ìƒê¸°ë‹ˆê¹Œ 
+    // ê°ì²´ ìì²´ëŠ” public ìœ¼ë¡œ, Setì€ protectedë¡œ ì„ ì–¸í•´ì£¼ê¸°(ìì‹ ìŠ¤í¬ë¦½íŠ¸ì—ì„œ ì ‘ê·¼ ê°€ëŠ¥)
+    public Define.Scene ScenType { get; protected set; } = Define.Scene.UnKnown; // ì´ˆê¸° ì„¤ì • UnKnown
 
     void Awake()
     {
@@ -28,7 +28,7 @@ public abstract class BaseScene : MonoBehaviour
     {
         remainTime = 0;
         
-        // EventSystem ¾øÀ¸¸é »ı¼ºÇÏ´Â ·ÎÁ÷
+        // EventSystem ì—†ìœ¼ë©´ ìƒì„±í•˜ëŠ” ë¡œì§
         UnityEngine.Object obj = GameObject.FindObjectOfType(typeof(EventSystem));
 
         if (obj == null)
@@ -39,7 +39,7 @@ public abstract class BaseScene : MonoBehaviour
     }
 
 
-    // ÇÏÆ® »ç¿ë
+    // í•˜íŠ¸ ì‚¬ìš©
     void CheckIsFullHeart(Action onFinish = null)
     {
         if (RechargeTimerCoroutine == null)
@@ -49,7 +49,7 @@ public abstract class BaseScene : MonoBehaviour
             onFinish();
     }
 
-    // ÇÏÆ® ÃæÀü
+    // í•˜íŠ¸ ì¶©ì „
     public void SetRechargeScheduler(Action onFinish = null)
     {
         _data = Managers.Data.GetUserInfoData();

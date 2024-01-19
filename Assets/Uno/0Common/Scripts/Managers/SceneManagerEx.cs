@@ -15,7 +15,7 @@ public class SceneManagerEx
 
         nextSceneName = GetSceneName(type);
 
-        // ÀÏ´Ü ·Îµù ¾ÀÀ¸·Î ÀÌµ¿ 
+        // ì¼ë‹¨ ë¡œë”© ì”¬ìœ¼ë¡œ ì´ë™ 
         SceneManager.LoadScene(GetSceneName(Define.Scene.Loading));
     }
 
@@ -24,7 +24,7 @@ public class SceneManagerEx
         SceneManager.LoadScene(nextScene);
     }
 
-    // Enum¼Ó ¾À Å¸ÀÔÀ» stringÀ¸·Î °¡Á®¿À±â
+    // Enumì† ì”¬ íƒ€ì…ì„ stringìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°
     public string GetSceneName(Define.Scene type)
     {
         return System.Enum.GetName(typeof(Define.Scene), type);

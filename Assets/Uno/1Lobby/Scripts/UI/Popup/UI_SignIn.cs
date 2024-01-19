@@ -43,7 +43,7 @@ public class UI_SignIn : UI_Popup
             {
                 Managers.UI.ClosePopup();
 
-                // ·Î±×ÀÎ ÈÄ¿¡´Â ·©Å· ÆË¾÷ open
+                // ë¡œê·¸ì¸ í›„ì—ëŠ” ë­í‚¹ íŒì—… open
                 Managers.UI.ShowPopup<UI_Ranking>();
             }
         }

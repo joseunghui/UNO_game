@@ -43,7 +43,7 @@ public class GameScene : BaseScene
 
     }
 
-    // ¿ÜºÎ¿¡¼­ »ç¿ëÇÏ´Â ¿ëµµ
+    // ì™¸ë¶€ì—ì„œ ì‚¬ìš©í•˜ëŠ” ìš©ë„
     public GameMode.PVCMode GetGameMode()
     {
         return gameMode;

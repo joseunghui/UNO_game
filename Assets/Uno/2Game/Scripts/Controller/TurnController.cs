@@ -34,9 +34,9 @@ public class TurnController : MonoBehaviour
         for (int i = 0; i < startCardCount; i++)
         {
             yield return new WaitForSeconds(0.1f);
-            OnAddCard?.Invoke(false);   // isMine; ���ī��
+            OnAddCard?.Invoke(false);   // false : 상대 카드 추가
             yield return new WaitForSeconds(0.1f);
-            OnAddCard?.Invoke(true);    // ��ī��
+            OnAddCard?.Invoke(true);    // true : 내 카드 추가
         }
         yield return new WaitForSeconds(0.1f);
         onStartCard?.Invoke(true);

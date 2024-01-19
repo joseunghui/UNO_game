@@ -6,8 +6,8 @@ public class UI_Popup : UI_Base
 {
     public override void Init()
     {
-        // ÆË¾÷ ¾È¿¡ ½Å±Ô Äµ¹ö½º ÄÄÆ÷³ÍÆ® »ý¼ºÇÏ´Â ´ë½Å @UI_Root »ç¿ëÇÏ±â
-        // -> ÀÌ °æ¿ì Äµ¹ö½º ÄÄÆ÷³ÍÆ®¸¦ °¡Áø ¿ÀºêÁ§Æ®°¡ ÀÖ¾î¾ß ÇÏ´Âµ¥ @UI_Root·Î ÇØ°á °¡´É 
+        // íŒì—… ì•ˆì— ì‹ ê·œ ìº”ë²„ìŠ¤ ì»´í¬ë„ŒíŠ¸ ìƒì„±í•˜ëŠ” ëŒ€ì‹  @UI_Root ì‚¬ìš©í•˜ê¸°
+        // -> ì´ ê²½ìš° ìº”ë²„ìŠ¤ ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ê°€ ìžˆì–´ì•¼ í•˜ëŠ”ë° @UI_Rootë¡œ í•´ê²° ê°€ëŠ¥ 
         // Managers.UI.SetCanvas(gameObject, true);
     }
 

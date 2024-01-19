@@ -14,7 +14,7 @@ public class UI_Card : UI_Scene
     {
         base.Init();
 
-        Debug.Log($"UI_Card ÇÁ¸®ÆÕ »ı¼º!");
+        Debug.Log($"UI_Card í”„ë¦¬íŒ¹ ìƒì„±!");
 
     }
 
