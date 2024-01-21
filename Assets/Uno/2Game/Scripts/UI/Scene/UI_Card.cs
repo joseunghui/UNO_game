@@ -22,18 +22,16 @@ public class UI_Card : UI_Scene
 
     public void Setup(bool isFront, Item _item)
     {
-        item.color = _item.color;
-        item.num = _item.num;
-        item.sprite = _item.sprite;
+        this.item.color = _item.color;
+        this.item.num = _item.num;
+        this.item.sprite = _item.sprite;
         this.isFront = isFront;
         
         var cardImage = Utill.FindChild<SpriteRenderer>(gameObject);
-        Debug.Log($"카드 셋업 : {item.sprite}");
         
         if (this.isFront)
         {
             cardImage.sprite = this.item.sprite;
-            Debug.Log($"{cardImage.sprite}");
         }   
     }
 

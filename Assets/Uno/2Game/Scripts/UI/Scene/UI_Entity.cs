@@ -6,7 +6,7 @@ using DG.Tweening;
 public class UI_Entity : UI_Scene
 {
     public Item item;
-    public Vector3 _originPRS;
+    public Vector3 _originPos;
 
     private void Start()
     {
@@ -24,11 +24,8 @@ public class UI_Entity : UI_Scene
         this.item.num = _item.num;
         this.item.sprite = _item.sprite;
         var cardImage = Utill.FindChild<SpriteRenderer>(gameObject);
-        Debug.Log($"{item.sprite}");
         
         cardImage.sprite = _item.sprite;
-        Debug.Log($"{cardImage.sprite}");
-        
     }
     public void MoveTransform(Vector3 pos, bool useDotween, float dotweenTime)
     {

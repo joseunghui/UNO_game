@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6175990284126361229}
-  - component: {fileID: 2408967150951232890}
+  - component: {fileID: 159572587772877914}
   - component: {fileID: 3628655504486281814}
   m_Layer: 5
   m_Name: UI_Entity
@@ -135,7 +135,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 280}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2408967150951232890
+--- !u!114 &159572587772877914
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,17 +144,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 9084903284651140294}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c08752edd4304984882d5606a1eab9d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 35ffc3b0e53f1bd4ea29d90788a5d091, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   item:
     num: 0
     color: 
     sprite: {fileID: 0}
-  _originPRS:
-    pos: {x: 0, y: 0, z: 0}
-    rot: {x: 0, y: 0, z: 0, w: 0}
-    scale: {x: 0, y: 0, z: 0}
+  _originPos: {x: 0, y: 0, z: 0}
 --- !u!114 &3628655504486281814
 MonoBehaviour:
   m_ObjectHideFlags: 0

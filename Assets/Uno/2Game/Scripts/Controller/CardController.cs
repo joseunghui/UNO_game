@@ -86,7 +86,6 @@ public class CardController : MonoBehaviour
     public bool SpawnEntity(bool isMine, Item item, Vector3 spawnPos)
     {
         UI_Entity go = Managers.UI.CardSpawn<UI_Entity>(parent:gameObject.transform.parent, _pos: spawnPos, _quat: Utils.QI);
-        Debug.Log($"before setUp : {item.num}");
 
         go.Setup(item);
         entities.Add(go);
