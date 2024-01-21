@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class OrderController : MonoBehaviour
 {
-    [SerializeField] Renderer[] backRenderers;
-    [SerializeField] Renderer[] middleRenderers;
-    [SerializeField] string sortingLayerName;
     int _originOrder;
-
 
     public void SetOriginOrder(int originOrder)
     {
-        _originOrder = originOrder;
+        this._originOrder = originOrder;
         SetOrder(originOrder);
     }
 
@@ -24,17 +20,9 @@ public class OrderController : MonoBehaviour
     public void SetOrder(int order)
     {
         int mulOrder = order * 10;
-
-        foreach (var renderer in backRenderers)
-        {
-            renderer.sortingLayerName = sortingLayerName;
-            renderer.sortingOrder = mulOrder;
-        }
-
-        foreach (var renderer in middleRenderers)
-        {
-            renderer.sortingLayerName = sortingLayerName;
-            renderer.sortingOrder = mulOrder + 1;
-        }
+        var cardImage = Utill.FindChild<SpriteRenderer>(gameObject);
+        cardImage.sortingLayerName = "UI";
+        cardImage.sortingOrder = mulOrder;
+        
     }
 }

@@ -5,15 +5,8 @@ using DG.Tweening;
 
 public class UI_Entity : UI_Scene
 {
-    public List<Item> items;
     public Item item;
-    public SpriteRenderer entity;
-    public SpriteRenderer image;
-
-    public int _num;
-    public string _color;
-    public Sprite _sprite;
-    public Vector3 _originPos;
+    public Vector3 _originPRS;
 
     private void Start()
     {
@@ -27,11 +20,15 @@ public class UI_Entity : UI_Scene
 
     public void Setup(Item _item)
     {
-        _num = _item.num;
-        _color = _item.color;
-
-        item = _item;
-        image.sprite = item.sprite;
+        this.item.color = _item.color;
+        this.item.num = _item.num;
+        this.item.sprite = _item.sprite;
+        var cardImage = Utill.FindChild<SpriteRenderer>(gameObject);
+        Debug.Log($"{item.sprite}");
+        
+        cardImage.sprite = _item.sprite;
+        Debug.Log($"{cardImage.sprite}");
+        
     }
     public void MoveTransform(Vector3 pos, bool useDotween, float dotweenTime)
     {

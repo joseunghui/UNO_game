@@ -208,7 +208,7 @@ public class UIManager
         go.transform.localPosition= _pos;
         go.transform.localRotation = _quat;
 
-        return go as T;
+        return Utill.GetOrAddComponent<T>(go);
     }
 
     public T CreatePostionSpot<T>(string name = null, Define.CardPRS _prs = Define.CardPRS.Left) where T : UI_Base

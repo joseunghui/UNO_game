@@ -38,9 +38,8 @@ public class GameScene : BaseScene
         turnButtons.transform.localScale = Vector3.one;
 
         gameObject.GetOrAddComponent<CardController>();
-        gameObject.GetOrAddComponent<TurnController>();
-        gameObject.GetOrAddComponent<OrderController>();
-
+        //gameObject.GetOrAddComponent<TurnController>();
+        //gameObject.GetOrAddComponent<OrderController>();
     }
 
     // 외부에서 사용하는 용도
