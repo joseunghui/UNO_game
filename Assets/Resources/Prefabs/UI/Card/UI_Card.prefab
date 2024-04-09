@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2739315023487760244}
   - component: {fileID: 9127345363968541371}
-  - component: {fileID: 7078866528707163456}
+  - component: {fileID: 4325964964235464694}
+  - component: {fileID: 5238939227691861628}
   m_Layer: 5
   m_Name: CardImage
   m_TagString: Untagged
@@ -45,7 +46,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4240788967625865174}
   m_CullTransparentMesh: 1
---- !u!212 &7078866528707163456
+--- !u!114 &4325964964235464694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4240788967625865174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: abff186cfee2ae043bbf273a8a50f01d, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!212 &5238939227691861628
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,7 +117,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: abff186cfee2ae043bbf273a8a50f01d, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -94,7 +125,7 @@ SpriteRenderer:
   m_Size: {x: 1.66, y: 2.57}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &6325037177111055704
@@ -147,6 +178,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c08752edd4304984882d5606a1eab9d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item:
+    num: 0
+    color: 
+    sprite: {fileID: 0}
+  _originPRS:
+    pos: {x: 0, y: 0, z: 0}
+    rot: {x: 0, y: 0, z: 0, w: 0}
+    scale: {x: 0, y: 0, z: 0}
 --- !u!114 &1984000970314128328
 MonoBehaviour:
   m_ObjectHideFlags: 0

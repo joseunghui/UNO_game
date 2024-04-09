@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CardController : MonoBehaviour
 {
-    [SerializeField] ItemSO ItemBuffer;
-    public List<Item> itemList;
+    ItemSO ItemBuffer;
+    public List<Item> itemList = new List<Item>();
 
     public int startCardCount;
     public bool isLoading; // 게임 끝나면 true로 해서 클릭 방지
@@ -15,15 +16,12 @@ public class CardController : MonoBehaviour
     public List<UI_Card> myCards = new List<UI_Card>();
     public List<UI_Entity> entities = new List<UI_Entity>();
 
-
-    // Start is called before the first frame update
-    void Start()
+    #region GameScene에 할당된 ItemSO를 CardController로 가져오기
+    public void SetItemSO(ItemSO tempSO)
     {
-        // 카드 섞기 
-        itemList = ShuffleList<Item>(SetCardList());
-
+        ItemBuffer = tempSO;
     }
-
+    #endregion
     #region SetStartCardCountbyGameMode 
     public void SetStartCardCountbyGameMode()
     {
@@ -42,6 +40,8 @@ public class CardController : MonoBehaviour
                 startCardCount = 10;
                 break;
         }
+        // 초반 카드 섞기
+        itemList = ShuffleList(SetCardList());
         StartCoroutine(StartGameCo());
     }
     #endregion
@@ -52,15 +52,10 @@ public class CardController : MonoBehaviour
         myTurn = Random.Range(0, 2) == 0;
         isLoading = true;
 
-        // 여기까지
-        Debug.Log($"myTurn >> {myTurn}");
-
-        //yield break;
-
         for (int i = 0; i < startCardCount; i++)
         {
             yield return new WaitForSeconds(0.1f);
-            //AddCard(false);   // false : 상대 카드 추가
+            AddCard(false);   // false : 상대 카드 추가
             yield return new WaitForSeconds(0.1f);
             AddCard(true);    // true : 내 카드 추가
         }
@@ -146,17 +141,17 @@ public class CardController : MonoBehaviour
     #region 카드 뽑기
     public Item PopItem()
     {
-        // if (itemBuffer.Count == 0)
-        // {
-        //     List<Item> items = _items;
-        //     int count = items.Count;
-        //     for (int i = 0; i < count - 1; i++)
-        //     {
-        //         itemBuffer.Add(items[i]);
-        //         items.RemoveAt(i);
-        //     }
-        //     MixCard();
-        // }
+        if (itemList.Count == 0)
+        {
+            List<Item> items = ItemBuffer.items.OfType<Item>().ToList();
+            int count = items.Count;
+            for (int i = 0; i < count - 1; i++)
+            {
+                itemList.Add(items[i]);
+                items.RemoveAt(i);
+            }
+            MixCard();
+        }
         Item item = itemList[0];
         Debug.Log(item.num + ", " + item.color);
         itemList.RemoveAt(0);
@@ -174,6 +169,7 @@ public class CardController : MonoBehaviour
         SetOriginOrder(isMine);
         //CardAlignment(isMine);
     }
+
     void SetOriginOrder(bool isMine)
     {
         int count = isMine ? myCards.Count : otherCards.Count;
@@ -242,4 +238,14 @@ public class CardController : MonoBehaviour
     }
     #endregion
 
+    void MixCard()
+    {
+        for (int i = 0; i < itemList.Count; i++)
+        {      // 카드 섞기
+            int rand = Random.Range(i, itemList.Count);
+            Item temp = itemList[i];
+            itemList[i] = itemList[rand];
+            itemList[rand] = temp;
+        }
+    }
 }

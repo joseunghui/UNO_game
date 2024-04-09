@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -53,8 +53,9 @@ public class UI_LevelSelect : UI_Popup
     void SetPVCGameMode(GameMode.PVCMode mode)
     {
         GameScene gameScene = GameObject.FindWithTag("Scene").GetComponent<GameScene>();
+        CardController cc = gameScene.GetComponent<CardController>();
 
-        switch(mode)
+        switch (mode)
         {
             case GameMode.PVCMode.EASY:
                 gameScene.gameMode = GameMode.PVCMode.EASY;
@@ -78,7 +79,7 @@ public class UI_LevelSelect : UI_Popup
         gameBarTimer.SetTimer("10");
 
         // StartCardCount 설정
-        gameScene.GetComponent<CardController>().SetStartCardCountbyGameMode();
+        cc.SetStartCardCountbyGameMode();
 
         Managers.UI.ClosePopup();
     }

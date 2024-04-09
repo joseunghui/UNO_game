@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 206bd11a8e7d62a49b1c7c847c4756ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCardLeft: {fileID: 3338850082354259697}
-  myCardRight: {fileID: 7364427737582826459}
-  otherCardLeft: {fileID: 1989332129123014923}
-  otherCardRight: {fileID: 2787879541287068208}
+  myCardLeft: {fileID: 8066741895525899327, guid: 3137094382e3e814b846fa05023af160, type: 3}
+  myCardRight: {fileID: 2581323527427692965, guid: 9c89042a635a1bc4db314b56a6780240, type: 3}
+  otherCardLeft: {fileID: 4711600919852335386, guid: 57b0b66461b4176429212751716e854a, type: 3}
+  otherCardRight: {fileID: 4386161252209697286, guid: 84927156fc6fcce4884213d18fdbd1ee, type: 3}

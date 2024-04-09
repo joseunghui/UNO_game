@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public class GameScene : BaseScene
 {
+    [SerializeField] ItemSO itemSO;
     public GameMode.PVCMode gameMode = GameMode.PVCMode.None;
 
     protected override void Init()
@@ -37,7 +38,9 @@ public class GameScene : BaseScene
         UI_Turn turnButtons = Managers.UI.MakeSubItemInContent<UI_Turn>();
         turnButtons.transform.localScale = Vector3.one;
 
-        gameObject.GetOrAddComponent<CardController>();
+        CardController cardController = gameObject.GetOrAddComponent<CardController>();
+        cardController.SetItemSO(itemSO);
+
         //gameObject.GetOrAddComponent<TurnController>();
         //gameObject.GetOrAddComponent<OrderController>();
     }

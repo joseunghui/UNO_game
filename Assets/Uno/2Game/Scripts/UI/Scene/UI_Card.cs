@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System;
+using UnityEngine.UI;
 
 public class UI_Card : UI_Scene
 {
@@ -27,7 +28,7 @@ public class UI_Card : UI_Scene
         this.item.sprite = _item.sprite;
         this.isFront = isFront;
         
-        var cardImage = Utill.FindChild<SpriteRenderer>(gameObject);
+        var cardImage = Utill.FindChild<Image>(gameObject);
         
         if (this.isFront)
         {

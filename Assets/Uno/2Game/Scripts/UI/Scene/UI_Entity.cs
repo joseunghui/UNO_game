@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class UI_Entity : UI_Scene
 {
@@ -23,7 +24,7 @@ public class UI_Entity : UI_Scene
         this.item.color = _item.color;
         this.item.num = _item.num;
         this.item.sprite = _item.sprite;
-        var cardImage = Utill.FindChild<SpriteRenderer>(gameObject);
+        var cardImage = Utill.FindChild<Image>(gameObject);
         
         cardImage.sprite = _item.sprite;
     }
