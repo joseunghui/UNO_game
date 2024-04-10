@@ -53,6 +53,9 @@ public class CardController : MonoBehaviour
         myTurn = Random.Range(0, 2) == 0;
         isLoading = true;
 
+        // sound 
+        Managers.Sound.Play("StartSound", Define.Sound.Effect);
+
         for (int i = 0; i < startCardCount; i++)
         {
             yield return new WaitForSeconds(0.1f);
@@ -60,9 +63,11 @@ public class CardController : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             AddCard(true);    // true : 내 카드 추가
         }
+        
         yield return new WaitForSeconds(0.1f);
+
         SpawnEntity(true, PopItem(), Vector3.zero);
-        //StartCoroutine(CoTurnSet());
+        StartCoroutine(CoTurnSet());
     }
     IEnumerator CoTurnSet()
     {

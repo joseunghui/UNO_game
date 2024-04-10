@@ -131,6 +131,9 @@ public class Define
 
         ReceiveAllBtn,
 
+        AddCard,
+        EndTurn,
+        UnoBtn,
     }
 
     public enum Texts

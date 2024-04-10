@@ -41,7 +41,9 @@ public class GameScene : BaseScene
         CardController cardController = gameObject.GetOrAddComponent<CardController>();
         cardController.SetItemSO(itemSO);
 
-        //gameObject.GetOrAddComponent<TurnController>();
+        TurnController turnController = gameObject.GetOrAddComponent<TurnController>();
+        turnController.StartGame();
+
         //gameObject.GetOrAddComponent<OrderController>();
     }
 

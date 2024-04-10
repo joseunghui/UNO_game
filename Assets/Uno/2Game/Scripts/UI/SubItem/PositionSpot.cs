@@ -22,13 +22,13 @@ public class PositionSpot : UI_SubItem
     public void SetTransformPosition()
     {
         myCardLeft.transform.position = new Vector3(-6, -3, 0);
-        myCardLeft.transform.rotation = Quaternion.identity;
+        myCardLeft.transform.rotation = Quaternion.Euler(0, 10, 5);
         myCardRight.transform.position = new Vector3(0, -3, 0);
-        myCardRight.transform.rotation = Quaternion.identity;
+        myCardRight.transform.rotation = Quaternion.Euler(0, 370, 5);
         otherCardLeft.transform.position = new Vector3(8, 2, 0);
-        otherCardLeft.transform.rotation = Quaternion.identity;
+        otherCardLeft.transform.rotation = Quaternion.Euler(0, 10, 5);
         otherCardRight.transform.position = new Vector3(5, 2, 0);
-        otherCardRight.transform.rotation = Quaternion.identity;
+        otherCardRight.transform.rotation = Quaternion.Euler(0, -10, 5);
 
     }
 
