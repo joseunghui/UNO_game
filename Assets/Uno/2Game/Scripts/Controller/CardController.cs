@@ -62,9 +62,9 @@ public class CardController : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
         SpawnEntity(true, PopItem(), Vector3.zero);
-        //StartCoroutine(StartTurnCo());
+        //StartCoroutine(CoTurnSet());
     }
-    IEnumerator StartTurnCo()
+    IEnumerator CoTurnSet()
     {
         isLoading = true;
 
@@ -81,6 +81,11 @@ public class CardController : MonoBehaviour
     #region Entity Manager(카드를 내는 위치에 오는 모든 카드들 관리)
     public bool SpawnEntity(bool isMine, Item item, Vector3 spawnPos)
     {
+        // 카드 덱 생성
+        UI_Card card = Managers.UI.CardSpawn<UI_Card>(parent: gameObject.transform.parent, _pos: spawnPos, _quat: Utils.QI);
+        card.gameObject.name = "CardDeck";
+        card.gameObject.transform.position = new Vector3(2, 0, 0);
+
         UI_Entity go = Managers.UI.CardSpawn<UI_Entity>(parent:gameObject.transform.parent, _pos: spawnPos, _quat: Utils.QI);
 
         go.Setup(item);
@@ -143,6 +148,8 @@ public class CardController : MonoBehaviour
     void PositionSpot()
     {
         position = Managers.UI.MakeSubItemInOldCanvas<PositionSpot>("PositionSpot");
+        position.transform.localScale = Vector3.one;
+        position.SetTransformPosition();
     }
 
     public Item PopItem()
@@ -173,7 +180,7 @@ public class CardController : MonoBehaviour
         (isMine ? myCards : otherCards).Add(card);
 
         SetOriginOrder(isMine);
-        //CardAlignment(isMine);
+        CardAlignment(isMine);
     }
 
     void SetOriginOrder(bool isMine)
@@ -188,27 +195,28 @@ public class CardController : MonoBehaviour
 
     public void CardAlignment(bool isMine)
     {
-        // var myCardLeft = Managers.UI.CreatePositionSpot<PositionSpot>(_prs: Define.CardPRS.Left, isMine).transform;
-        // var myCardRight = Managers.UI.CreatePositionSpot<PositionSpot>(_prs: Define.CardPRS.Right, isMine).transform;
-        // var otherCardLeft = Managers.UI.CreatePositionSpot<PositionSpot>(_prs: Define.CardPRS.Left, isMine).transform;
-        // var otherCardRight = Managers.UI.CreatePositionSpot<PositionSpot>(_prs: Define.CardPRS.Right, isMine).transform;
         
-        // // 카드 정렬
-        // List<PRS> originCardPRSs = new List<PRS>();
-        // if (isMine)
-        //     originCardPRSs = RoundAlignment(myCardLeft, myCardRight, myCards.Count, 0.5f, Vector3.one);
-        // else
-        //     originCardPRSs = RoundAlignment(otherCardLeft, otherCardRight, otherCards.Count, -0.5f, Vector3.one * 0.8f);
+        var myCardLeft = position.GetMyLeft();
+        var myCardRight = position.GetMyRight();
+        var otherCardLeft = position.GetOtherLeft();
+        var otherCardRight = position.GetOtherRight();
+
+        // 카드 정렬
+        List<PRS> originCardPRSs = new List<PRS>();
+        if (isMine)
+            originCardPRSs = RoundAlignment(myCardLeft, myCardRight, myCards.Count, 0.5f, Vector3.one);
+        else
+            originCardPRSs = RoundAlignment(otherCardLeft, otherCardRight, otherCards.Count, -0.5f, Vector3.one * 0.8f);
 
 
-        // var targetCards = isMine ? myCards : otherCards;
-        // for (int i = 0; i < targetCards.Count; i++)
-        // {
-        //     var targetCard = targetCards[i];
+        var targetCards = isMine ? myCards : otherCards;
+        for (int i = 0; i < targetCards.Count; i++)
+        {
+            var targetCard = targetCards[i];
 
-        //     targetCard.originPRS = originCardPRSs[i];
-        //     targetCard.MoveTransform(targetCard.originPRS, true, 0.97f);
-        // }
+            targetCard._originPRS = originCardPRSs[i];
+            targetCard.MoveTransform(targetCard._originPRS, true, 0.97f);
+        }
     }
     List<PRS> RoundAlignment(Transform leftTr, Transform rightTr, int objCount, float height, Vector3 scale)
     {
