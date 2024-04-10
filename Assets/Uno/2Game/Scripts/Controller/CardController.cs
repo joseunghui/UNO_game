@@ -15,6 +15,7 @@ public class CardController : MonoBehaviour
     public List<UI_Card> otherCards = new List<UI_Card>();
     public List<UI_Card> myCards = new List<UI_Card>();
     public List<UI_Entity> entities = new List<UI_Entity>();
+    PositionSpot position;
 
     #region GameScene에 할당된 ItemSO를 CardController로 가져오기
     public void SetItemSO(ItemSO tempSO)
@@ -26,7 +27,7 @@ public class CardController : MonoBehaviour
     public void SetStartCardCountbyGameMode()
     {
         GameMode.PVCMode _type = gameObject.GetComponent<GameScene>().GetGameMode();
-
+        PositionSpot();
         // 난이도에 따른 보유 카드 개수 차등
         switch (_type)
         {
@@ -139,6 +140,11 @@ public class CardController : MonoBehaviour
     #endregion
 
     #region 카드 뽑기
+    void PositionSpot()
+    {
+        position = Managers.UI.MakeSubItemInOldCanvas<PositionSpot>("PositionSpot");
+    }
+
     public Item PopItem()
     {
         if (itemList.Count == 0)
