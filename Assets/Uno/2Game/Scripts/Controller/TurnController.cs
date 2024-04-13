@@ -43,7 +43,7 @@ public class TurnController : MonoBehaviour
 
     public IEnumerator StartGameCo()
     {
-        GameSetup();
+        GameSetup(); // 랜덤 시작 순서 지정
         isLoading = true;
 
         for (int i = 0; i < startCardCount; i++)
