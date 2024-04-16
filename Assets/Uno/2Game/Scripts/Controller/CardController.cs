@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CardController : MonoBehaviour
@@ -24,9 +25,11 @@ public class CardController : MonoBehaviour
     }
     #endregion
     #region SetStartCardCountbyGameMode 
-    public void SetStartCardCountbyGameMode()
+    public void SetStartCardCountbyGameMode(GameMode.PVCMode? _type)
     {
-        GameMode.PVCMode _type = gameObject.GetComponent<GameScene>().GetGameMode();
+        if (_type.IsUnityNull())
+            _type = gameObject.GetComponent<GameScene>().GetGameMode();
+
         PositionSpot();
         // 난이도에 따른 보유 카드 개수 차등
         switch (_type)
@@ -39,6 +42,9 @@ public class CardController : MonoBehaviour
                 break;
             case GameMode.PVCMode.HARD:
                 startCardCount = 10;
+                break;
+            case GameMode.PVCMode.None:
+                startCardCount = 8;
                 break;
         }
         // 초반 카드 섞기

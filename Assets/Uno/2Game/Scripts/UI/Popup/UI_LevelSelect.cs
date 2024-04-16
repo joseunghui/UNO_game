@@ -79,7 +79,7 @@ public class UI_LevelSelect : UI_Popup
         gameBarTimer.SetTimer("10");
 
         // StartCardCount 설정
-        cc.SetStartCardCountbyGameMode();
+        cc.SetStartCardCountbyGameMode(null);
 
         Managers.UI.ClosePopup();
     }
