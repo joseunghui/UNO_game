@@ -14,6 +14,7 @@ public class InputManager
     public Action<Define.GameState> GameAction = null;
     public Action<Define.MouseEvent> MouseAction = null;
 
+    bool OnMyCardArea;
     bool _pressed = false;
     bool _draggable = false;
 
@@ -47,6 +48,8 @@ public class InputManager
                 }
                 _pressed = false;
             }
+
+
         }
     }
 
@@ -77,7 +80,7 @@ public class InputManager
         if (inputState != Define.MouseEvent.Drag)
             return;
 
-        if (true) // OnMyCardArea
+        if (OnMyCardArea)
             GetCardController().EntityAlignment();
         else
         {
@@ -93,7 +96,7 @@ public class InputManager
         if (inputState != Define.MouseEvent.Drag)
             return;
 
-        if (!true) // OnMyCardArea
+        if (!OnMyCardArea)
         {
             targetCard.MoveTransform(new PRS(Utils.MousePos, Utils.QI, targetCard._originPRS.scale), false);
             GetCardController().EntityAlignment();
@@ -106,7 +109,7 @@ public class InputManager
         // MyCardArea랑 마우스랑 겹치는 부분이 있으면 true
         RaycastHit2D[] hits = Physics2D.RaycastAll(Utils.MousePos, Vector3.forward);
         int layer = LayerMask.NameToLayer("MyCardArea");
-        //OnMyCardArea = Array.Exists(hits, x => x.collider.gameObject.layer == layer);
+        OnMyCardArea = Array.Exists(hits, x => x.collider.gameObject.layer == layer);
     }
 
     void EnlargeCard<T>(bool isEnlarge, T TargetCard)
