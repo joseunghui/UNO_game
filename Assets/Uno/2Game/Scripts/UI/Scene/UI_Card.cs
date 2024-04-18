@@ -37,25 +37,25 @@ public class UI_Card : UI_Scene
     }
 
     #region Mouse Action
-    void OnMouseOver()
+    void CursorOverCard()
     {
         if (isFront)
-            Managers.Input.OnMouseOver(this);
+            Managers.Input.OnCursorOver(this);
     }
-    void OnMouseExit()
+    void CursorOutCard()
     {
         if (isFront)
-            Managers.Input.OnMouseExit(this);
+            Managers.Input.OnCursorOut(this);
     }
-    void OnMouseDown()
+    void CursorDownCard()
     {
         if (isFront)
-            Managers.Input.OnMouseDown();
+            Managers.Input.OnCursorDown();
     }
-    void OnMouseUp()
+    void CursorUpCard()
     {
         if (isFront)
-            Managers.Input.OnMouseUp();
+            Managers.Input.OnCursorUp();
     }
     #endregion
     #region Move Transform

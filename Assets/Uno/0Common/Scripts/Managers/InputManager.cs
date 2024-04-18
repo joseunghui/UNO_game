@@ -51,26 +51,26 @@ public class InputManager
     }
 
     #region MyCard
-    public void OnMouseOver<T>(T target)
+    public void OnCursorOver<T>(T target)
     {
         if (inputState == Define.MouseEvent.None)
             return;
         EnlargeCard(true, target);
     }
 
-    public void OnMouseExit<T>(T targer)
+    public void OnCursorOut<T>(T targer)
     {
         EnlargeCard(false, targer);
     }
 
-    public void OnMouseDown()
+    public void OnCursorDown()
     {
         if (inputState != Define.MouseEvent.Drag)
             return;
         _draggable = true;
     }
 
-    public void OnMouseUp()
+    public void OnCursorUp()
     {
         _draggable = false;
         
