@@ -10,12 +10,10 @@ public class DataManager
     UserInfoDB _user = new UserInfoDB();
     RankingData _rank = new RankingData();
     PostDataDB _post = new PostDataDB();
-    MatchServer _match = new MatchServer();
 
     public UserInfoDB User { get { return _user; } }
     public RankingData Rank { get { return _rank; } }
     public PostDataDB Post { get { return _post; } }
-    public MatchServer Match { get { return _match; } }
 
     UserInfoData userInfoData;
     List<Ranking> rankingDatas;

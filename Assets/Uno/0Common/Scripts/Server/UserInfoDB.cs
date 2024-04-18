@@ -1,12 +1,12 @@
 using System;
 using System.Text;
 using UnityEngine;
-
 using BackEnd; // 뒤끝 디비
 
 #region UserInfoData Class
 public class UserInfoData
 {
+    public string inDate;
     public string nickname;
     public bool nickChange;
     public int grade;
@@ -23,6 +23,7 @@ public class UserInfoData
     {
         StringBuilder result = new StringBuilder();
 
+        result.AppendLine($"inDate : {inDate}");
         result.AppendLine($"nickname : {nickname}");
         result.AppendLine($"nickChange : {nickChange}");
         result.AppendLine($"grade : {grade}");
@@ -93,6 +94,7 @@ public class UserInfoDB
 
         userInfo = new UserInfoData(); // 객체 초기화
 
+        userInfo.inDate = bro.Rows()[0]["inDate"]["S"].ToString();
         userInfo.nickname = getNick;
         userInfo.nickChange = bool.Parse(bro.Rows()[0]["nickChange"]["BOOL"].ToString());
         userInfo.grade = int.Parse(bro.Rows()[0]["grade"]["N"].ToString());

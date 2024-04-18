@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class MatchScene : BaseScene
 {
@@ -38,7 +37,16 @@ public class MatchScene : BaseScene
         cardController.SetItemSO(itemSO);
         cardController.SetStartCardCountbyGameMode(GameMode.PVCMode.None);
 
-        Managers.Data.Match.AccessMatchServer();
+        BackEndMatchManager.GetInstance().AccessMatchServer();
+
+        if (BackEndMatchManager.GetInstance().CreateMatchRoom())
+        {
+            Debug.Log("Create Match Room >> success");
+        }
+        else
+        {
+            Debug.Log("create Match Room >> Fail");
+        }
 
     }
 

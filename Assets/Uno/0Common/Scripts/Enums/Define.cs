@@ -53,9 +53,19 @@ public class Define
 
     public enum MouseEvent
     {
+        None,
+        Over,
         Press,
         Click,
         DoubleClick,
+        Drag,
+    }
+
+    public enum GameState
+    {
+        GameStart,
+        GamePause,
+        GameEnd,
     }
     #endregion
 

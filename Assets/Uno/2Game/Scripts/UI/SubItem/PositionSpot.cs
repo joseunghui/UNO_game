@@ -24,9 +24,9 @@ public class PositionSpot : UI_SubItem
         myCardLeft.transform.position = new Vector3(-6, -3, 0);
         myCardLeft.transform.rotation = Quaternion.Euler(0, 10, 5);
         myCardRight.transform.position = new Vector3(0, -3, 0);
-        myCardRight.transform.rotation = Quaternion.Euler(0, 370, 5);
+        myCardRight.transform.rotation = Quaternion.Euler(0, 370, -5);
         otherCardLeft.transform.position = new Vector3(8, 2, 0);
-        otherCardLeft.transform.rotation = Quaternion.Euler(0, 10, 5);
+        otherCardLeft.transform.rotation = Quaternion.Euler(0, 10, -5);
         otherCardRight.transform.position = new Vector3(5, 2, 0);
         otherCardRight.transform.rotation = Quaternion.Euler(0, -10, 5);
 

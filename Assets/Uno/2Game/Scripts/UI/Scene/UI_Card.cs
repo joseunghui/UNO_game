@@ -36,29 +36,29 @@ public class UI_Card : UI_Scene
         }   
     }
 
+    #region Mouse Action
     void OnMouseOver()
     {
-        //if (isFront)
-            //cardController.CardMouseOver(this);
+        if (isFront)
+            Managers.Input.OnMouseOver(this);
     }
-
-
     void OnMouseExit()
     {
-        //if (isFront)
-            //cardController.CardMouseExit(this);
+        if (isFront)
+            Managers.Input.OnMouseExit(this);
     }
     void OnMouseDown()
     {
-        //if (isFront)
-            //cardController.CardMouseDown();
+        if (isFront)
+            Managers.Input.OnMouseDown();
     }
     void OnMouseUp()
     {
-        //if (isFront)
-            //cardController.CardMouseUp();
+        if (isFront)
+            Managers.Input.OnMouseUp();
     }
-
+    #endregion
+    #region Move Transform
     public void MoveTransform(PRS prs, bool useDotween, float dotweenTime = 0)
     {
         if (useDotween)
@@ -74,5 +74,6 @@ public class UI_Card : UI_Scene
             transform.localScale = prs.scale;
         }
     }
+    #endregion
 }
 

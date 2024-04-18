@@ -71,23 +71,15 @@ public class TurnController : MonoBehaviour
 
     public void EndTurn()
     {
-        /*myTurn = !myTurn;
+        myTurn = !myTurn;
+        CardController Card = gameObject.GetOrAddComponent<CardController>();
+
         if (Card.myCards.Count == 0)
             StartCoroutine(GameOver(true));
         if (Card.otherCards.Count == 0)
             StartCoroutine(GameOver(false));
         else
-            StartCoroutine(StartTurnCo());*/
-    }
-
-    void InputCheatKey()
-    {
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-            OnAddCard?.Invoke(true);
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-            OnAddCard?.Invoke(false);
-        if (Input.GetKeyDown(KeyCode.Keypad3))
-            EndTurn();
+            StartCoroutine(StartTurnCo());
     }
 
     public void StartGame()

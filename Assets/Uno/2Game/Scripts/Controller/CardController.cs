@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class CardController : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class CardController : MonoBehaviour
     public int startCardCount;
     public bool isLoading; // 게임 끝나면 true로 해서 클릭 방지
     public bool myTurn;
+    public int putCount;
     public int unoCount = 0;
     public List<UI_Card> otherCards = new List<UI_Card>();
     public List<UI_Card> myCards = new List<UI_Card>();
@@ -273,4 +275,14 @@ public class CardController : MonoBehaviour
             itemList[rand] = temp;
         }
     }
+
+    #region 카드 내는 과정
+    public bool TryPutCard(bool isMine)
+    {
+        if (putCount >= 1)   // 카드 하나 낼 수 있음
+            return false;
+       
+        return false;
+    }
+    #endregion
 }

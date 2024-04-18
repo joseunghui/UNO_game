@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.85352147, g: 0.9716981, b: 0.79294235, a: 1}
+  m_Color: {r: 0.30980393, g: 0.34901962, b: 0.32941177, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -477,6 +477,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1799665098}
   - component: {fileID: 1799665097}
+  - component: {fileID: 1799665099}
   m_Layer: 0
   m_Name: '@Scene'
   m_TagString: Untagged
@@ -497,6 +498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSO: {fileID: 11400000, guid: 2f80e87c80df63d48b9a34e18abd6dcd, type: 2}
+  gameMode: 0
 --- !u!4 &1799665098
 Transform:
   m_ObjectHideFlags: 0
@@ -512,6 +514,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1799665099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799665096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99655ffec8dd71b4995abc73247aaabd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1844462016
 GameObject:
   m_ObjectHideFlags: 0
