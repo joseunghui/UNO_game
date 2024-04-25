@@ -13,12 +13,12 @@ public class UI_EnterGame : UI_SubItem
     private void Start()
     {
         Init();
+        
     }
     public override void Init()
     {
         base.Init();
-        AutoLoginIntoGame();
-
+        
         // 가져와야 할 것 : 버튼, 텍스트
         Bind<Button>(typeof(Define.Buttons));
         Bind<TextMeshProUGUI>(typeof(Define.Texts));
@@ -26,9 +26,11 @@ public class UI_EnterGame : UI_SubItem
         GetText((int)Define.Texts.EnterGameText).GetComponent<TextMeshProUGUI>().text = "게임시작";
         GetButton((int)Define.Buttons.EnterGameButton).gameObject.BindEvent( (PointerEventData) =>
         {
+            AutoLoginIntoGame();
+
+            Managers.Data.Load();
             Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
             Managers.Resource.Destroy(gameObject);
-            Managers.Data.Load();
 
             // 로그인 후에는 랭킹 팝업 open
             Managers.UI.ShowPopup<UI_Ranking>();
@@ -37,6 +39,8 @@ public class UI_EnterGame : UI_SubItem
 
     void AutoLoginIntoGame()
     {
+        Debug.Log("AutoLoginIntoGame()");
+
         // 로그인 했으면 Game, 아니면 Login
         // 뒤끝 토큰으로 로그인
         Managers.Data.BackendTokenLogin((bool result, string error) =>

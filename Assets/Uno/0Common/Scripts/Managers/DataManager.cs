@@ -120,6 +120,7 @@ public class DataManager
     // 유저 정보 불러오기 사전작업
     public void OnPrevBackendAuthorized()
     {
+        Debug.Log("유저 정보 불러오기 사전작업");
         isLogin = true;
 
         OnBackendAuthorized();

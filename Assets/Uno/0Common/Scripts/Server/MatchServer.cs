@@ -43,9 +43,10 @@ public partial class BackEndMatchManager : MonoBehaviour
 
     public void AccessMatchServer()
     {
+        Debug.Log($"AccessMatchServer() >> {isConnectMatchServer}");
+
         if (isConnectMatchServer)
         {
-            Debug.Log("이미 접속한 매치 서버 있음");
             return;
         }
         ErrorInfo errorInfo;
@@ -60,7 +61,6 @@ public partial class BackEndMatchManager : MonoBehaviour
     // 매칭 서버 접속종료
     public void DisconnectMatchServer()
     {
-        Debug.Log("매치 서버 접속 종료");
         isConnectMatchServer = false;
         Backend.Match.LeaveMatchMakingServer();
     }
@@ -109,9 +109,9 @@ public partial class BackEndMatchManager : MonoBehaviour
 
         Backend.Match.RequestMatchMaking(matchInfos[index].matchType, matchInfos[index].matchModeType, matchInfos[index].inDate);
         
-        //nowMatchType = matchInfos[index].matchType;
-        //nowModeType = matchInfos[index].matchModeType;
-        //numOfClient = int.Parse(matchInfos[index].headCount);
+        nowMatchType = matchInfos[index].matchType;
+        nowModeType = matchInfos[index].matchModeType;
+        numOfClient = int.Parse(matchInfos[index].headCount);
     }
 
     // 매칭 신청 취소하기
@@ -205,6 +205,7 @@ public partial class BackEndMatchManager : MonoBehaviour
                 // 매칭 되고, 서버에서 방 생성할 때 에러 발생 시 exception이 리턴됨
                 // 이 경우 다시 매칭 신청해야 됨
                 debugLog = string.Format(EXCEPTION_OCCUR, args.Reason);
+                Managers.Match.RequestMatchMaking(0);
 
                 break;
         }

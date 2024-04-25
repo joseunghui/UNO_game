@@ -38,8 +38,6 @@ public class Managers : MonoBehaviour
         // 뒤끝 초기화에 대한 응답값
         if (bro.IsSuccess())
         {
-            s_instance._match.Init();
-
             Debug.Log("초기화 성공 : " + bro);
 
             // SendQueue 초기화
@@ -81,6 +79,14 @@ public class Managers : MonoBehaviour
     private void Update()
     {
         Backend.AsyncPoll();
+
+        // SendQueue가 초기화 되었을 때만 Poll 함수를 호출
+        if (SendQueue.IsInitialize)
+        {
+            // SendQueue를 정상적으로 사용하기 위해서는 
+            // 아래 Poll 함수가 반드시 정기적으로 호출되어야 합니다.
+            BackEnd.SendQueue.Poll();
+        }
     }
 
     void OnApplicationQuit()
