@@ -70,6 +70,8 @@ public partial class BackEndMatchManager : MonoBehaviour
     // 혼자 매칭을 하더라도 무조건 방을 생성한 뒤 매칭을 신청해야 함
     public bool CreateMatchRoom()
     {
+        Debug.Log("CreateMatchRoom()");
+
         // 매청 서버에 연결되어 있지 않으면 매칭 서버 접속
         if (!isConnectMatchServer)
         {

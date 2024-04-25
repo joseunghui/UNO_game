@@ -30,7 +30,6 @@ public partial class BackEndMatchManager : MonoBehaviour
         public bool isSandBoxEnable;        // 샌드박스 모드 (AI매칭)
     }
 
-    private static BackEndMatchManager instance = null; // 인스턴스
 
     public List<MatchInfo> matchInfos { get; private set; } = new List<MatchInfo>();  // 콘솔에서 생성한 매칭 카드들의 리스트
 
@@ -43,7 +42,7 @@ public partial class BackEndMatchManager : MonoBehaviour
     public bool isReconnectEnable { get; private set; } = false;
 
     public bool isConnectMatchServer { get; private set; } = false;
-    private bool isConnectInGameServer = false;
+    public bool isConnectInGameServer = false;
     private bool isJoinGameRoom = false;
     public bool isReconnectProcess { get; private set; } = false;
     public bool isSandBoxGame { get; private set; } = false;
@@ -52,49 +51,60 @@ public partial class BackEndMatchManager : MonoBehaviour
 
     #region Host
     private bool isHost = false;                    // 호스트 여부 (서버에서 설정한 SuperGamer 정보를 가져옴)
-    private Queue<KeyMessage> localQueue = null;    // 호스트에서 로컬로 처리하는 패킷을 쌓아두는 큐 (로컬처리하는 데이터는 서버로 발송 안함)
+    public Queue<KeyMessage> localQueue = null;    // 호스트에서 로컬로 처리하는 패킷을 쌓아두는 큐 (로컬처리하는 데이터는 서버로 발송 안함)
     #endregion
+
+    private void Awake()
+    {
+        // 만약 SendQueue가 초기화 되지 않았다면 초기화 수행
+        if (SendQueue.IsInitialize == false)
+        {
+            // SendQueue는 시작과 동시에 초기화가 수행됩니다.
+            // 디버그 로그 활성화, 예외 이벤트 핸들러 등록
+            SendQueue.StartSendQueue(true, ExceptionEvent);
+        }
+    }
 
     public void Init()
     {
-        if (instance != null)
-        {
-            Destroy(instance);
-        }
-        instance = this;
-    }
-
-    public static BackEndMatchManager GetInstance()
-    {
-        if (!instance)
-        {
-            return null;
-        }
-
-        return instance;
-    }
-
-    void OnApplicationQuit()
-    {
-        if (isConnectMatchServer)
-        {
-            AccessMatchServer();
-            Debug.Log("ApplicationQuit - LeaveMatchServer");
-        }
-    }
-
-    void Start()
-    {
-        // 이벤트 설정
-        //GameManager.OnRobby += IsMatchGameActivate;
-        //GameManager.OnGameReady += OnGameReady;
-        //GameManager.OnGameReconnect += OnGameReconnect;
         // 핸들러 설정
         MatchMakingHandler();
         GameHandler();
         ExceptionHandler();
     }
 
+    // SendQueue 내부에서 예외가 발생했을 경우  
+    // 아래 이벤트 핸들러를 통해 예외 이벤트가 전달됩니다.
+    void ExceptionEvent(Exception e)
+    {
+        Debug.Log(e.ToString());
+    }
+
+    private void Update()
+    {
+        // SendQueue가 초기화 되었을 때만 Poll 함수를 호출
+        if (SendQueue.IsInitialize)
+        {
+            // SendQueue를 정상적으로 사용하기 위해서는 
+            // 아래 Poll 함수가 반드시 정기적으로 호출되어야 합니다.
+            BackEnd.SendQueue.Poll();
+        }
+
+        if (isConnectInGameServer || isConnectMatchServer)
+        {
+            Backend.Match.Poll();
+
+            // 호스트의 경우 로컬 큐가 존재
+            // 큐에 있는 패킷을 로컬에서 처리
+            if (localQueue != null)
+            {
+                while (localQueue.Count > 0)
+                {
+                    var msg = localQueue.Dequeue();
+                }
+            }
+        }
+    }
 
     public bool IsHost()
     {
@@ -465,25 +475,6 @@ public partial class BackEndMatchManager : MonoBehaviour
         };
     }
 
-    void Update()
-    {
-        if (isConnectInGameServer || isConnectMatchServer)
-        {
-            Backend.Match.Poll();
-
-            // 호스트의 경우 로컬 큐가 존재
-            // 큐에 있는 패킷을 로컬에서 처리
-            if (localQueue != null)
-            {
-                while (localQueue.Count > 0)
-                {
-                    var msg = localQueue.Dequeue();
-                    // WorldManager.instance.OnRecieveForLocal(msg);
-                }
-            }
-        }
-    }
-
     public void GetMyMatchRecord(int index, Action<MatchRecord, bool> func)
     {
         // Get user InDate -> Managers.Data.userInfoDB...
@@ -547,6 +538,7 @@ public partial class BackEndMatchManager : MonoBehaviour
 
     public void GetMatchList(Action<bool, string> func)
     {
+        Debug.Log($"GetMatchList() >> {func}");
         // 매칭 카드 정보 초기화
         matchInfos.Clear();
 

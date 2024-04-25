@@ -59,7 +59,15 @@ public class UI_Ranking : UI_Popup
                 return;
 
             SetUserHeart();
+
+            // 로딩 이미지 고민
             Managers.Scene.LoadScene(Define.Scene.Game);
+
+            // 매치 서버에 대기방 생성 요청
+            if (Managers.Match.CreateMatchRoom() == true)
+            {
+                Managers.Match.RequestMatchMaking(0);
+            }
         });
 
         // pvp game start btn

@@ -1,12 +1,26 @@
 using BackEnd;
+using BackEnd.Game;
+using Battlehub.Dispatcher;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
+using static BackEnd.SendQueue;
 
 public class DataManager
 {
+    public bool isLogin { get; private set; }   // 로그인 여부
+    private string tempNickName;                        // 설정할 닉네임 (id와 동일)
+    public string myNickName { get; private set; } = string.Empty;  // 로그인한 계정의 닉네임
+    public string myIndate { get; private set; } = string.Empty;    // 로그인한 계정의 inDate
+    private Action<bool, string> loginSuccessFunc = null;
+
+    private const string BackendError = "statusCode : {0}\nErrorCode : {1}\nMessage : {2}";
+
+    public string appleToken = ""; // SignInWithApple.cs에서 토큰값을 받을 문자열
+
+
     UserInfoDB _user = new UserInfoDB();
     RankingData _rank = new RankingData();
     PostDataDB _post = new PostDataDB();
@@ -18,28 +32,8 @@ public class DataManager
     UserInfoData userInfoData;
     List<Ranking> rankingDatas;
     List<PostData> postDatas;
-    
-
-    public void Init()
-    {
-        var bro = Backend.Initialize(true); // 뒤끝 초기화
-
-        // 뒤끝 초기화에 대한 응답값
-        if (bro.IsSuccess())
-        {
-            Debug.Log("초기화 성공 : " + bro);
-        }
-        else
-        {
-            Debug.LogError("초기화 실패 : " + bro);
-        }
-    }
 
 
-    public void BackendDataAsyncPoll()
-    {
-        Backend.AsyncPoll();
-    }
 
     #region 로그인 & 회원가입
     public bool CustomSignUp(string id, string pw)
@@ -84,6 +78,24 @@ public class DataManager
         }
     }
 
+    // 뒤끝 토큰으로 로그인
+    public void BackendTokenLogin(Action<bool, string> func)
+    {
+        Enqueue(Backend.BMember.LoginWithTheBackendToken, callback =>
+        {
+            if (callback.IsSuccess())
+            {
+                Debug.Log("토큰 로그인 성공");
+                loginSuccessFunc = func;
+
+                OnPrevBackendAuthorized();
+                return;
+            }
+
+            Debug.Log("토큰 로그인 실패\n" + callback.ToString());
+            func(false, string.Empty);
+        });
+    }
 
     // 난수 사용 최초 닉네임 설정
     public static string GetRandomDigit(int length)
@@ -91,7 +103,6 @@ public class DataManager
         string s = "user_";
         Random r = new Random((int)DateTime.Now.Ticks);
 
-        //Random r = new Random(Convert.ToInt32(DateTime.Now.ToString("fffmmss")));
         int[] Random = new int[length];
 
         for (int i = 0; i < length; i++)
@@ -104,6 +115,51 @@ public class DataManager
             s += Random[i].ToString();
         }
         return s;
+    }
+
+    // 유저 정보 불러오기 사전작업
+    public void OnPrevBackendAuthorized()
+    {
+        isLogin = true;
+
+        OnBackendAuthorized();
+    }
+
+    // 실제 유저 정보 불러오기
+    private void OnBackendAuthorized()
+    {
+        Debug.Log("OnBackendAuthorized()");
+
+        Backend.BMember.GetUserInfo( callback =>
+        {
+            if (!callback.IsSuccess())
+            {
+                Debug.LogError("유저 정보 불러오기 실패\n" + callback);
+                loginSuccessFunc(false, string.Format(BackendError,
+                callback.GetStatusCode(), callback.GetErrorCode(), callback.GetMessage()));
+                return;
+            }
+            Debug.Log("유저정보\n" + callback);
+
+            var info = callback.GetReturnValuetoJSON()["row"];
+            if (info["nickname"] == null)
+            {
+                // LoginUI.GetInstance().ActiveNickNameObject();
+                return;
+            }
+            myNickName = info["nickname"].ToString();
+            myIndate = info["inDate"].ToString();
+
+            Debug.Log($"myNickName >> {myNickName}");
+            Debug.Log($"loginSuccessFunc >> {loginSuccessFunc}");
+
+            if (loginSuccessFunc != null)
+            {
+                Debug.Log($"OnBackendAuthorized() >> {loginSuccessFunc}");
+
+                Managers.Match.GetMatchList(loginSuccessFunc);
+            }
+        });
     }
     #endregion
 

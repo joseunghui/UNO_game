@@ -37,16 +37,6 @@ public class MatchScene : BaseScene
         cardController.SetItemSO(itemSO);
         cardController.SetStartCardCountbyGameMode(GameMode.PVCMode.None);
 
-        BackEndMatchManager.GetInstance().AccessMatchServer();
-
-        if (BackEndMatchManager.GetInstance().CreateMatchRoom())
-        {
-            Debug.Log("Create Match Room >> success");
-        }
-        else
-        {
-            Debug.Log("create Match Room >> Fail");
-        }
 
     }
 

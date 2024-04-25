@@ -1,9 +1,12 @@
 using BackEnd;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Battlehub.Dispatcher;
+using UnityEditor.PackageManager;
 
 public class UI_EnterGame : UI_SubItem
 {
@@ -14,6 +17,7 @@ public class UI_EnterGame : UI_SubItem
     public override void Init()
     {
         base.Init();
+        AutoLoginIntoGame();
 
         // 가져와야 할 것 : 버튼, 텍스트
         Bind<Button>(typeof(Define.Buttons));
@@ -23,25 +27,38 @@ public class UI_EnterGame : UI_SubItem
         GetButton((int)Define.Buttons.EnterGameButton).gameObject.BindEvent( (PointerEventData) =>
         {
             Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
+            Managers.Resource.Destroy(gameObject);
+            Managers.Data.Load();
 
-            // 로그인 했으면 Game, 아니면 Login
-            // 기등록된 로컬 기기 자동 로그인
-            BackendReturnObject autoLogin = Backend.BMember.LoginWithTheBackendToken();
-
-            if (autoLogin.IsSuccess())
-            {
-                Managers.Data.Load();
-
-                Managers.Resource.Destroy(gameObject);
-                // 로그인 후에는 랭킹 팝업 open
-                Managers.UI.ShowPopup<UI_Ranking>();
-            }
-            else
-            {
-                Managers.Scene.LoadScene(Define.Scene.Login);
-            }
+            // 로그인 후에는 랭킹 팝업 open
+            Managers.UI.ShowPopup<UI_Ranking>();
         });
-
     }
 
+    void AutoLoginIntoGame()
+    {
+        // 로그인 했으면 Game, 아니면 Login
+        // 뒤끝 토큰으로 로그인
+        Managers.Data.BackendTokenLogin((bool result, string error) =>
+        {
+            Debug.Log("여기 아님?");
+
+            Dispatcher.Current.BeginInvoke(() =>
+            {
+                if (result)
+                {
+                    return;
+                }
+
+                if (!error.Equals(string.Empty))
+                {
+                    Debug.Log("유저 정보 불러오기 실패\n\n" + error);
+
+                    Managers.Scene.LoadScene(Define.Scene.Login);
+                    return;
+                }
+
+            });
+        });
+    }
 }
