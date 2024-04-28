@@ -6,7 +6,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Battlehub.Dispatcher;
-using UnityEditor.PackageManager;
 
 public class UI_EnterGame : UI_SubItem
 {
@@ -28,19 +27,13 @@ public class UI_EnterGame : UI_SubItem
         {
             AutoLoginIntoGame();
 
-            Managers.Data.Load();
             Managers.Sound.Play("ButtonClick", Define.Sound.Effect);
             Managers.Resource.Destroy(gameObject);
-
-            // 로그인 후에는 랭킹 팝업 open
-            Managers.UI.ShowPopup<UI_Ranking>();
         });
     }
 
     void AutoLoginIntoGame()
     {
-        Debug.Log("AutoLoginIntoGame()");
-
         // 로그인 했으면 Game, 아니면 Login
         // 뒤끝 토큰으로 로그인
         Managers.Data.BackendTokenLogin((bool result, string error) =>
@@ -51,6 +44,11 @@ public class UI_EnterGame : UI_SubItem
             {
                 if (result)
                 {
+                    Managers.Data.Load();
+
+                    // 로그인 후에는 랭킹 팝업 open
+                    Managers.UI.ShowPopup<UI_Ranking>();
+
                     return;
                 }
 

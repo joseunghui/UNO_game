@@ -20,7 +20,7 @@ public class UI_Ranking : UI_Popup
 
         Load();
     }
-
+    
     public void Load()
     {
         data = Managers.Data.GetUserInfoData();
