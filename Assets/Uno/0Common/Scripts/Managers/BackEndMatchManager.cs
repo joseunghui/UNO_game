@@ -65,7 +65,7 @@ public partial class BackEndMatchManager : MonoBehaviour
         }
     }
 
-    public void Init()
+    private void Start()
     {
         // 핸들러 설정
         MatchMakingHandler();
@@ -82,14 +82,6 @@ public partial class BackEndMatchManager : MonoBehaviour
 
     private void Update()
     {
-        // SendQueue가 초기화 되었을 때만 Poll 함수를 호출
-        if (SendQueue.IsInitialize)
-        {
-            // SendQueue를 정상적으로 사용하기 위해서는 
-            // 아래 Poll 함수가 반드시 정기적으로 호출되어야 합니다.
-            BackEnd.SendQueue.Poll();
-        }
-
         if (isConnectInGameServer || isConnectMatchServer)
         {
             Backend.Match.Poll();

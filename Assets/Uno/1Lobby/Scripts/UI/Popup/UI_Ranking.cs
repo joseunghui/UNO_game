@@ -20,7 +20,7 @@ public class UI_Ranking : UI_Popup
 
         Load();
     }
-
+    
     public void Load()
     {
         data = Managers.Data.GetUserInfoData();
@@ -66,7 +66,7 @@ public class UI_Ranking : UI_Popup
             // 매치 서버에 대기방 생성 요청
             if (Managers.Match.CreateMatchRoom() == true)
             {
-                Managers.Match.RequestMatchMaking(0);
+                Managers.Match.RequestMatchMaking(0); 
             }
         });
 
