@@ -12,15 +12,10 @@ public class OrderController : MonoBehaviour
         SetOrder(originOrder);
     }
 
-    public void SetMostFrontOrder(bool isMostFront)
-    {
-        SetOrder(isMostFront ? 100 : _originOrder);
-    }
-
     public void SetOrder(int order)
     {
         int mulOrder = order * 10;
-        //var cardImage = gameObject.GetComponent<Canvas>();
+        
         var cardImage = Utill.FindChild<SpriteRenderer>(gameObject);
         cardImage.sortingLayerName = "UI";
         cardImage.sortingOrder = mulOrder;

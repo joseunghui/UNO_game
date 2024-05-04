@@ -129,8 +129,6 @@ public class InputManager
         }
         else
             card.MoveTransform(card._originPRS, false);
-
-        card.gameObject.GetOrAddComponent<OrderController>().SetMostFrontOrder(isEnlarge);
     }
     void SetECardState()
     {

@@ -26,22 +26,23 @@ public class Managers : MonoBehaviour
     public static InputManager Input { get {  return Instance._input; } }
     public static BackEndMatchManager Match { get {  return Instance._match; } }
 
-    void ExceptionHandler(Exception e)
-    {
-        // 예외 처리
-    }
+    
 
     void Start()
     {
+        // example
+        if (SendQueue.IsInitialize == false)
+        {
+            // SendQueue 초기화
+            SendQueue.StartSendQueue(true, ExceptionHandler);
+        }
+
         var bro = Backend.Initialize(true); // 뒤끝 초기화
 
         // 뒤끝 초기화에 대한 응답값
         if (bro.IsSuccess())
         {
             Debug.Log("초기화 성공 : " + bro);
-
-            // SendQueue 초기화
-            StartSendQueue(true, ExceptionHandler);
         }
         else
         {
@@ -51,6 +52,10 @@ public class Managers : MonoBehaviour
         Init();
     }
 
+    void ExceptionHandler(Exception e)
+    {
+        // 예외 처리
+    }
 
     static void Init()
     {
@@ -85,20 +90,14 @@ public class Managers : MonoBehaviour
         {
             // SendQueue를 정상적으로 사용하기 위해서는 
             // 아래 Poll 함수가 반드시 정기적으로 호출되어야 합니다.
-            BackEnd.SendQueue.Poll();
+            SendQueue.Poll();
         }
     }
 
     void OnApplicationQuit()
     {
         // 어플리케이션이 종료되었을 때 SendQueue를 정지 시킴
-        BackEnd.SendQueue.StopSendQueue();
-
-        if (s_instance._match.isConnectMatchServer)
-        {
-            s_instance._match.AccessMatchServer();
-            Debug.Log("ApplicationQuit - LeaveMatchServer");
-        }
+        SendQueue.StopSendQueue();
     }
 
     void OnApplicationPause(bool isPause)

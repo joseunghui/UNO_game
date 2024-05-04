@@ -5,7 +5,7 @@ using DG.Tweening;
 using System;
 using UnityEngine.UI;
 
-public class UI_Card : UI_Scene
+public class UI_Card : UI_SubItem
 {
     public Item item;
     public PRS _originPRS;

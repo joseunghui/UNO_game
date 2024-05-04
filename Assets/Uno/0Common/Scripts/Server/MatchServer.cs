@@ -43,8 +43,6 @@ public partial class BackEndMatchManager : MonoBehaviour
 
     public void AccessMatchServer()
     {
-        Debug.Log($"AccessMatchServer() >> {isConnectMatchServer}");
-
         if (isConnectMatchServer)
         {
             return;

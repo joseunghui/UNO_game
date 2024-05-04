@@ -10,6 +10,8 @@ TagManager:
   - SubItem
   - Top
   - Content
+  - Deck
+  - Hand
   - InnerPopup
   layers:
   - Default

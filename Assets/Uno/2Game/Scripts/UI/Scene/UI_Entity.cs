@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class UI_Entity : UI_Scene
+public class UI_Entity : UI_SubItem
 {
     public Item item;
     public Vector3 _originPos;

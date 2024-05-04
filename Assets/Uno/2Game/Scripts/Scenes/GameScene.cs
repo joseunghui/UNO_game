@@ -37,9 +37,6 @@ public class GameScene : BaseScene
 
         CardController cardController = gameObject.GetOrAddComponent<CardController>();
         cardController.SetItemSO(itemSO);
-
-        TurnController turnController = gameObject.GetOrAddComponent<TurnController>();
-        turnController.StartGame();
     }
 
     // 외부에서 사용하는 용도

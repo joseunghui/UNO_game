@@ -145,20 +145,20 @@ public class DataManager
             var info = callback.GetReturnValuetoJSON()["row"];
             if (info["nickname"] == null)
             {
-                // LoginUI.GetInstance().ActiveNickNameObject();
                 return;
             }
             myNickName = info["nickname"].ToString();
             myIndate = info["inDate"].ToString();
 
-            Debug.Log($"myNickName >> {myNickName}");
-            Debug.Log($"loginSuccessFunc >> {loginSuccessFunc}");
-
             if (loginSuccessFunc != null)
             {
-                Debug.Log($"OnBackendAuthorized() >> {loginSuccessFunc}");
-
                 Managers.Match.GetMatchList(loginSuccessFunc);
+
+                // 매치 서버에 대기방 생성 요청
+                if (Managers.Match.CreateMatchRoom()== true)
+                {
+                    Debug.Log("매치 서버에 대기방 생성 요청");
+                }
             }
         });
     }

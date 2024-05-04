@@ -4,7 +4,6 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using DG.Tweening;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class CardController : MonoBehaviour
 {
@@ -19,6 +18,21 @@ public class CardController : MonoBehaviour
     PositionSpot position;
     public int putCount = 0;
     int unoCount = 0;
+
+
+    #region Modify Turn 
+    public void ModifyMyTrunToFalse()
+    {
+        myTurn = false;
+        putCount = 1;
+    }
+
+    public void ModifyMyTrunToTrue()
+    {
+        myTurn = true;
+        putCount = 0;
+    }
+    #endregion
 
     #region GameScene에 할당된 ItemSO를 CardController로 가져오기
     public void SetItemSO(ItemSO tempSO)
@@ -58,6 +72,8 @@ public class CardController : MonoBehaviour
     #region  Turn Manager
     IEnumerator StartGameCo()
     {
+        CreateCardDeck(); // 카드 덱 생성
+
         myTurn = Random.Range(0, 2) == 0;
         gameState = Define.GameState.GamePause;
 
@@ -77,6 +93,15 @@ public class CardController : MonoBehaviour
         SpawnEntity(true, PopItem(), Vector3.zero);
         StartCoroutine(CoTurnSet());
     }
+
+    void CreateCardDeck()
+    {
+        // 카드 덱 생성
+        UI_Card card = Managers.UI.CardSpawn<UI_Card>(parent: GameObject.FindWithTag("Deck").transform, _pos: Vector3.zero, _quat: Utils.QI);
+        card.gameObject.name = "CardDeck";
+        card.gameObject.transform.position = new Vector3(2, 0, 0);
+    }
+
     IEnumerator CoTurnSet()
     {
         gameState = Define.GameState.GamePause;
@@ -94,13 +119,10 @@ public class CardController : MonoBehaviour
     #region Entity Manager(카드를 내는 위치에 오는 모든 카드들 관리)
     public bool SpawnEntity(bool isMine, Item item, Vector3 spawnPos)
     {
-        // 카드 덱 생성
-        UI_Card card = Managers.UI.CardSpawn<UI_Card>(parent: gameObject.transform.parent, _pos: spawnPos, _quat: Utils.QI);
-        card.gameObject.name = "CardDeck";
-        card.gameObject.transform.position = new Vector3(2, 0, 0);
+        // 중앙 카드 내는 곳 생성
+        UI_Entity go = Managers.UI.CardSpawn<UI_Entity>(parent: GameObject.FindWithTag("Deck").transform, _pos: spawnPos, _quat: Utils.QI);
 
-        UI_Entity go = Managers.UI.CardSpawn<UI_Entity>(parent:gameObject.transform.parent, _pos: spawnPos, _quat: Utils.QI);
-
+        go.transform.SetAsLastSibling();
         go.Setup(item);
         entities.Add(go);
         
@@ -156,6 +178,17 @@ public class CardController : MonoBehaviour
 
         return list;
     }
+
+    void MixCard()
+    {
+        for (int i = 0; i < itemList.Count; i++)
+        {      // 카드 섞기
+            int rand = Random.Range(i, itemList.Count);
+            Item temp = itemList[i];
+            itemList[i] = itemList[rand];
+            itemList[rand] = temp;
+        }
+    }
     #endregion
 
     #region 카드 뽑기
@@ -186,10 +219,9 @@ public class CardController : MonoBehaviour
     }
     public void AddCard(bool isMine)
     {
-        Debug.Log($"AddCard");
         var spawnPoint = new Vector3(216f, -390f, 0);
-        UI_Card card = Managers.UI.CardSpawn<UI_Card>(parent:null, _pos: spawnPoint, _quat: Utils.QI);
-        
+        UI_Card card = Managers.UI.CardSpawn<UI_Card>(parent: GameObject.FindWithTag("Hand").transform, _pos: spawnPoint, _quat: Utils.QI);
+
         card.Setup(isMine, PopItem());
         (isMine ? myCards : otherCards).Add(card);
 
@@ -267,16 +299,7 @@ public class CardController : MonoBehaviour
     }
     #endregion
 
-    void MixCard()
-    {
-        for (int i = 0; i < itemList.Count; i++)
-        {      // 카드 섞기
-            int rand = Random.Range(i, itemList.Count);
-            Item temp = itemList[i];
-            itemList[i] = itemList[rand];
-            itemList[rand] = temp;
-        }
-    }
+    
 
     #region 카드 내는 과정
     public bool TryPutCard(bool isMine, UI_Card card)
@@ -348,7 +371,6 @@ public class CardController : MonoBehaviour
             }
             else
             {
-                myCards.ForEach(x => x.gameObject.GetComponent<OrderController>().SetMostFrontOrder(false)); //origin order 만들기
                 CardAlignment(isMine);
                 result = false;
             }

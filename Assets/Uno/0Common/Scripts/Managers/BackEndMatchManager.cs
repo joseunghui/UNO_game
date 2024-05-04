@@ -530,7 +530,6 @@ public partial class BackEndMatchManager : MonoBehaviour
 
     public void GetMatchList(Action<bool, string> func)
     {
-        Debug.Log($"GetMatchList() >> {func}");
         // 매칭 카드 정보 초기화
         matchInfos.Clear();
 
