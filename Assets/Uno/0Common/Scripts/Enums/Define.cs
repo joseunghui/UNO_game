@@ -55,10 +55,17 @@ public class Define
     {
         None,
         Over,
-        Press,
-        Click,
+        Exit,
+        Down,
+        Up,
         DoubleClick,
-        Drag,
+    }
+
+    public enum MouseState
+    {
+        None,
+        CanOver,
+        CanDrag,
     }
 
     public enum GameState

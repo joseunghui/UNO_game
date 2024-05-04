@@ -4,118 +4,124 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InputManager 
+public class InputManager
 {
-    public Action KeyAction = null;
-
-    public Define.GameState gameState; // 게임 시작, 중단, 종료
     public Define.MouseEvent inputState; // 동작안함, 마우스오버, 누름(있어야 하나... 고민), 클릭, 더블클릭(막으려고 넣음), 드래그
-    
-    public Action<Define.GameState> GameAction = null;
-    public Action<Define.MouseEvent> MouseAction = null;
+    public Action MouseAction = null;
 
-    bool OnMyCardArea;
-    bool _pressed = false;
+    bool putCardArea;
     bool _draggable = false;
+    bool _pressed = false;
+    public UI_Card selectCard;
 
     public void OnUpdate()
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
+        if (GetCardController().gameState != Define.GameState.GameStart)
+            return;
+        SetECardState();
 
-
-        if (Input.anyKey && KeyAction != null)
-            KeyAction.Invoke();
-
-        /**
-         * 커서 위치 가져오기 : Vector3 mousePos = Input.mousePosition;
-         * GetMouseButton(0) : 마우스 왼쪽
-         * GetMouseButton(1) : 마우스 오른쪽
-         * GetMouseButton(2) : 마우스 휠
-         */
-        if (MouseAction != null)
+        if (_pressed)
         {
-            if (Input.GetMouseButton(0))
-            {
-                MouseAction.Invoke(Define.MouseEvent.Press);
-                _pressed = true;
-            }
-            else
-            {
-                if (_pressed)
-                {
-                    MouseAction.Invoke(Define.MouseEvent.Click);
-                }
-                _pressed = false;
-            }
-
-
+            CardDrag();
         }
     }
 
     #region MyCard
-    public void OnCursorOver<T>(T target)
+    public void SetMouseAction(Define.MouseEvent input)
     {
-        if (inputState == Define.MouseEvent.None)
+        if (GetCardController().gameState != Define.GameState.GameStart)
             return;
-        EnlargeCard(true, target);
+        inputState = input;
+
+        switch (inputState)
+        {
+            case Define.MouseEvent.Over:
+                {
+                    MouseAction += OnMouseOver; break;
+                }
+            case Define.MouseEvent.Exit:
+                {
+                    MouseAction += OnMouseExit; break;
+                }
+            case Define.MouseEvent.Down:
+                {
+                    MouseAction += OnMouseDown; break;
+                }
+            case Define.MouseEvent.Up:
+                {
+                    MouseAction += OnMouseUp; break;
+                }
+            default: break;
+        }
+        MouseAction?.Invoke();
     }
 
-    public void OnCursorOut<T>(T targer)
+    public void OnMouseOver()
     {
-        EnlargeCard(false, targer);
+        if (selectCard == null)
+            return;
+        EnlargeCard(true, selectCard);
+        Clear();
     }
 
-    public void OnCursorDown()
+    public void OnMouseExit()
     {
-        if (inputState != Define.MouseEvent.Drag)
+        if (selectCard == null)
             return;
-        _draggable = true;
+        EnlargeCard(false, selectCard);
+        Clear();
     }
 
-    public void OnCursorUp()
+    public void OnMouseDown()
     {
-        _draggable = false;
-        
-        if (inputState != Define.MouseEvent.Drag)
-            return;
+        if (_draggable)
+        {
+            Clear();
+            _pressed = true;
+        }
+    }
 
-        if (OnMyCardArea)
-            GetCardController().EntityAlignment();
+    public void OnMouseUp()
+    {
+        if (!_pressed)
+            return;
+        _pressed = false;
+        DetectCardArea();
+        Clear();
+        if (!putCardArea)
+            GetCardController().CardAlignment(true);
         else
         {
-            if (GetCardController().TryPutCard(true))
+            if (GetCardController().TryPutCard(true, selectCard))
             {
-                GetTurnController().EndTurn();
+                //GetTurnController().EndTurn();
             }
+            selectCard = null;
         }
     }
 
-    void CardDrag(UI_Card targetCard)
+    void CardDrag()
     {
-        if (inputState != Define.MouseEvent.Drag)
-            return;
-
-        if (!OnMyCardArea)
-        {
-            targetCard.MoveTransform(new PRS(Utils.MousePos, Utils.QI, targetCard._originPRS.scale), false);
-            GetCardController().EntityAlignment();
-        }
+        selectCard.MoveTransform(new PRS(Utils.MousePos, Utils.QI, selectCard._originPRS.scale), false);
     }
 
     // 이거 고민해보기!!!
     void DetectCardArea()
-    {  
-        // MyCardArea랑 마우스랑 겹치는 부분이 있으면 true
+    {
+        /*if (Physics.Raycast(Utils.MousePos, Vector3.forward, Mathf.Infinity, LayerMask.GetMask("PutCardArea")))
+            putCardArea = true;
+        */
         RaycastHit2D[] hits = Physics2D.RaycastAll(Utils.MousePos, Vector3.forward);
-        int layer = LayerMask.NameToLayer("MyCardArea");
-        OnMyCardArea = Array.Exists(hits, x => x.collider.gameObject.layer == layer);
+        int layer = LayerMask.NameToLayer("PutCardArea");
+        putCardArea = Array.Exists(hits, x => x.collider.gameObject.layer == layer);
+        Debug.Log(putCardArea);
     }
 
-    void EnlargeCard<T>(bool isEnlarge, T TargetCard)
+    void EnlargeCard<T>(bool isEnlarge, T target)
     {
-        UI_Card card = TargetCard as UI_Card;
-
+        var card = target as UI_Card;
         if (isEnlarge)
         {
             Vector3 enlargePos = new Vector3(card._originPRS.pos.x, -2.1f, -5f);   // x는 그대로 y 올리고 z는 앞으로 뻄
@@ -124,30 +130,21 @@ public class InputManager
         else
             card.MoveTransform(card._originPRS, false);
 
-        card.GetComponent<OrderController>().SetMostFrontOrder(isEnlarge);
+        card.gameObject.GetOrAddComponent<OrderController>().SetMostFrontOrder(isEnlarge);
     }
     void SetECardState()
     {
-        if (GetTurnController().isLoading)  // 게임 로딩중일땐 아무것도 안되고
-            inputState = Define.MouseEvent.None;
-        else if (!GetTurnController().myTurn || GetCardController().putCount == 1)   // 드래그 못하게
-            inputState = Define.MouseEvent.Over;
-        else if (GetTurnController().myTurn && GetCardController().putCount == 0)    // 내 턴일땐 가능
-            inputState = Define.MouseEvent.Drag;
-
+        if (GetCardController().myTurn && GetCardController().putCount == 0)    // 내 턴일땐 가능
+            _draggable = true;
+        else if (!GetCardController().myTurn || GetCardController().putCount == 1)   // 드래그 못하게
+            _draggable = false;
     }
     #endregion
 
     public void Clear()
     {
-        KeyAction = null;
-        GameAction = null;
+        inputState = Define.MouseEvent.None;
         MouseAction = null;
-    }
-
-    TurnController GetTurnController()
-    {
-        return GameObject.FindWithTag("Scene").GetOrAddComponent<TurnController>();
     }
 
     CardController GetCardController()

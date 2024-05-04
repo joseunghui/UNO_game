@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OrderController : MonoBehaviour
 {
-    int _originOrder;
+    public int _originOrder;
 
     public void SetOriginOrder(int originOrder)
     {
@@ -14,12 +14,13 @@ public class OrderController : MonoBehaviour
 
     public void SetMostFrontOrder(bool isMostFront)
     {
-        SetOrder(isMostFront ? 500 : _originOrder);
+        SetOrder(isMostFront ? 100 : _originOrder);
     }
 
     public void SetOrder(int order)
     {
         int mulOrder = order * 10;
+        //var cardImage = gameObject.GetComponent<Canvas>();
         var cardImage = Utill.FindChild<SpriteRenderer>(gameObject);
         cardImage.sortingLayerName = "UI";
         cardImage.sortingOrder = mulOrder;

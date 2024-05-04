@@ -38,7 +38,6 @@ public class UI_EnterGame : UI_SubItem
         // 뒤끝 토큰으로 로그인
         Managers.Data.BackendTokenLogin((bool result, string error) =>
         {
-            Debug.Log("여기 아님?");
 
             Dispatcher.Current.BeginInvoke(() =>
             {

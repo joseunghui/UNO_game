@@ -203,35 +203,14 @@ public class UIManager
             parent = GameObject.FindWithTag("Content").transform;
 
         GameObject go = Managers.Resource.Instantiate($"UI/Card/{name}", parent);
+        var coll = go.GetOrAddComponent<BoxCollider2D>();
+        coll.size = new Vector2(200, 280);
         
         go.transform.localScale = Vector3.one;
         go.transform.localPosition= _pos;
         go.transform.localRotation = _quat;
 
         return Utill.GetOrAddComponent<T>(go);
-    }
-
-    public T CreatePostionSpot<T>(string name = null, Define.CardPRS _prs = Define.CardPRS.Left) where T : UI_Base
-    {
-        if (string.IsNullOrEmpty(name))
-            name = typeof(T).Name;
-
-        GameObject go = Managers.Resource.Instantiate($"UI/Transform/{name}");
-        GameObject parentCanvas = GameObject.FindWithTag("Canvas");
-
-        switch (_prs)
-        {
-            case Define.CardPRS.Left:
-                go.transform.localRotation = new Quaternion(0f, 0f, 15f, 0f);
-                break;
-            case Define.CardPRS.Right:
-                go.transform.localRotation = new Quaternion(0f, 0f, -15f, 0f);
-                break;
-        }
-        go.transform.SetParent(parentCanvas.transform);
-        go.transform.localScale = parentCanvas.transform.localScale;
-        
-        return go as T;
     }
 
 

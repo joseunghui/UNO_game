@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using DG.Tweening;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class CardController : MonoBehaviour
 {
     ItemSO ItemBuffer;
     public List<Item> itemList = new List<Item>();
-
     public int startCardCount;
-    public bool isLoading; // 게임 끝나면 true로 해서 클릭 방지
     public bool myTurn;
-    public int putCount;
-    public int unoCount = 0;
     public List<UI_Card> otherCards = new List<UI_Card>();
     public List<UI_Card> myCards = new List<UI_Card>();
     public List<UI_Entity> entities = new List<UI_Entity>();
+    public Define.GameState gameState;
     PositionSpot position;
+    public int putCount = 0;
+    int unoCount = 0;
 
     #region GameScene에 할당된 ItemSO를 CardController로 가져오기
     public void SetItemSO(ItemSO tempSO)
@@ -59,7 +59,7 @@ public class CardController : MonoBehaviour
     IEnumerator StartGameCo()
     {
         myTurn = Random.Range(0, 2) == 0;
-        isLoading = true;
+        gameState = Define.GameState.GamePause;
 
         // sound 
         Managers.Sound.Play("StartSound", Define.Sound.Effect);
@@ -79,12 +79,12 @@ public class CardController : MonoBehaviour
     }
     IEnumerator CoTurnSet()
     {
-        isLoading = true;
+        gameState = Define.GameState.GamePause;
 
         // ButtonManager.Inst.turnStart(myTurn);
 
         yield return new WaitForSeconds(0.1f);
-        isLoading = false;
+        gameState = Define.GameState.GameStart;
         if (myTurn == false)
             yield return new WaitForSeconds(0.1f);
         //OnTurnStarted?.Invoke(myTurn);
@@ -122,6 +122,7 @@ public class CardController : MonoBehaviour
             
             targetEntity.transform.position = new Vector3(0, 0, 0);
             targetEntity.gameObject.GetComponent<OrderController>()?.SetOriginOrder(i+1);
+            Debug.Log("낸 카드 : "+targetEntity.item.color+", "+targetEntity.item.num);
         }
     }
     #endregion
@@ -241,6 +242,7 @@ public class CardController : MonoBehaviour
             case 1: objLerps = new float[] { 0.5f }; break;               // 카드 한장일 때
             case 2: objLerps = new float[] { 0.27f, 0.73f }; break;       // 두장
             case 3: objLerps = new float[] { 0.1f, 0.5f, 0.9f }; break;   // 세장
+            case 4: objLerps = new float[] { 0, 0.3f, 0.6f, 0.9f }; break;   // 네장
             default:                                                    // 그 이상
                 float interval = 1f / (objCount - 1);
                 for (int i = 0; i < objCount; i++)
@@ -253,7 +255,7 @@ public class CardController : MonoBehaviour
         {   // 원의 방정식
             var targetPos = Vector3.Lerp(leftTr.position, rightTr.position, objLerps[i]);
             var targetRot = Utils.QI;
-            if (objCount >= 4)
+            if (objCount >= 5)
             {  // 3개까지는 둥글게 배치할 필요가 없대요
                 float curve = Mathf.Sqrt(Mathf.Pow(height, 2) - Mathf.Pow(objLerps[i] - 0.5f, 2));
                 targetPos.y += curve;
@@ -277,12 +279,85 @@ public class CardController : MonoBehaviour
     }
 
     #region 카드 내는 과정
-    public bool TryPutCard(bool isMine)
+    public bool TryPutCard(bool isMine, UI_Card card)
     {
         if (putCount >= 1)   // 카드 하나 낼 수 있음
             return false;
-       
-        return false;
+        Item lastCard = entities[entities.Count - 1].item; // 마지막으로 낸 카드
+
+        if (card == null)
+        {
+            Debug.Log("받아온 카드가 없습니다");
+            return false;
+        }
+        var spawnPos = Utils.MousePos;
+        bool result = false;
+
+        // 특수카드 중 색깔 블랙 (4드로우, 색깔 변경)
+        if (card.item.color.Equals("black"))
+        {
+            SpawnEntity(isMine, card.item, spawnPos);
+            myCards.Remove(card);
+            card.transform.DOKill();
+            DestroyImmediate(card.gameObject);
+            Managers.Input.selectCard = null;
+            putCount++;
+            CardAlignment(isMine);
+
+            // 색깔 바꾸기 카드 낸 경우
+            if (card.item.num == 101 || card.item.num == 100)
+            {
+                Debug.Log("색깔 변경!");    // 색변경 팝업!
+            }
+            else if (card.item.num == 200 || card.item.num == 201)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    AddCard(!isMine);
+                }
+                CardAlignment(!isMine);
+            }
+            result = true;
+        }
+        else
+        {
+            if (card.item.color == lastCard.color || card.item.num == lastCard.num || lastCard.color.Equals("black"))
+            { // 카드 낼 때 조건
+                SpawnEntity(isMine, card.item, spawnPos);
+                myCards.Remove(card);
+                card.transform.DOKill();
+                DestroyImmediate(card.gameObject);
+                Managers.Input.selectCard = null;
+                putCount++;
+                CardAlignment(isMine);
+
+                // 리버스 카드, 스킵 카드의 경우 내 차례 다시
+                if (card.item.num == 10 || card.item.num == 11)
+                {
+                    //OnTurnStarted(isMine); 다시 내턴
+                    return false;
+                }
+                // +2 드로우 카드 (색깔 구분 O)
+                else if (card.item.num == 12)
+                {
+                    AddCard(!isMine);
+                    AddCard(!isMine);
+                    CardAlignment(!isMine);
+                }
+                result = true;
+            }
+            else
+            {
+                myCards.ForEach(x => x.gameObject.GetComponent<OrderController>().SetMostFrontOrder(false)); //origin order 만들기
+                CardAlignment(isMine);
+                result = false;
+            }
+        }
+        if (result)
+        {
+            // play(2); 효과음 재생
+        }
+        return result;
     }
     #endregion
 }

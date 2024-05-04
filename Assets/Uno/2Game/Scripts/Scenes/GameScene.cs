@@ -40,8 +40,6 @@ public class GameScene : BaseScene
 
         TurnController turnController = gameObject.GetOrAddComponent<TurnController>();
         turnController.StartGame();
-
-        //gameObject.GetOrAddComponent<OrderController>();
     }
 
     // 외부에서 사용하는 용도
@@ -54,6 +52,11 @@ public class GameScene : BaseScene
     public override void Clear()
     {
         Debug.Log("Game Scene Clear!!!");
+    }
+
+    private void Update()
+    {
+        Managers.Input.OnUpdate();
     }
 
 

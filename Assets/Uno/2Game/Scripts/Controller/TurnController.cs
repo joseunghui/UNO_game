@@ -11,7 +11,7 @@ public class TurnController : MonoBehaviour
     [SerializeField][Tooltip("시작 카드 개수를 정합니다")] int startCardCount;
 
     [Header("Properties")]
-    public bool isLoading; // 게임 끝나면 true로 해서 클릭 방지
+    public Define.GameState gameState;
     public bool myTurn;
 
     enum ETurnMode { Random, My, Other }
@@ -24,6 +24,7 @@ public class TurnController : MonoBehaviour
     public static event Action<bool> OnTurnStarted;
 
     public int unoCount = 0;
+    public int putCount = 0;
 
     void GameSetup()
     {
@@ -44,12 +45,12 @@ public class TurnController : MonoBehaviour
     public IEnumerator StartGameCo()
     {
         GameSetup(); // 랜덤 시작 순서 지정
-        isLoading = true;
+        gameState = Define.GameState.GamePause;
 
         for (int i = 0; i < startCardCount; i++)
         {
             yield return delay01;
-            OnAddCard?.Invoke(false);   // isMine; 상대카드
+            //OnAddCard?.Invoke(false);   // isMine; 상대카드
             yield return delay01;
             OnAddCard?.Invoke(true);    // 내카드
         }
@@ -60,10 +61,11 @@ public class TurnController : MonoBehaviour
 
     IEnumerator StartTurnCo()
     {
-        isLoading = true;
+        gameState = Define.GameState.GamePause;
+        unoCount = 0;
         // ButtonManager.Inst.turnStart(myTurn);
         yield return delay01;
-        isLoading = false;
+        gameState = Define.GameState.GameStart;
         if (myTurn == false)
             yield return delay02;
         OnTurnStarted?.Invoke(myTurn);
@@ -84,12 +86,12 @@ public class TurnController : MonoBehaviour
 
     public void StartGame()
     {
-        StartCoroutine(StartGameCo());
+        //StartCoroutine(StartGameCo());
     }
 
     public IEnumerator GameOver(bool isMyWin)
     {
-        isLoading = true;
+        gameState = Define.GameState.GameEnd;
 
         // 타이머 종료
         // Destroy(DataManager.Instance);
