@@ -41,7 +41,8 @@ public partial class BackEndMatchManager : MonoBehaviour
     }
 
 
-    public void AccessMatchServer()
+    // 매칭 서버 접속
+    public void JoinMatchServer()
     {
         if (isConnectMatchServer)
         {
@@ -57,7 +58,7 @@ public partial class BackEndMatchManager : MonoBehaviour
     }
 
     // 매칭 서버 접속종료
-    public void DisconnectMatchServer()
+    public void LeaveMatchServer()
     {
         isConnectMatchServer = false;
         Backend.Match.LeaveMatchMakingServer();
@@ -68,14 +69,12 @@ public partial class BackEndMatchManager : MonoBehaviour
     // 혼자 매칭을 하더라도 무조건 방을 생성한 뒤 매칭을 신청해야 함
     public bool CreateMatchRoom()
     {
-        Debug.Log("CreateMatchRoom()");
-
         // 매청 서버에 연결되어 있지 않으면 매칭 서버 접속
         if (!isConnectMatchServer)
         {
             Debug.Log(NOTCONNECT_MATCHSERVER);
             Debug.Log(RECONNECT_MATCHSERVER);
-            AccessMatchServer();
+            JoinMatchServer();
             return false;
         }
         Debug.Log("방 생성 요청을 서버로 보냄");
@@ -99,17 +98,21 @@ public partial class BackEndMatchManager : MonoBehaviour
         {
             Debug.Log(NOTCONNECT_MATCHSERVER);
             Debug.Log(RECONNECT_MATCHSERVER);
-            AccessMatchServer();
+            JoinMatchServer();
             return;
         }
         // 변수 초기화
-        isConnectMatchServer = false;
+        isConnectInGameServer = false;
 
         Backend.Match.RequestMatchMaking(matchInfos[index].matchType, matchInfos[index].matchModeType, matchInfos[index].inDate);
-        
-        nowMatchType = matchInfos[index].matchType;
-        nowModeType = matchInfos[index].matchModeType;
-        numOfClient = int.Parse(matchInfos[index].headCount);
+        if (isConnectInGameServer)
+        {
+            Backend.Match.LeaveGameServer(); //인게임 서버 접속되어 있을 경우를 대비해 인게임 서버 리브 호출
+        }
+
+        //nowMatchType = matchInfos[index].matchType;
+        //nowModeType = matchInfos[index].matchModeType;
+        //numOfClient = int.Parse(matchInfos[index].headCount);
     }
 
     // 매칭 신청 취소하기
@@ -213,14 +216,14 @@ public partial class BackEndMatchManager : MonoBehaviour
             Debug.Log(debugLog);
             if (isError == true)
             {
-
+                Debug.Log("Error!!");
             }
         }
     }
 
     // 매칭 성공했을 때
     // 인게임 서버로 접속해야 한다.
-    public void ProcessMatchSuccess(MatchMakingResponseEventArgs args)
+    private void ProcessMatchSuccess(MatchMakingResponseEventArgs args)
     {
         ErrorInfo errorInfo;
         if (sessionIdList != null)
@@ -229,11 +232,15 @@ public partial class BackEndMatchManager : MonoBehaviour
             sessionIdList.Clear();
         }
 
+        if (!Backend.Match.JoinGameServer(args.RoomInfo.m_inGameServerEndPoint.m_address, args.RoomInfo.m_inGameServerEndPoint.m_port, false, out errorInfo))
+        {
+            var debugLog = string.Format(FAIL_ACCESS_INGAME, errorInfo.ToString(), string.Empty);
+            Debug.Log(debugLog);
+        }
         // 인자값에서 인게임 룸토큰을 저장해두어야 한다.
         // 인게임 서버에서 룸에 접속할 때 필요
         // 1분 내에 모든 유저가 룸에 접속하지 않으면 해당 룸은 파기된다.
-        isConnectMatchServer = true;
-
+        isConnectInGameServer = true;
         isJoinGameRoom = false;
         isReconnectProcess = false;
         inGameRoomToken = args.RoomInfo.m_inGameRoomToken;
@@ -249,6 +256,7 @@ public partial class BackEndMatchManager : MonoBehaviour
         nowModeType = info.matchModeType;
         numOfClient = int.Parse(info.headCount);
     }
+
 
     public void ProcessReconnect()
     {
@@ -266,9 +274,16 @@ public partial class BackEndMatchManager : MonoBehaviour
             sessionIdList.Clear();
         }
 
-        isConnectMatchServer = true;
+        if (!Backend.Match.JoinGameServer(roomInfo.host, roomInfo.port, true, out errorInfo))
+        {
+            var debugLog = string.Format(FAIL_ACCESS_INGAME, errorInfo.ToString(), string.Empty);
+            Debug.Log(debugLog);
+        }
+
+        isConnectInGameServer = true;
         isJoinGameRoom = false;
         isReconnectProcess = true;
     }
+
 }
 

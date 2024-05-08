@@ -1,6 +1,4 @@
 using BackEnd;
-using BackEnd.Game;
-using Battlehub.Dispatcher;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -152,13 +150,8 @@ public class DataManager
 
             if (loginSuccessFunc != null)
             {
+                Debug.Log($"loginSuccessFunc >> {loginSuccessFunc}");
                 Managers.Match.GetMatchList(loginSuccessFunc);
-
-                // 매치 서버에 대기방 생성 요청
-                if (Managers.Match.CreateMatchRoom()== true)
-                {
-                    Debug.Log("매치 서버에 대기방 생성 요청");
-                }
             }
         });
     }

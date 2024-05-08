@@ -23,6 +23,8 @@ public class UI_Ranking : UI_Popup
     
     public void Load()
     {
+        Managers.Data.Load();
+
         data = Managers.Data.GetUserInfoData();
         rankings = Managers.Data.GetAllRankingData();
 
@@ -60,13 +62,10 @@ public class UI_Ranking : UI_Popup
 
             SetUserHeart();
 
-            // 로딩 이미지 고민
-            Managers.Scene.LoadScene(Define.Scene.Game);
-
             // 매치 서버에 대기방 생성 요청
             if (Managers.Match.CreateMatchRoom() == true)
             {
-                Managers.Match.RequestMatchMaking(0); 
+                Managers.Scene.BeforeLoadScene(Define.GameState.GameStart);
             }
         });
 
@@ -88,7 +87,7 @@ public class UI_Ranking : UI_Popup
     void SetUserHeart()
     {
         data.heart -= 1;
-        Managers.Data.UpdataUserData(Define.UpdateDateSort.UsingHeart, data);
+        //Managers.Data.UpdataUserData(Define.UpdateDateSort.UsingHeart, data); TODO 하트 로직 수정 필요!!!
     }
 
     void SetUserData()
