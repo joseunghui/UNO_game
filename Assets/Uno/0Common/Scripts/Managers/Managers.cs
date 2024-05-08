@@ -3,7 +3,6 @@ using Battlehub.Dispatcher;
 using System;
 using System.Collections;
 using UnityEngine;
-using static BackEnd.SendQueue;
 
 public class Managers : MonoBehaviour
 {
@@ -26,18 +25,10 @@ public class Managers : MonoBehaviour
     public static InputManager Input { get {  return Instance._input; } }
     public static BackEndMatchManager Match { get {  return Instance._match; } }
 
-    
 
-    void Start()
+    private void Awake()
     {
-        // example
-        if (SendQueue.IsInitialize == false)
-        {
-            // SendQueue 초기화
-            SendQueue.StartSendQueue(true, ExceptionHandler);
-        }
-
-        var bro = Backend.Initialize(true); // 뒤끝 초기화
+        var bro = Backend.Initialize(true);
 
         // 뒤끝 초기화에 대한 응답값
         if (bro.IsSuccess())
@@ -51,10 +42,9 @@ public class Managers : MonoBehaviour
 
         Init();
     }
-
-    void ExceptionHandler(Exception e)
+    void Start()
     {
-        // 예외 처리
+        
     }
 
     static void Init()
@@ -66,14 +56,14 @@ public class Managers : MonoBehaviour
             {
                 go = new GameObject { name = "@Managers" };
                 go.AddComponent<Managers>();
+                go.AddComponent<SendQueueMgr>();
+                go.AddComponent<BackEndMatchManager>();
+                go.AddComponent<DataParser>();
                 go.AddComponent<Dispatcher>();
             }
 
             DontDestroyOnLoad(go);
             s_instance = go.GetComponent<Managers>();
-
-            // data
-            // s_instance._data.Init();
 
             // sound
             s_instance._sound.Init();
@@ -81,39 +71,12 @@ public class Managers : MonoBehaviour
     }
 
 
+
     private void Update()
     {
+        //비동기함수 풀링
         Backend.AsyncPoll();
-
-        // SendQueue가 초기화 되었을 때만 Poll 함수를 호출
-        if (SendQueue.IsInitialize)
-        {
-            // SendQueue를 정상적으로 사용하기 위해서는 
-            // 아래 Poll 함수가 반드시 정기적으로 호출되어야 합니다.
-            SendQueue.Poll();
-        }
     }
-
-    void OnApplicationQuit()
-    {
-        // 어플리케이션이 종료되었을 때 SendQueue를 정지 시킴
-        SendQueue.StopSendQueue();
-    }
-
-    void OnApplicationPause(bool isPause)
-    {
-        if (isPause == false)
-        {
-            // 어플리케이션이 재실행 되었을 때 SendQueue를 재실행 시킴
-            SendQueue.ResumeSendQueue();
-        }
-        else
-        {
-            // 어플리케이션이 정지되었을 때 SendQueue를 일시 정지 시킴 
-            SendQueue.PauseSendQueue();
-        }
-    }
-
 
     // 씬 이동 시 없애줘야 하는 것들을 한방에 없애기 
     // 호출은 SceneManagerEx.cs 에서

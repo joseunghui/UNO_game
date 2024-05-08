@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Battlehub.Dispatcher;
 
 public class SceneManagerEx
 {
@@ -33,5 +34,20 @@ public class SceneManagerEx
     public void Clear()
     {
         CurrentScene.Clear();
+    }
+
+    // Loading popup(match)
+    public void BeforeLoadScene(Define.GameState gameState)
+    {
+        if (gameState.Equals(null))
+        {
+            Dispatcher.Current.BeginInvoke(() => Managers.UI.ShowPopup<UI_MatchLoading>());
+            
+            if (Managers.Match.isConnectInGameServer)
+            {
+                Debug.Log("로딩 화면 어케 없애누...");
+                Managers.Match.RequestMatchMaking(0);
+            }
+        }
     }
 }

@@ -38,13 +38,10 @@ public class UI_EnterGame : UI_SubItem
         // 뒤끝 토큰으로 로그인
         Managers.Data.BackendTokenLogin((bool result, string error) =>
         {
-
             Dispatcher.Current.BeginInvoke(() =>
             {
                 if (result)
                 {
-                    Managers.Data.Load();
-
                     // 로그인 후에는 랭킹 팝업 open
                     Managers.UI.ShowPopup<UI_Ranking>();
 
